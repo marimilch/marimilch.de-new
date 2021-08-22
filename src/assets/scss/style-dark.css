@@ -1,0 +1,56 @@
+@media (prefers-color-scheme: dark) {
+
+:root {
+    --brown: #ffffd9;
+    --light-brown: #342f40;
+    --dark-pink: #cc97be;
+    --pink: #2b2325;
+    --gold: #d4cd83;
+    --gold2:#69533c;
+    --canvas: #342f40;
+    --green: #bdb775;
+    --blue: #967d46;
+    --inset-shadow-text: 6px var(--gold2);
+}
+
+nav .button, 
+.button {
+    color: var(--pink);
+    background: var(--gold);
+    box-shadow: 0 var(--button-height) 0 0 var(--blue), 
+    0 var(--button-height) var(--inset-shadow) var(--gold2);
+}
+
+nav .button:hover, 
+nav .button:active,
+nav .button.pressed,
+.button:hover,
+.button:active,
+.button.pressed {
+    background: #ffffef;
+    box-shadow: 
+        0 var(--button-height) 0 var(--green),
+        0 var(--button-height) var(--inset-shadow) var(--dark-pink),
+        0 2px 15px var(--canvas)
+    ;
+}
+
+nav .button:active, 
+nav .button.pressed,
+.button:active,
+.button.pressed {
+    box-shadow: 
+        0 0 0 var(--dark-pink), 
+        0 2px 15px var(--canvas)
+    ;
+}
+
+nav h1, h1, h2, h3, h4, h5, a {
+    color: var(--gold);
+}
+
+.hook-link {
+    color: var(--dark-pink);
+}
+
+}

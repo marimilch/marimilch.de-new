@@ -1,0 +1,464 @@
+@font-face {
+    font-family: Manrope;
+    src: url(../fonts/Manrope-VariableFont_wght.ttf);
+}
+@font-face {
+    font-family: Pacifico;
+    src: url(../fonts/Pacifico-Regular.ttf);
+}
+
+@keyframes spinninga {
+    from {
+        transform: 
+            rotate3d(0, 1, 0, 45deg) 
+            rotate3d(0, 0, -1, 0deg) 
+            translate3d(0,0, calc( var(--rect-size) * .66 ))
+        ;
+    }
+    to {
+        transform: 
+            rotate3d(0, 1, 0, 45deg) 
+            rotate3d(0, 0, -1, 90deg) 
+            translate3d(0,0, calc( var(--rect-size) * .66 ))
+        ;
+    }
+}
+
+@keyframes spinningb {
+    from {
+        transform: 
+            rotate3d(0, 1, 0, 45deg) 
+            rotate3d(0, 0, -1, 30deg) 
+            translate3d(0,0,0)
+        ;
+    }
+    to {
+        transform: 
+            rotate3d(0, 1, 0, 45deg) 
+            rotate3d(0, 0, -1, 120deg) 
+            translate3d(0,0,0)
+        ;
+    }
+}
+
+@keyframes spinningc {
+    from {
+        transform: 
+            rotate3d(0, 1, 0, 45deg) 
+            rotate3d(0, 0, -1, 60deg) 
+            translate3d(0,0, calc( var(--rect-size) * -.66 ));
+    }
+    to {
+        transform: 
+            rotate3d(0, 1, 0, 45deg) 
+            rotate3d(0, 0, -1, 150deg) 
+            translate3d(0,0, calc( var(--rect-size) * -.66 ));
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: Manrope, sans-serif;
+    font-size: 22px;
+    background: var(--canvas);
+    color: var(--brown);
+}
+main {
+    background: var(--canvas);
+    overflow: hidden;
+    position: relative;
+    transition: height .5s ease;
+}
+main > div {
+    position: absolute;
+    overflow: visible;
+    padding: 50px 0;
+    /* top: 0; */
+}
+main, footer {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+footer, .cookies {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 18px 15px;
+    font-size: 12px;
+}
+nav > div {
+    max-width: var(--content-width);
+    padding: 0px 25px;
+    width: 100%;
+}
+main {
+    max-width: var(--content-width);
+    padding: 0px 50px;
+    margin: 0 auto;
+}
+ul {
+    padding-left: 0;
+}
+ul li {
+    margin: 20px 0;
+}
+.mb-5 {
+    margin-bottom: 50px
+}
+.button {
+    display: inline-block;
+    top: calc( -1 * var(--button-height) ); 
+    position: relative;
+    content: " ";
+    text-decoration: none;
+    border: none;
+    padding: 8px 10px;
+    margin: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: 
+        background-color var(--timing) ease,
+        box-shadow var(--timing) ease,
+        color var(--timing) ease, 
+        top var(--timing) ease
+    ;
+    cursor: pointer;
+    color: var(--canvas);
+    background: var(--light-brown);
+    box-shadow: 
+        0 var(--button-height) 0 0 var(--brown), 
+        0 var(--button-height) var(--inset-shadow) var(--pink)
+    ;
+}
+.button:hover {
+    background: var(--dark-pink);
+    box-shadow: 
+        0 var(--button-height) 0 0 var(--light-brown), 
+        0 var(--button-height) var(--inset-shadow) var(--pink),
+        0 2px 15px var(--dark-pink)
+    ;
+}
+.button:active, .button.pressed {
+    background: var(--dark-pink);
+    box-shadow: 
+        0 0px 0 0 var(--brown), 
+        0 2px 15px var(--dark-pink)
+    ;
+    top: 0;
+}
+
+/* 
+ * ensures the space above the
+ * button is still active
+ * when it's pushed down
+ *
+ */
+.button:active::before, 
+.button.pressed::before {
+    content: ' ';
+    width: 100%;
+    height: var(--button-height);
+    display: block;
+    position: absolute;
+    left: 0;
+    top: calc( var(--button-height) * -1 );
+}
+/*button.highlight {
+    color: var(--canvas);
+    background: var(--dark-pink);
+    box-shadow: 
+        0 var(--button-height) 0 0 var(--light-brown), 
+        0 var(--button-height) var(--inset-shadow) var(--pink)
+}
+button.highlight:hover {
+    color: var(--brown);
+    background: var(--green);
+    box-shadow: 
+        0 var(--button-height) 0 var(--blue),
+        0 var(--button-height) var(--inset-shadow) var(--pink),
+        0 2px 15px var(--blue)
+    ;
+}
+button.highlight:active, button.highlight.pressed {
+    color: var(--brown);
+    background: var(--green);
+    box-shadow: 
+        0 0 0 var(--blue), 
+        0 2px 15px var(--blue)
+    ;
+}*/
+nav .button {
+    color: var(--blue);
+    background: var(--canvas);
+    box-shadow: 
+        0 var(--button-height) 0 0 var(--blue), 
+        0 var(--button-height) var(--inset-shadow) var(--dark-pink)
+}
+nav .button:hover {
+    background: var(--canvas);
+    box-shadow: 
+        0 var(--button-height) 0 var(--green),
+        0 var(--button-height) var(--inset-shadow) var(--dark-pink),
+        0 2px 15px var(--canvas)
+    ;
+}
+nav .button:active, nav .button.pressed {
+    background: var(--canvas);
+    box-shadow: 
+        0 0 0 var(--dark-pink), 
+        0 2px 15px var(--canvas)
+    ;
+}
+.video {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    padding: 0 0 26%;
+    position: relative;
+}
+.video iframe {
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+.tour-dates {
+    list-style: none;
+    padding-left: 0;
+}
+.tour-dates li {
+    padding: 10px 0;
+}
+.tour-dates li > * {
+    display: inline-block;
+}
+.tour-dates li > time {
+    width: 170px;
+    font-weight: bold;
+    color: var(--pink);
+}
+a {
+    color: var(--pink);
+}
+.right {
+    float:right;
+}
+h1,h2,h3 {
+    font-family: Pacifico, cursive;
+    text-align: center;
+    font-weight: normal;
+    color: var(--dark-pink);
+}
+h2 {
+    font-size: 50px;
+    margin: 5px 0 55px;
+}
+nav h1 a {
+    text-decoration:none;
+    position: relative;
+    top: calc( var(--button-height) * -1 );
+    font-size: 40px;
+    user-select: none;
+    display: inline-block;
+    z-index: 2;
+    color: var(--canvas);
+    text-shadow:
+        0 5px 0 var(--blue), 
+        0 5px var(--inset-shadow-text);
+    color: var(--canvas);
+    transition: 
+        background-color var(--timing) ease,
+        text-shadow var(--timing) ease,
+        color var(--timing) ease, 
+        top var(--timing) ease
+    ;
+}
+nav h1 a:hover {
+    text-shadow:
+        0 5px 0 var(--green), 
+        0 5px var(--inset-shadow-text),
+        0 3px 15px var(--canvas)
+}
+nav h1 a:active, nav h1 a.pressed {
+    top: 0;
+    text-shadow: 
+        0 0 0 var(--dark-pink),
+        0 0 5px var(--dark-pink),
+        0 2px 15px var(--canvas)
+    ;
+}
+nav, .nav-buttons, nav > div {
+    display: flex;
+}
+.nav-buttons, nav {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+ul.no-indicators {
+    list-style: none;
+}
+ul.center li {
+    text-align: center;
+}
+nav, footer {
+    width:100%;
+    background: var(--pink);
+    /*position:relative;*/
+    box-shadow: var(--light-brown) 0 0 20px 0;
+    z-index: 2;
+    position: relative;
+}
+.heart {
+    font-size: 22px;
+}
+/*nav::after {
+    content: " ";
+    position: absolute;
+    background: var(--green);
+    height: 10px;
+    width: 100%;
+    bottom: 0;
+}*/
+nav > div{
+    justify-content: space-between;
+    align-content: center;
+}
+.flag, .cookies {
+    max-width: none;
+    width: 100%;
+    background: var(--pink);
+    color: var(--canvas);
+    text-align: center;
+}
+.center {
+    text-align: center;
+}
+.line {
+    height: 2px;
+    background: var(--pink);
+    width: 100%;
+    margin: 50px 0;
+}
+.flag h1 {
+    color: var(--brown);
+}
+.cursive {
+    color: var(--pink);
+    font-family: Pacifico, cursive;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.cookies {
+    padding: 5px 10px;
+    box-shadow: rgba(0,0,0,.2) 0 0 10px 0;
+    position:fixed;
+    top: 0;
+    z-index: 2;
+}
+article {
+    margin-bottom: 80px;
+}
+.vid-grid {
+    display: grid;
+    grid-gap: 25px 50px;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+}
+.vid-grid video{
+    width: 100%;
+    height: 265px;
+}
+.single-vid video{
+    width: 100%;
+    height: 552px;
+}
+.videos video {
+    background: black;
+    border-radius: 5px;
+}
+.milkglass-wrap {
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+.milkglass {
+    width: var(--content-width);
+    height: calc( var(--content-width) * .5);
+}
+.air-bottom {
+    margin-bottom: 50px;
+}
+.star-box {
+    display: inline-block;
+    perspective: 800px;
+    height: var(--rect-size);
+    width: var(--rect-size);
+    margin: 95px 95px 95px 75px;
+}
+.star-box > div {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    animation-play-state: paused;
+}
+.star-box > div:nth-child(3){
+    background: var(--green);
+    animation: spinninga 7.5s var(--spinning-time);
+}
+.star-box > div:nth-child(2){
+    background: var(--brown);
+    animation: spinningb 8s var(--spinning-time) reverse;
+}
+.star-box > div:nth-child(1){
+    background: var(--pink);
+    animation: spinningc 8.5s var(--spinning-time);
+}
+article video {
+    width: 100%;
+}
+.desktop-only {
+    display: inline-block;
+}
+.mobile-only {
+    display: none;
+}
+.hook-link {
+    position: absolute;
+    padding-right: 5px;
+    transform: translateX(-100%);
+    text-decoration: none;
+    transition: color var(--timing) ease;
+}
+.hook-link:active {
+    color: var(--blue);
+}
+
+:root   {
+    --brown: #73464c;
+    --light-brown: #ab5675;
+    --dark-pink: #ee6a7c;
+    --pink: #ffa7a5;
+    --gold: #ffe07e;
+    --canvas: #ffe7d6;
+    --green: #72dcbb;
+    --blue: #34acba;
+
+    --gradient: radial-gradient(var(--pink) 0%, var(--canvas) 75%);
+    --timing: .2s;
+    --rect-size: 150px;
+    --spinning-time: linear 0s infinite;
+    --inset-shadow-blur: 4px;
+    --inset-shadow: var(--inset-shadow-blur) 2px;
+    --inset-shadow-text: 6px var(--brown);
+
+    --button-height: 6px;
+    --content-width: 900px;
+}

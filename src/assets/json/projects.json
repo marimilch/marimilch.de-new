@@ -1,0 +1,182 @@
+[
+    {
+        "name": "Star Fox Stage 1 Clone",
+        "description": "This is a clone of the first stage of Star Fox (for Super Nintendo) I programmed in Unity in about a month to learn Unity for my bachelor thesis. I worked on it three times a week for about six hours and made three all-nighters a couple of days before I had to show it to my tutor. I programmed all scripts in C#. The models were made by me in Blender.",
+        "slug": "starfox-clone",
+        "live-game": "starfox-webgl",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "//github.com/marimilch/starfox-clone-scripts"
+            }
+        ],
+        "files": [
+            {
+                "label": "Windows Binary",
+                "url": "starfox-clone-win.zip"
+            },
+            {
+                "label": "macOS Binary",
+                "url": "starfox-clone-mac.zip"
+            },
+            {
+                "label": "Full Source",
+                "url": "starfox-clone-source.zip"
+            }
+        ],
+        "clips": [
+            {
+                "url": "action"
+            },
+            {
+                "url": "boss"
+            },
+            {
+                "url": "movement"
+            },
+            {
+                "url": "shoot1"
+            }
+        ]
+    },
+    {
+        "name": "ASCII 3D-Cube",
+        "description": "This is a little cube demo I programmed purely in C to learn the basics of Computer Graphics in my free time. It basically works with \"Voxels\" (although in this case naming them 3D-pixels would be better), that are \"flattened\" to a plane with the so called camera matrix I learned from in a lecture. It took me a week to finish (and one minor, random look a year later for a bug I was unable to find back then 😁).",
+        "slug": "ascii-cube",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "//github.com/marimilch/asciiray"
+            }
+        ],
+        "clips": [
+            {
+                "url": "ascii-cube"
+            }
+        ]
+    },
+    {
+        "name": "ASCII Water",
+        "description": "This is a simulation of water on a surface based on the wave equation. Implemented in C.",
+        "slug": "ascii-water",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "//github.com/marimilch/ascii_water"
+            }
+        ],
+        "clips": [
+            {
+                "url": "ascii-water"
+            },
+            {
+                "url": "ascii-water-2"
+            }
+        ]
+    },
+    {
+        "name": "Cable Simulation",
+        "description": "This is a simulation for a cable I implemented for my Bachelor Thesis. It can be run by two algorithms. The first one bases on Jakobsen's Advanced Character Physics Model and the second one on (Extended) Position Based Dynamics.",
+        "slug": "cable-simulation",
+        "links": [
+            {
+                "label": "GitLab",
+                "url": "//gitlab.rlp.net/mamirago/bachelor-thesis"
+            },
+            {
+                "label": "GitHub",
+                "url": "//github.com/marimilch/unity-xpbd-jakobsen-cable"
+            }
+        ],
+        "clips": [
+            {
+                "url": "cable-simulation"
+            }
+        ]
+    },
+    {
+        "name": "Klara - RPG Maker Game",
+        "description": "This is a game I've been working on during the last two years (with long pauses and some intense working periods, depending on how much time I had). The game is largely story based. I built it in RPG Maker 2003. It is not finished yet, but there are about one to two hours worth of gameplay.",
+        "slug": "klara",
+        "files": [
+            {
+                "label": "Windows Setup",
+                "url": "klara-setup.zip"
+            },
+            {
+                "label": "Full Source",
+                "url": "klara-source.zip"
+            }
+        ],
+        "clips": [
+            {
+                "url": "klara-boss"
+            },
+            {
+                "url": "klara-fighting"
+            },
+            {
+                "url": "klara-riddle"
+            },
+            {
+                "url": "klara-train"
+            }
+        ]
+    },
+    {
+        "name": "Petra & The Wolves - Microgame",
+        "description": "This is a little microgame I programmed as an exercise for an Unity Tutorial. I downloaded the assets from the Unity Store. It took me a week to finish working six hours each day.",
+        "slug": "petra",
+        "live-game": "petra",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "//github.com/marimilch/petra-and-the-wolves-scripts"
+            }
+        ],
+        "files": [
+            {
+                "label": "Windows Binary",
+                "url": "petra-win.zip"
+            },
+            {
+                "label": "Full Source",
+                "url": "petra-source.zip"
+            }
+        ],
+        "clips": [
+            {
+                "url": "microgame"
+            }
+        ]
+    },
+    {
+        "name": "Text Performer",
+        "description": "Text Performer is a Word Processor made for SEO writers. It's a project I built from the ground up for my old job at pagebeaker. The idea is by Ralf Schulte. It supports spell checking, export & import to proprietary formats, SEO-analysation tools, filler removal, detection of word repetitions and more. Its release is planned soon.",
+        "slug": "text-performer",
+        "links": [
+            {
+                "label": "Homepage",
+                "url": "//txtperformer.com/"
+            },
+            {
+                "label": "pagebreaker",
+                "url": "//pagebreaker.de/"
+            }
+        ],
+        "clips": [
+            {
+                "url": "tp-analysis"
+            },
+            {
+                "url": "tp-competitive"
+            },
+            {
+                "url": "tp-import"
+            },
+            {
+                "url": "tp-repetitio"
+            }
+        ]
+    }
+]

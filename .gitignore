@@ -21,3 +21,9 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Project specific
+# public/games-live
+# public/downloads
+# public/clips
+# public/glb

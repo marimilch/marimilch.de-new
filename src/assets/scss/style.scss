@@ -1,10 +1,10 @@
 @font-face {
     font-family: Manrope;
-    src: url(../fonts/Manrope-VariableFont_wght.ttf);
+    src: url(assets/fonts/Manrope-VariableFont_wght.ttf);
 }
 @font-face {
     font-family: Pacifico;
-    src: url(../fonts/Pacifico-Regular.ttf);
+    src: url(assets/fonts/Pacifico-Regular.ttf);
 }
 
 @keyframes spinninga {
@@ -74,7 +74,7 @@ main {
 main > div {
     position: absolute;
     overflow: visible;
-    padding: 50px 0;
+    padding: 50px 25px;
     /* top: 0; */
 }
 main, footer {
@@ -87,6 +87,7 @@ footer, .cookies {
     letter-spacing: 3px;
     padding: 18px 15px;
     font-size: 12px;
+    line-height: 1.6;
 }
 nav > div {
     max-width: var(--content-width);
@@ -95,7 +96,6 @@ nav > div {
 }
 main {
     max-width: var(--content-width);
-    padding: 0px 50px;
     margin: 0 auto;
 }
 ul {

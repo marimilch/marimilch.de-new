@@ -31,6 +31,17 @@ nav h1 {
 .vid-grid {
     grid-template-columns: 100% 100% 100% 100%;
     overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+
+    video {
+        scroll-snap-align: center;
+    }
+}
+.scroll-vids {
+    text-transform: uppercase;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
 }
 :root {
     --rect-size: 125px;

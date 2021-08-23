@@ -8,23 +8,27 @@
         </h3>
 
         <template v-if="project.clips">
-            <div class="vid-grid videos" v-if="project.clips.length > 1">
-                <video 
-                    controls 
-                    loop 
-                    v-for="(video, index) in project.clips"
-                    v-bind:key="index"
-                >
-                    <source 
-                        :src="`/clips/${project.slug}/${video.url}.mp4`" 
-                        type="video/mp4"
+            <template v-if="project.clips.length > 1">
+                <div class="vid-grid videos">
+                    <video 
+                        controls 
+                        loop 
+                        v-for="(video, index) in project.clips"
+                        v-bind:key="index"
                     >
-                    <source 
-                        :src="`/clips/${project.slug}/${video.url}.webm`" 
-                        type="video/webm"
-                    >
-                </video>
-            </div>
+                        <source 
+                            :src="`/clips/${project.slug}/${video.url}.mp4`" 
+                            type="video/mp4"
+                        >
+                        <source 
+                            :src="`/clips/${project.slug}/${video.url}.webm`" 
+                            type="video/webm"
+                        >
+                    </video>
+                </div>
+                <p class="text-center scroll-vids mobile-only">← Scroll →</p>
+            </template>
+                
             <p class="text-center single-vid videos" v-else>
                 <video 
                     controls 
@@ -43,44 +47,6 @@
                 </video>
             </p>
         </template>
-
-        <!-- <?php if(!empty($json["clips"])) { ?>
-            <?php $clipdir = "/assets/clips/" ?>
-            <?php 
-                $clipsMp4 = get_filenames_in_dir(
-                    $clipdir . $json["clips"] . "/" ,
-                    "mp4"
-                );
-
-                $clipsWebm = get_filenames_in_dir(
-                    $clipdir . $json["clips"] . "/" ,
-                    "webm"
-                );
-
-                //semi dirty solution
-                $clips = array_zip($clipsMp4, $clipsWebm);
-            ?>
-
-            <?php $multi = count($clips) > 1; ?>
-            <?php echo $multi ? '<div class="vid-grid">' : '<p class="center">'; ?>
-                <?php  
-                    foreach(
-                        $clips as $clip
-                    ){ 
-                ?>
-                    <video controls loop autoplay>
-                        <source 
-                            src="<?php echo $clipdir . $json["clips"] . "/" . $clip[0]; ?>" 
-                            type="video/mp4"
-                        >
-                        <source 
-                            src="<?php echo $clipdir . $json["clips"] . "/" . $clip[1]; ?>" 
-                            type="video/webm"
-                        >
-                    </video>
-                <?php }?>
-            <?php echo $multi ? '</div>' : '</p>'; ?>
-        <?php } ?> -->
 
         <p>{{ project.description }}</p>
 

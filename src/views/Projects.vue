@@ -12,6 +12,7 @@
 <script>
 import Project from '@/components/Project'
 import projectsJson from '@/assets/json/projects.json'
+import anime from 'animejs/lib/anime.es.js';
 
 export default {
     data() {
@@ -23,10 +24,22 @@ export default {
     beforeUnmount() {
         this.observer.disconnect();
     },
+    animateScrolls() {
+        
+    },
     mounted(){
+        anime({
+            targets: '.scroll-vids',
+            letterSpacing: '3px',
+            loop: true,
+            durataion: 500,
+            direction: 'alternate',
+            easing: 'easeInOutSine'
+        });
+
         const options = {
             rootMargin: '0px',
-            threshold: 1
+            threshold: .6
         }
 
         const vids = document.querySelectorAll('video')

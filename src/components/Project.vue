@@ -28,7 +28,7 @@
                 </div>
                 <p class="text-center scroll-vids mobile-only">← Scroll →</p>
             </template>
-                
+
             <p class="text-center single-vid videos" v-else>
                 <video 
                     controls 
@@ -47,6 +47,10 @@
                 </video>
             </p>
         </template>
+
+        <p class="center" v-if="project.liveGame">
+            <Button :to="`/games-live/${project.liveGame}`" external="true">Play In Browser ▶</Button>
+        </p>
 
         <p>{{ project.description }}</p>
 
@@ -78,6 +82,8 @@
 </template>
 
 <script>
+import Button from '@/components/Button'
+
 export default {
     computed: {
         getMaybeFile(path){
@@ -94,6 +100,9 @@ export default {
             type: Object,
             required: true
         }
+    },
+    components: {
+        Button
     }
 }
 </script>

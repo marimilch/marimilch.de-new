@@ -1,9 +1,10 @@
 <template>
   <div class="home">
     <h2>Welcome!</h2>
-    <p class="center">Nice to see you here :)</p>
-    <p class="center">Have a sip of milk, lol</p>
+    <h3>Nice to see you here :)</h3>
     <p class="center"><MilkGlass></MilkGlass></p>
+    <p class="center">You can check out all my <br>projects on this website.</p>
+    <p class="center">Please have a sip of milk, lol.</p>
   </div>
 </template>
 

@@ -252,6 +252,7 @@ h1,h2,h3 {
     font-family: Pacifico, cursive;
     text-align: center;
     font-weight: normal;
+    text-transform: lowercase;
     color: var(--dark-pink);
 }
 h2 {
@@ -349,8 +350,9 @@ nav > div{
     color: var(--brown);
 }
 .cursive {
-    color: var(--pink);
+    color: var(--dark-pink);
     font-family: Pacifico, cursive;
+    text-transform: lowercase;
 }
 .flex {
     display: flex;

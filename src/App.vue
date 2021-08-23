@@ -2,7 +2,7 @@
     <div>
         <nav>
             <div>
-                <h1><router-link to="/">Marimilch</router-link></h1>
+                <h1><router-link to="/">marimilch</router-link></h1>
                 <div class="nav-buttons">
                     <Button 
                         v-for="(value, key) in navigationPoints" 
@@ -52,8 +52,8 @@ export default {
                     label: 'Projects',
                 },
                 thanks: {
-                    to: '/about',
-                    label: 'About'
+                    to: '/aboutme',
+                    label: 'About Me'
                 },
             },
             contentHeight: 0

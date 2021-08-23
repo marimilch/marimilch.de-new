@@ -1,6 +1,6 @@
 <template>
     <div class="milkglass-wrap">
-        <div ref="milkglass" class="milkglass">
+        <div ref="milkglass" class="milkglass" style="opacity:0">
 
         </div>
     </div>      
@@ -10,7 +10,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-const CAMERA_DISTANCE = .35
+const FOCAL_LENGTH = 30
+const CAMERA_DISTANCE = .03 * FOCAL_LENGTH
 
 // function getBackgroundColor() {
 //     const stylings = window.getComputedStyle(document.body)
@@ -35,7 +36,7 @@ export default {
         const gltfLoader = new GLTFLoader()
         
         this.scene = new THREE.Scene()
-        this.camera = new THREE.PerspectiveCamera( 60, rect.width / rect.height, 0.1, 1000 )
+        this.camera = new THREE.PerspectiveCamera( FOCAL_LENGTH, rect.width / rect.height, 0.1, 1000 )
 
         const backColor = this.getBackgroundColor()
 
@@ -100,19 +101,6 @@ export default {
             this.scene.add( light3 )
             this.scene.add( ambientLight )
 
-            // const planeGeometry = new THREE.BoxGeometry( 10, .005, 10 );
-            // const material = new THREE.MeshStandardMaterial({
-            //     color: 0xff0000
-            // });
-            // const planeMesh = new THREE.Mesh( planeGeometry, material );
-            // planeMesh.position.set(
-            //     0,
-            //     -.155,
-            //     0
-            // )
-
-            // this.scene.add( planeMesh );
-
             this.model = gltf.scene
             this.model.translateY(-.17)
             this.scene.add( this.model )
@@ -125,6 +113,7 @@ export default {
                 }
             })
 
+            wrap.style.opacity = '1'
             this.renderCascade()
         }.bind(this), undefined, function ( error ) {
             console.error( error )
@@ -147,10 +136,13 @@ export default {
             const canvasRect = this.$refs.milkglass.getBoundingClientRect()
             const canvasMid = canvasRect.top + canvasRect.height / 2
 
-            const midDelta = (canvasMid - viewMid) * .0001
+            const midDelta = canvasMid - viewMid
+            const effectDampener = .15
 
-            this.camera.rotation.x = -Math.atan(CAMERA_DISTANCE * midDelta * 10)
-            this.camera.position.y = midDelta
+            this.model.rotation.x = midDelta / canvasRect.height
+                * effectDampener * Math.PI
+            // this.camera.rotation.x = -Math.atan(CAMERA_DISTANCE * midDelta * 10)
+            // this.camera.position.y = midDelta
 
             this.renderer.render( this.scene, this.camera )
             window.requestAnimationFrame(this.renderCascade.bind(this))

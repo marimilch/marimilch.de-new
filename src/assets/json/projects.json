@@ -3,7 +3,7 @@
         "name": "Star Fox Stage 1 Clone",
         "description": "This is a clone of the first stage of Star Fox (for Super Nintendo) I programmed in Unity in about a month to learn Unity for my bachelor thesis. I worked on it three times a week for about six hours and made three all-nighters a couple of days before I had to show it to my tutor. I programmed all scripts in C#. The models were made by me in Blender.",
         "slug": "starfox-clone",
-        "live-game": "starfox-webgl",
+        "liveGame": "starfox-webgl",
         "links": [
             {
                 "label": "GitHub",
@@ -127,7 +127,7 @@
         "name": "Petra & The Wolves - Microgame",
         "description": "This is a little microgame I programmed as an exercise for an Unity Tutorial. I downloaded the assets from the Unity Store. It took me a week to finish working six hours each day.",
         "slug": "petra",
-        "live-game": "petra",
+        "liveGame": "petra",
         "links": [
             {
                 "label": "GitHub",

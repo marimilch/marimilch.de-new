@@ -70,7 +70,7 @@ export default {
             return el.children
         },
         beforeEnter(el){
-            const targets = this.getMainImmediates(el)
+            const targets = this.toAnimate(el)
 
             const videos = el.querySelectorAll('video')
 
@@ -89,16 +89,53 @@ export default {
         updateHeight(el){
             this.contentHeight = this.getCurrentHeight(el)
         },
+        toAnimate(el){
+            const children = el.children
+            const targets = []
+
+            for (const child of children){
+                console.log(child, child.tagName)
+                if (child.tagName == 'ARTICLE' || child.tagName == 'UL') {
+                    const articleChildren = child.children
+                    for (const articleChild of articleChildren){
+                        if (articleChild.classList.contains('videos')){
+                            const videos = articleChild.querySelectorAll('video')
+                            for (const child of videos){
+                                targets.push(child)
+                            }
+                            continue
+                        }
+                        targets.push(articleChild)
+                    }
+                    continue
+                }
+                targets.push(child)
+            }
+
+            return targets
+        },
         enter(el, done){
             this.updateHeight(el)
 
             anime({
-                targets: this.getMainImmediates(el),
+                targets: this.toAnimate(el),
                 opacity: {
                     value: 1,
                     duration: 200,
                     easing: 'linear'
                 },
+                scale: [
+                    {
+                        value: 1.1,
+                        duration: 300,
+                        easing: 'easeInOutQuad'
+                    },
+                    {
+                        value: 1,
+                        duration: 1800,
+                        easing: 'easeOutElastic(1, .33)'
+                    }
+                ],
                 delay: anime.stagger(100),
                 complete: done
             })
@@ -155,8 +192,8 @@ export default {
 </script>
 
 <style lang="scss">
-    @import 'assets/scss/style.css';
-    @import 'assets/scss/style-tablet.css';
-    @import 'assets/scss/style-phone.css';
+    @import 'assets/scss/style.scss';
+    @import 'assets/scss/style-tablet.scss';
+    @import 'assets/scss/style-phone.scss';
     // @import 'assets/scss/style-dark.css';
 </style>

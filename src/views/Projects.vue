@@ -57,7 +57,11 @@ export default {
         observeCallback(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting){
-                    entry.target.play()
+                    try {
+                        entry.target.play()
+                    } catch (e){
+                        // pass
+                    }
                     return
                 }
 

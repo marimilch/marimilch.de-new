@@ -12,7 +12,8 @@
                 <div class="vid-grid videos">
                     <video 
                         controls 
-                        loop 
+                        loop
+                        muted
                         v-for="(video, index) in project.clips"
                         v-bind:key="index"
                     >
@@ -32,7 +33,8 @@
             <p class="text-center single-vid videos" v-else>
                 <video 
                     controls 
-                    loop 
+                    loop
+                    muted
                     v-for="(video, index) in project.clips"
                     v-bind:key="index"
                 >
@@ -49,7 +51,7 @@
         </template>
 
         <p class="center" v-if="project.liveGame">
-            <Button :to="`/games-live/${project.liveGame}`" external="true">Play In Browser ▶</Button>
+            <Button :to="`/games-live/${project.liveGame}`" :external="true">Play In Browser&nbsp;&nbsp;▶</Button>
         </p>
 
         <p>{{ project.description }}</p>

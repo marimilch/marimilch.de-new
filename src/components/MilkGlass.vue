@@ -49,7 +49,7 @@ export default {
         const materials = [
             new THREE.MeshPhysicalMaterial({ 
                 color: 0xdadadf,
-                specular: 0xffffff,
+                // specular: 0xffffff,
                 transparent: true,
                 opacity: .5,
                 roughness: 0,

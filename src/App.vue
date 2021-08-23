@@ -94,7 +94,6 @@ export default {
             const targets = []
 
             for (const child of children){
-                console.log(child, child.tagName)
                 if (child.tagName == 'ARTICLE' || child.tagName == 'UL') {
                     const articleChildren = child.children
                     for (const articleChild of articleChildren){

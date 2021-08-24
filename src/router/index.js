@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home'
 
 const routes = [
@@ -16,11 +16,17 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: () => import('@/views/Projects.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'home',
+    component: () => import('@/views/Error404.vue')
+    // how can I add exact match config here?
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 

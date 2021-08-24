@@ -14,6 +14,8 @@ import Project from '@/components/Project'
 import projectsJson from '@/assets/json/projects.json'
 import anime from 'animejs/lib/anime.es.js';
 
+const MOBILE_VW = 600
+
 export default {
     data() {
         return {
@@ -22,10 +24,7 @@ export default {
         }
     },
     beforeUnmount() {
-        this.observer.disconnect();
-    },
-    animateScrolls() {
-        
+        this.observer.disconnect()
     },
     mounted(){
         anime({
@@ -55,6 +54,8 @@ export default {
     },
     methods: {
         observeCallback(entries) {
+            if (this.getCurrentViewportWidth() <= MOBILE_VW) return
+
             entries.forEach(entry => {
                 if (entry.isIntersecting){
                     try {
@@ -67,7 +68,15 @@ export default {
 
                 entry.target.pause()
             })
-        }
+        },
+        getCurrentViewportWidth(){
+            const vw = Math.max(
+                document.documentElement.clientWidth || 0, 
+                window.innerWidth || 0
+            )
+
+            return vw
+        },
     },
     components: {
         Project

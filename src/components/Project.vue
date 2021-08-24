@@ -1,7 +1,7 @@
 <template>
     <article :id="project.slug">
         <h3>
-            <!-- <a class="hook-link" :href="'#' + project.slug">#</a> -->
+            <a class="hook-link" :href="'#' + project.slug">#</a>
             <span>
                 {{ project.name }}
             </span>
@@ -16,6 +16,7 @@
                         muted
                         v-for="(video, index) in project.clips"
                         v-bind:key="index"
+                        preload="metadata"
                     >
                         <source 
                             :src="`/clips/${project.slug}/${video.url}.mp4`" 
@@ -37,6 +38,7 @@
                     muted
                     v-for="(video, index) in project.clips"
                     v-bind:key="index"
+                    preload="metadata"
                 >
                     <source 
                         :src="`/clips/${project.slug}/${video.url}.mp4`" 
@@ -51,7 +53,7 @@
         </template>
 
         <p class="center" v-if="project.liveGame">
-            <Button :to="`/games-live/${project.liveGame}`" :external="true">Play In Browser&nbsp;&nbsp;▶</Button>
+            <Button :to="`/games-live/${project.liveGame}`" :external="true">Play In Browser</Button>
         </p>
 
         <p>{{ project.description }}</p>
@@ -87,16 +89,6 @@
 import Button from '@/components/Button'
 
 export default {
-    computed: {
-        getMaybeFile(path){
-            try {
-                const file = require(path)
-                return file
-            } catch (e) {
-                return null
-            }
-        }
-    },
     props: {
         project: {
             type: Object,

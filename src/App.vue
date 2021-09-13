@@ -2,7 +2,7 @@
     <div>
         <nav>
             <div>
-                <h1><router-link to="/">marimilch</router-link></h1>
+                <h1>marimilch</h1>
                 <div class="nav-buttons">
                     <Button 
                         v-for="(value, key) in navigationPoints" 
@@ -18,10 +18,9 @@
         <main ref="main">
             <router-view v-slot="{ Component, route }">
                 <transition 
-                    name="fade" 
+                    @enter="enter" 
                     @leave="leave" 
-                    @beforeEnter="beforeEnter"
-                    @enter="enter"
+                    :name="route.meta.transition"
                 >
                     <component :is="Component" :key="route.path"/>
                 </transition>
@@ -41,12 +40,16 @@
 
 <script>
 import Button from './components/Button'
-import anime from 'animejs/lib/anime.es.js';
+import * as transitions from './assets/js/transitions'
 
 export default {
     data() {
         return {
             navigationPoints: {
+                home: {
+                    to: '/',
+                    label: 'Home',
+                },
                 projects: {
                     to: '/projects',
                     label: 'Projects',
@@ -56,8 +59,13 @@ export default {
                     label: 'About Me'
                 },
             },
-            contentHeight: 0
+            contentHeight: 0,
         }
+    },
+    computed: {
+        routeTransition(){
+            return this.$route.meta.transition || 'Fade'
+        },
     },
     methods: {
         getCurrentHeight(el){
@@ -66,117 +74,18 @@ export default {
         getCurrentContentElement(){
             return document.querySelector('main div')
         },
-        getMainImmediates(el){
-            return el.children
-        },
-        beforeEnter(el){
-            const targets = this.toAnimate(el)
-
-            const videos = el.querySelectorAll('video')
-
-            for (const t of targets){
-                t.style.opacity = '0'
-            }
-
-            for (const v of videos){
-                v.style.opacity = '0'
-            }
+        updateHeight(el) {
+            this.contentHeight = this.getCurrentHeight(el)
         },
         contentLoadedAsync(){
             const el = this.getCurrentContentElement()
             this.enter(el)
         },
-        updateHeight(el){
-            this.contentHeight = this.getCurrentHeight(el)
-        },
-        toAnimate(el){
-            const children = el.children
-            const targets = []
-
-            for (const child of children){
-                if (child.tagName == 'ARTICLE' || child.tagName == 'UL') {
-                    const articleChildren = child.children
-                    for (const articleChild of articleChildren){
-                        if (articleChild.classList.contains('videos')){
-                            const videos = articleChild.querySelectorAll('video')
-                            for (const child of videos){
-                                targets.push(child)
-                            }
-                            continue
-                        }
-                        targets.push(articleChild)
-                    }
-                    continue
-                }
-                targets.push(child)
-            }
-
-            return targets
-        },
         enter(el, done){
-            this.updateHeight(el)
-
-            anime({
-                targets: this.toAnimate(el),
-                opacity: {
-                    value: 1,
-                    duration: 200,
-                    easing: 'linear'
-                },
-                scale: [
-                    {
-                        value: 1.1,
-                        duration: 300,
-                        easing: 'easeInOutQuad'
-                    },
-                    {
-                        value: 1,
-                        duration: 1800,
-                        easing: 'easeOutElastic(1, .33)'
-                    }
-                ],
-                delay: anime.stagger(100),
-                complete: done
-            })
-
-            anime({
-                targets: el.querySelectorAll('.button'),
-                translateY: [
-                    {
-                        value: '-50px',
-                        duration: 300,
-                        easing: 'easeInOutQuad'
-                    },
-                    {
-                        value: 0,
-                        duration: 1800,
-                        easing: 'easeOutElastic(1, .33)'
-                    },
-                ],
-                delay: anime.stagger(100),
-            })
-
-            anime({
-                targets: el.querySelectorAll('video'),
-                opacity: {
-                    value: 1,
-                    duration: 200,
-                    easing: 'linear'
-                },
-                delay: anime.stagger(100, {start: 500}),
-            })
+            return transitions[this.routeTransition].enter.bind(this)(el, done)
         },
         leave(el, done){
-            anime({
-                targets: this.getMainImmediates(el),
-                opacity: {
-                    value: 0,
-                    duration: 200,
-                    easing: 'linear'
-                },
-                delay: anime.stagger(100),
-                complete: done,
-            })
+            return transitions[this.routeTransition].leave.bind(this)(el, done)
         }
     },
     components: {
@@ -195,4 +104,8 @@ export default {
     @import 'assets/scss/style-tablet.scss';
     @import 'assets/scss/style-phone.scss';
     // @import 'assets/scss/style-dark.css';
+
+    #app {
+        overflow: hidden;
+    }
 </style>

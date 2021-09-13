@@ -67,15 +67,17 @@ body {
 }
 main {
     background: var(--canvas);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     transition: height .5s ease;
 }
 main > div {
-    position: absolute;
+    perspective: 2000px;
+    min-height: var(--content-min-height);
+    transform-origin: top;
     overflow: visible;
-    padding: 50px 25px;
-    /* top: 0; */
+    top: 0;
+    padding: var(--content-padding);
 }
 main, footer {
     display:flex;
@@ -85,13 +87,13 @@ main, footer {
 footer, .cookies {
     text-transform: uppercase;
     letter-spacing: 3px;
-    padding: 18px 15px;
+    padding: var(--content-padding);
     font-size: 12px;
     line-height: 1.6;
 }
 nav > div {
     max-width: var(--content-width);
-    padding: 0px 25px;
+    padding: var(--content-padding);
     width: 100%;
 }
 main {
@@ -118,10 +120,10 @@ ul li {
     content: " ";
     text-decoration: none;
     border: none;
-    padding: 8px 10px;
+    padding: 15px 35px;
     margin: 10px 15px;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: 9999px;
+    font-size: 20px;
     text-transform: uppercase;
     transition: 
         background-color var(--timing) ease,
@@ -133,14 +135,16 @@ ul li {
     color: var(--canvas);
     background: var(--light-brown);
     box-shadow: 
-        0 var(--button-height) 0 0 var(--brown), 
+        0 var(--button-height) 0 0 var(--brown),
+        0 calc( var(--button-height) * .5 ) 0 0 var(--brown),
         0 var(--button-height) var(--inset-shadow) var(--pink)
     ;
 }
-.button:hover {
+.button:hover, .router-link-exact-active.button {
     background: var(--dark-pink);
     box-shadow: 
         0 var(--button-height) 0 0 var(--light-brown), 
+        0 calc( var(--button-height) * .5 ) 0 0 var(--light-brown),
         0 var(--button-height) var(--inset-shadow) var(--pink),
         0 2px 15px var(--dark-pink)
     ;
@@ -148,7 +152,7 @@ ul li {
 .button:active, .button.pressed {
     background: var(--dark-pink);
     box-shadow: 
-        0 0px 0 0 var(--brown), 
+        0 0px 0 0 var(--brown),
         0 2px 15px var(--dark-pink)
     ;
     top: 0;
@@ -194,28 +198,28 @@ button.highlight:active, button.highlight.pressed {
         0 2px 15px var(--blue)
     ;
 }*/
-nav .button {
-    color: var(--blue);
-    background: var(--canvas);
-    box-shadow: 
-        0 var(--button-height) 0 0 var(--blue), 
-        0 var(--button-height) var(--inset-shadow) var(--dark-pink)
-}
-nav .button:hover {
-    background: var(--canvas);
-    box-shadow: 
-        0 var(--button-height) 0 var(--green),
-        0 var(--button-height) var(--inset-shadow) var(--dark-pink),
-        0 2px 15px var(--canvas)
-    ;
-}
-nav .button:active, nav .button.pressed {
-    background: var(--canvas);
-    box-shadow: 
-        0 0 0 var(--dark-pink), 
-        0 2px 15px var(--canvas)
-    ;
-}
+// nav .button {
+//     color: var(--blue);
+//     background: var(--canvas);
+//     box-shadow: 
+//         0 var(--button-height) 0 0 var(--blue), 
+//         0 var(--button-height) var(--inset-shadow) var(--dark-pink)
+// }
+// nav .button:hover {
+//     background: var(--canvas);
+//     box-shadow: 
+//         0 var(--button-height) 0 var(--green),
+//         0 var(--button-height) var(--inset-shadow) var(--dark-pink),
+//         0 2px 15px var(--canvas)
+//     ;
+// }
+// nav .button:active, nav .button.pressed {
+//     background: var(--canvas);
+//     box-shadow: 
+//         0 0 0 var(--dark-pink), 
+//         0 2px 15px var(--canvas)
+//     ;
+// }
 .video {
     display: block;
     height: 0;
@@ -258,6 +262,8 @@ h1,h2,h3 {
     font-weight: normal;
     text-transform: lowercase;
     color: var(--dark-pink);
+    z-index: 10;
+    position: relative;
 }
 h2 {
     font-size: 50px;
@@ -313,10 +319,10 @@ ul.center li {
 }
 nav, footer {
     width:100%;
-    background: var(--pink);
+    // background: var(--pink);
     /*position:relative;*/
-    box-shadow: var(--light-brown) 0 0 20px 0;
-    z-index: 2;
+    // box-shadow: var(--light-brown) 0 0 20px 0;
+    z-index: 10;
     position: relative;
 }
 .heart {
@@ -465,6 +471,8 @@ article video {
     --inset-shadow: var(--inset-shadow-blur) 2px;
     --inset-shadow-text: 6px var(--brown);
 
-    --button-height: 6px;
-    --content-width: 900px;
+    --button-height: 10px;
+    --content-width: 100%;
+    --content-padding: 25px 100px;
+    --content-min-height: calc( 100vh - 360px);
 }

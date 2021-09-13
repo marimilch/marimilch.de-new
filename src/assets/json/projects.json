@@ -1,6 +1,7 @@
 [
     {
         "name": "Star Fox Stage 1 Clone",
+        "teaser": "A clone of the first stage of Star Fox I programmed to learn Unity",
         "description": "This is a clone of the first stage of Star Fox (for Super Nintendo) I programmed in Unity in about a month to learn Unity for my bachelor thesis. I worked on it three times a week for about six hours and made three all-nighters a couple of days before I had to show it to my tutor. I programmed all scripts in C#. The models were made by me in Blender.",
         "slug": "starfox-clone",
         "liveGame": "starfox-webgl",
@@ -41,6 +42,7 @@
     },
     {
         "name": "ASCII 3D-Cube",
+        "teaser": "A cube demo in C I programmed to learn computer graphics",
         "description": "This is a little cube demo I programmed purely in C to learn the basics of Computer Graphics in my free time. It basically works with \"Voxels\" (although in this case naming them 3D-pixels would be better), that are \"flattened\" to a plane with the so called camera matrix I learned from in a lecture. It took me a week to finish (and one minor, random look a year later for a bug I was unable to find back then 😁).",
         "slug": "ascii-cube",
         "links": [
@@ -57,6 +59,7 @@
     },
     {
         "name": "ASCII Water",
+        "teaser": "A shallow water simulation in C inspired by ZSNES's menu screen",
         "description": "This is a simulation of water on a surface based on the wave equation. Implemented in C.",
         "slug": "ascii-water",
         "links": [
@@ -76,6 +79,7 @@
     },
     {
         "name": "Cable Simulation",
+        "teaser": "My bachelor thesis which was a cable simulation in Unity",
         "description": "This is a simulation for a cable I implemented for my Bachelor Thesis. It can be run by two algorithms. The first one bases on Jakobsen's Advanced Character Physics Model and the second one on (Extended) Position Based Dynamics.",
         "slug": "cable-simulation",
         "links": [
@@ -95,7 +99,8 @@
         ]
     },
     {
-        "name": "Klara - RPG Maker Game",
+        "name": "Klara",
+        "teaser": "An RPG game about Marie whose sister is kidnapped",
         "description": "This is a game I've been working on during the last two years (with long pauses and some intense working periods, depending on how much time I had). The game is largely story based. I built it in RPG Maker 2003. It is not finished yet, but there are about one to two hours worth of gameplay.",
         "slug": "klara",
         "files": [
@@ -124,7 +129,8 @@
         ]
     },
     {
-        "name": "Petra & The Wolves - Microgame",
+        "name": "Petra & The Wolves",
+        "teaser": "A very small project I finished along with a Unity tutorial",
         "description": "This is a little microgame I programmed as an exercise for an Unity Tutorial. I downloaded the assets from the Unity Store. It took me a week to finish working six hours each day.",
         "slug": "petra",
         "liveGame": "petra",
@@ -152,6 +158,7 @@
     },
     {
         "name": "Text Performer",
+        "teaser": "A text processor aimed at creative SEO writers",
         "description": "Text Performer is a Word Processor made for SEO writers. It's a project I built from the ground up for my old job at pagebeaker. The idea is by Ralf Schulte. It supports spell checking, export & import to proprietary formats, SEO-analysation tools, filler removal, detection of word repetitions and more. Its release is planned soon.",
         "slug": "text-performer",
         "links": [

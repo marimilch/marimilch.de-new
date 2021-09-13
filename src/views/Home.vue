@@ -1,12 +1,29 @@
 <template>
   <div class="home">
-    <h2>Welcome!</h2>
-    <h3>Nice to see you here :)</h3>
-    <p class="center"><MilkGlass></MilkGlass></p>
-    <p class="center">You can check out all my <br>projects on this website.</p>
-    <p class="center">Please have a sip of milk, lol.</p>
+    <h2 class="huge">Welcome!</h2>
+    <h3 class="">Nice to see you here :)</h3>
+      
+    <MilkGlass class="absolute"></MilkGlass>
   </div>
 </template>
+
+<style scoped>
+  .home {
+    width: 100%;
+    height: var(--content-min-height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+  .absolute {
+    position: absolute;
+  }
+  .huge {
+    font-size: 160px;
+  }
+</style>
 
 <script>
 // @ is an alias to /src

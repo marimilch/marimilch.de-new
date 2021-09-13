@@ -15,13 +15,19 @@ const routes = [
   {
     path: '/projects',
     name: 'Projects',
-    component: () => import('@/views/Projects.vue')
+    component: () => import('@/views/Projects.vue'),
+    meta: { transition: 'Fade' },
+  },
+  {
+    path: '/project/:slug',
+    name: 'Project',
+    component: () => import('@/views/ProjectDetails.vue'),
+    meta: { transition: 'Fade' },
   },
   {
     path: '/:pathMatch(.*)*',
-    name: 'home',
+    name: '404',
     component: () => import('@/views/Error404.vue')
-    // how can I add exact match config here?
   }
 ]
 

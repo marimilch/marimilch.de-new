@@ -1,17 +1,24 @@
 <template>
-    <div class="milkglass-wrap">
-        <div ref="milkglass" class="milkglass" style="opacity:0">
+    <div class="milkglass-wrap wh-full">
+        <div ref="milkglass" class="milkglass wh-full" style="opacity:0">
 
         </div>
     </div>      
 </template>
+
+<style scoped>
+    .wh-full {
+        width: 100%;
+        height: var(--content-min-height);
+    }
+</style>
 
 <script>
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const FOCAL_LENGTH = 30
-const CAMERA_DISTANCE = .03 * FOCAL_LENGTH
+const CAMERA_DISTANCE = .025 * FOCAL_LENGTH
 
 // function getBackgroundColor() {
 //     const stylings = window.getComputedStyle(document.body)
@@ -146,7 +153,6 @@ export default {
 
             this.renderer.render( this.scene, this.camera )
             window.requestAnimationFrame(this.renderCascade.bind(this))
-
         },
         getBackgroundColor(){
             const stylings = window.getComputedStyle(document.body)

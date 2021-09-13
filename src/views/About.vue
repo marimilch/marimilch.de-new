@@ -12,20 +12,25 @@
             <!-- <button href="//dank-games.com">Dank-Games</button> -->
         </p>
         <h3>I would like to thank</h3>
-        <ul class="no-indicators center">
-            <li>My mom for always booking my shows. You're my favorite fan!</li>
-            <li>My dad for liking my music!</li>
-            <li>Arkady for inspiring me to pursue my artistic dream! Thanks brother &lt;3 </li>
-            <li>Felix for beating one of my games!</li>
-            <li>Renyo for complimenting my games!</li>
-            <li>Marko for trying my games!</li>
-            <li>Batiste for giving me honest feedback and having the patience to play through everything I have made!</li>
-            <li>Cedric for listening to my songs and covering them!</li>
-            <li>Sev for listening to my songs and telling me to keep it up!</li>
-            <li>Yamina, because of you I started all of this in the first place!</li>
-        </ul>
+        <span>My mother, </span>
+        <span>my father, </span>
+        <span>Arkady, </span>
+        <span>Felix, </span>
+        <span>Renyo, </span>
+        <span>Marko, </span>
+        <span>Batiste, </span>
+        <span>Cedric, </span>
+        <span>Sev, </span>
+        <span>Yamina</span>
     </div>
 </template>
+
+<style scoped>
+    span {
+        display: inline-block;
+        margin-right: 7px;
+    }
+</style>
 
 <script>
 import Button from '@/components/Button'

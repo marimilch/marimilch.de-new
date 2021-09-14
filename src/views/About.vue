@@ -5,7 +5,7 @@
         <p><span class="cursive">marimilch</span> is a reference to the german version of the book <em>A Shadow Like A Leopard</em> by Myron Levoy.</p>
 
         <p class="project-links mb-5">
-            <Button :alt="true" to="//instagram.com/marimilch93" :external="true">Instagram</Button>
+            <!-- <Button :alt="true" to="//instagram.com/marimilch93" :external="true">Instagram</Button> -->
             <!-- <button href="//twitter.com/marimilch93">Twitter</button> -->
             <Button :alt="true" to="//github.com/marimilch" :external="true">GitHub</Button>
             <!-- <Button to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button> -->

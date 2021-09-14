@@ -52,7 +52,7 @@ function handleMilkGlass(_this){
     milkglass.moveTo(
       -.75,
       milkglass.startPositionModel.y,
-      milkglass.startPositionModel.z
+      .5
     )
     return
   }

@@ -2,7 +2,10 @@
     <div>
         <nav>
             <div>
-                <h1>marimilch</h1>
+                <div>
+                    <h1>marimilch</h1>
+                    <h2 class="sub">too poor for cereal</h2>
+                </div>
                 <div class="nav-buttons">
                     <Button 
                         v-for="(value, key) in navigationPoints" 
@@ -112,14 +115,21 @@ export default {
         overflow: hidden;
     }
 
-    .sub {
-        font-size: 8px;
+    h1 {
+        margin: 0;
+    }
 
+    .sub {
+        font-size: 11px;
+        font-family: Manrope, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-align: center;
     }
 
     .milkglass-background {
         z-index: -1;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100vw;

@@ -1,6 +1,6 @@
 <template>
-    <div :id="project.slug" class="project-wrap w-full" ref="projectWrapElem" @mouseenter="projectMouseEnter" @mouseleave="projectMouseLeave">
-        <router-link :to="{ path: `/project/${project.slug}`}" append class="no-underline inline-block project-link">
+    <div :id="project.slug" class="project-wrap w-full" ref="projectWrapElem">
+        <router-link :to="{ path: `/project/${project.slug}`}" append class="no-underline inline-block project-link" @mouseenter="projectMouseEnter" @mouseleave="projectMouseLeave">
             <article class="project w-full" ref="projectElem">
                 <div class="project-thumb">
                     <div class="overlay">

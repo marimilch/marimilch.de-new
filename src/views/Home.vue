@@ -2,8 +2,6 @@
   <div class="home">
     <h2 class="huge">Welcome!</h2>
     <h3 class="">Nice to see you here :)</h3>
-      
-    <MilkGlass class="absolute"></MilkGlass>
   </div>
 </template>
 
@@ -17,9 +15,6 @@
     align-items: center;
     align-content: center;
   }
-  .absolute {
-    position: absolute;
-  }
   .huge {
     font-size: 160px;
   }
@@ -27,12 +22,8 @@
 
 <script>
 // @ is an alias to /src
-import MilkGlass from '@/components/MilkGlass'
 
 export default {
   name: 'Home',
-  components: {
-    MilkGlass
-  }
 }
 </script>

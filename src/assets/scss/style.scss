@@ -66,7 +66,6 @@ body {
     color: var(--brown);
 }
 main {
-    background: var(--canvas);
     overflow: visible;
     position: relative;
     transition: height .5s ease;
@@ -79,17 +78,18 @@ main > div {
     top: 0;
     padding: var(--content-padding);
 }
-main, footer {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-}
 footer, .cookies {
     text-transform: uppercase;
     letter-spacing: 3px;
     padding: var(--content-padding);
     font-size: 12px;
     line-height: 1.6;
+}
+footer {
+    height: var(--footer-height);
+}
+nav {
+    height: var(--nav-height);
 }
 nav > div {
     max-width: var(--content-width);
@@ -198,28 +198,28 @@ button.highlight:active, button.highlight.pressed {
         0 2px 15px var(--blue)
     ;
 }*/
-// nav .button {
-//     color: var(--blue);
-//     background: var(--canvas);
-//     box-shadow: 
-//         0 var(--button-height) 0 0 var(--blue), 
-//         0 var(--button-height) var(--inset-shadow) var(--dark-pink)
-// }
-// nav .button:hover {
-//     background: var(--canvas);
-//     box-shadow: 
-//         0 var(--button-height) 0 var(--green),
-//         0 var(--button-height) var(--inset-shadow) var(--dark-pink),
-//         0 2px 15px var(--canvas)
-//     ;
-// }
-// nav .button:active, nav .button.pressed {
-//     background: var(--canvas);
-//     box-shadow: 
-//         0 0 0 var(--dark-pink), 
-//         0 2px 15px var(--canvas)
-//     ;
-// }
+.button.alt {
+    color: var(--blue);
+    background: var(--canvas);
+    box-shadow: 
+        0 var(--button-height) 0 0 var(--blue), 
+        0 var(--button-height) var(--inset-shadow) var(--dark-pink)
+}
+.button.alt:hover {
+    background: var(--canvas);
+    box-shadow: 
+        0 var(--button-height) 0 var(--green),
+        0 var(--button-height) var(--inset-shadow) var(--dark-pink),
+        0 2px 15px var(--canvas)
+    ;
+}
+.button.alt:active, nav .button.pressed {
+    background: var(--canvas);
+    box-shadow: 
+        0 0 0 var(--dark-pink), 
+        0 2px 15px var(--canvas)
+    ;
+}
 .video {
     display: block;
     height: 0;
@@ -258,16 +258,19 @@ a {
 }
 h1,h2,h3 {
     font-family: Pacifico, cursive;
-    text-align: center;
+    // text-align: center;
     font-weight: normal;
     text-transform: lowercase;
     color: var(--dark-pink);
     z-index: 10;
     position: relative;
 }
+p {
+    line-height: 1.6;
+}
 h2 {
     font-size: 50px;
-    margin: 5px 0 55px;
+    margin: 0;
 }
 nav h1 a {
     text-decoration:none;
@@ -474,5 +477,9 @@ article video {
     --button-height: 10px;
     --content-width: 100%;
     --content-padding: 25px 100px;
-    --content-min-height: calc( 100vh - 360px);
+
+    --footer-height: 93px;
+    --nav-height: 160px;
+
+    --content-min-height: calc( 100vh - var(--footer-height) - var(--nav-height) );
 }

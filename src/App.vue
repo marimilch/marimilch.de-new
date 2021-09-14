@@ -27,10 +27,11 @@
             </router-view>
         </main>
 
+        <div class="milkglass-background">
+            <MilkGlass ref="milkglass"></MilkGlass>
+        </div>
+
         <footer>
-            <p class="heart air-bottom">
-                ❤️
-            </p>
             <p class="center">
                 © marimilch. all rights reserved or something. i don't know, i'm just a footer, lol.
             </p>
@@ -40,6 +41,7 @@
 
 <script>
 import Button from './components/Button'
+import MilkGlass from '@/components/MilkGlass'
 import * as transitions from './assets/js/transitions'
 
 export default {
@@ -89,7 +91,8 @@ export default {
         }
     },
     components: {
-        Button
+        Button,
+        MilkGlass
     },
     watch: {
         contentHeight(val){
@@ -107,5 +110,19 @@ export default {
 
     #app {
         overflow: hidden;
+    }
+
+    .sub {
+        font-size: 8px;
+
+    }
+
+    .milkglass-background {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
     }
 </style>

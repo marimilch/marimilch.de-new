@@ -202,7 +202,6 @@ $projectWidth: 450px;
     .project-description {
         margin: 1rem 2rem;
         transform-origin: left;
-        line-height: 1.5;
 
         h3 {
             text-align: left;

@@ -26,14 +26,63 @@ function overlappingEnterAfter() {
   main.style.height = ''
 }
 
+function colorChangeNav(view){
+  const maybeBG = view.querySelector('.background-zoom');
+
+  if ( maybeBG && isBGElem(maybeBG) ){
+    const h1 = document.querySelector('h1')
+
+    h1.classList.add('color-canvas')
+
+    return
+  }
+
+  const h1 = document.querySelector('h1')
+  h1.classList.remove('color-canvas')
+
+}
+
+function handleMilkGlass(_this){
+  const path = _this.$route.path
+  const milkglass = _this.$refs.milkglass
+
+  if (!milkglass.startPositionModel) return
+
+  if (path.includes('projects')) {
+    milkglass.moveTo(
+      -.75,
+      milkglass.startPositionModel.y,
+      milkglass.startPositionModel.z
+    )
+    return
+  }
+
+  if ( path.includes('about') ){
+    milkglass.moveTo(
+      .1, 
+      milkglass.startPositionModel.y - .08, 
+      .5
+    )
+    return
+  }
+
+  milkglass.moveTo(
+    milkglass.startPositionModel.x,
+    milkglass.startPositionModel.y,
+    milkglass.startPositionModel.z
+  )
+}
+
 function fadeEnter(el, done) {
   overlappingEnter(el)
+  colorChangeNav(el)
+  handleMilkGlass(this)
 
   anime({
     targets: el.children,
     opacity: [
       {
-        value: 0,
+        value: isBGZoom(1, 0),
         duration: 0,
         easing: 'linear'
       },
@@ -45,12 +94,12 @@ function fadeEnter(el, done) {
     ],
     scale: [
       {
-        value: .5,
+        value: isBGZoom(0, .5),
         duration: 0,
         easing: 'linear'
       },
       {
-        value: 1,
+        value: isBGZoom(2, 1),
         duration: 1500,
         easing: 'easeOutElastic(1, .6)'
       },
@@ -63,8 +112,17 @@ function fadeEnter(el, done) {
   })
 }
 
+function isBGElem(el){
+  return el.classList.contains('background-zoom')
+}
+
+function isBGZoom(yes, no){
+  return (el) => { return isBGElem(el) ? yes : no }
+}
+
 function fadeLeave(el, done) {
   overlappingLeave(el)
+  colorChangeNav(el)
 
   anime({
     targets: el.children,
@@ -75,19 +133,19 @@ function fadeLeave(el, done) {
         easing: 'linear'
       },
       {
-        value: 0,
+        value: isBGZoom(1, 0),
         duration: 500,
         easing: 'easeOutQuad'
       },
     ],
     scale: [
       {
-        value: 1,
+        value: isBGZoom(2, 1),
         duration: 0,
         easing: 'linear'
       },
       {
-        value: .5,
+        value: isBGZoom(0, .5),
         duration: 1000,
         easing: 'easeOutQuad'
       },

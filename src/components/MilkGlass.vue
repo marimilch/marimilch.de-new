@@ -9,7 +9,7 @@
 <style scoped>
     .wh-full {
         width: 100%;
-        height: var(--content-min-height);
+        height: 100%;
     }
 </style>
 
@@ -18,7 +18,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const FOCAL_LENGTH = 30
-const CAMERA_DISTANCE = .025 * FOCAL_LENGTH
+const CAMERA_DISTANCE = .03 * FOCAL_LENGTH
 
 // function getBackgroundColor() {
 //     const stylings = window.getComputedStyle(document.body)
@@ -28,13 +28,15 @@ const CAMERA_DISTANCE = .025 * FOCAL_LENGTH
 // }
 
 export default {
-    // data(){
-    //     return {
-    //         renderer: null,
-    //         scene: null,
-    //         camera: null
-    //     }
-    // },
+    data(){
+        return {
+            startPositionModel: null,
+            lerpStart: null,
+            lerpEnd: null,
+            t: 1,
+            moveSpeed: 0.003,
+        }
+    },
     mounted(){
         // Not using data on purpose (workaround for three js in vue)
         // Scene
@@ -121,6 +123,11 @@ export default {
             })
 
             wrap.style.opacity = '1'
+
+            this.lerpStart = this.model.position.clone()
+            this.lerpEnd = this.model.position.clone()
+            this.startPositionModel = this.model.position.clone()
+
             this.renderCascade()
         }.bind(this), undefined, function ( error ) {
             console.error( error )
@@ -135,22 +142,40 @@ export default {
     },
     methods: {
         renderCascade() {
-            if (!this.$refs.milkglass) return
+            const wrap = this.$refs.milkglass
+            if (!wrap) return
 
+            // Move to target position
+            if (this.t < 1){
+                this.t += this.moveSpeed
+                this.lerpStart.lerp(this.lerpEnd, this.t)
+            }
+
+            // Handle resize
+            const rect = wrap.getBoundingClientRect()
+            this.camera.aspect = rect.width / rect.height;
+            this.camera.updateProjectionMatrix();
+
+            this.renderer.setSize( rect.width, rect.height );
+
+            // Rotate around itself
 			this.model.rotation.y += 0.01
-            const viewHeight = window.innerHeight
-            const viewMid = viewHeight / 2
-            const canvasRect = this.$refs.milkglass.getBoundingClientRect()
-            const canvasMid = canvasRect.top + canvasRect.height / 2
 
-            const midDelta = canvasMid - viewMid
-            const effectDampener = .15
+            // Rotate with scroll
+            // const viewHeight = window.innerHeight
+            // const viewMid = viewHeight / 2
+            // const canvasRect = this.$refs.milkglass.getBoundingClientRect()
+            // const canvasMid = canvasRect.top + canvasRect.height / 2
 
-            this.model.rotation.x = midDelta / canvasRect.height
-                * effectDampener * Math.PI
+            // const midDelta = canvasMid - viewMid
+            // const effectDampener = .15
+
+            // this.model.rotation.x = midDelta / canvasRect.height
+            //     * effectDampener * Math.PI
             // this.camera.rotation.x = -Math.atan(CAMERA_DISTANCE * midDelta * 10)
             // this.camera.position.y = midDelta
 
+            // Keep rendering
             this.renderer.render( this.scene, this.camera )
             window.requestAnimationFrame(this.renderCascade.bind(this))
         },
@@ -158,7 +183,13 @@ export default {
             const stylings = window.getComputedStyle(document.body)
             const color = stylings.getPropertyValue('background-color')
             return color
-        }
+        },
+        moveTo(x, y, z){
+            console.log('move to', x, y, z)
+            this.t = 0
+            this.lerpStart = this.model.position
+            this.lerpEnd = new THREE.Vector3(x, y, z)
+        },
     }
 }
 </script>

@@ -48,7 +48,7 @@ function handleMilkGlass(_this){
 
   if (!milkglass.startPositionModel) return
 
-  if (path.includes('projects')) {
+  if (path.includes('project')) {
     milkglass.moveTo(
       -.75,
       milkglass.startPositionModel.y,
@@ -73,10 +73,20 @@ function handleMilkGlass(_this){
   )
 }
 
+function handleWave(_this){
+  const path = _this.$route.path
+  const wave = _this.$refs.wave
+
+  if (path.includes('project/')) {
+    wave.play()
+  }
+}
+
 function fadeEnter(el, done) {
   overlappingEnter(el)
   colorChangeNav(el)
   handleMilkGlass(this)
+  handleWave(this)
 
   anime({
     targets: el.children,

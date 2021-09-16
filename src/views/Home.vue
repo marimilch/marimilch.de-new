@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h2 class="huge">Welcome!</h2>
-    <h3 class="">Nice to see you here :)</h3>
+    <h3 class="nice-to-see-you">Nice to see you here :)</h3>
   </div>
 </template>
 
@@ -14,6 +14,13 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+  }
+  .nice-to-see-you {
+    font-family: Manrope, sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
   }
   .huge {
     font-size: 160px;

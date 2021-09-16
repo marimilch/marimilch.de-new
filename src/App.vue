@@ -34,6 +34,10 @@
             <MilkGlass ref="milkglass"></MilkGlass>
         </div>
 
+        <div class="waves-background">
+            <Wave ref="wave"></Wave>
+        </div>
+
         <footer>
             <p class="center">
                 © marimilch. all rights reserved or something. i don't know, i'm just a footer, lol.
@@ -45,6 +49,7 @@
 <script>
 import Button from './components/Button'
 import MilkGlass from '@/components/MilkGlass'
+import Wave from '@/components/Wave'
 import * as transitions from './assets/js/transitions'
 
 export default {
@@ -95,7 +100,8 @@ export default {
     },
     components: {
         Button,
-        MilkGlass
+        MilkGlass,
+        Wave
     },
     watch: {
         contentHeight(val){
@@ -128,6 +134,15 @@ export default {
     }
 
     .milkglass-background {
+        z-index: -2;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .waves-background {
         z-index: -1;
         position: fixed;
         top: 0;

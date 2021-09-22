@@ -2,7 +2,7 @@
     <div>
         <nav>
             <div>
-                <div>
+                <div class="logo">
                     <h1>marimilch</h1>
                     <h2 class="sub">too poor for cereal</h2>
                 </div>
@@ -39,10 +39,11 @@
         </div>
 
         <footer>
-            <p class="center">
+            <p class="center footer-content">
                 © marimilch. all rights reserved or something. i don't know, i'm just a footer, lol.
             </p>
         </footer>
+        
     </div>
 </template>
 
@@ -113,14 +114,9 @@ export default {
 
 <style lang="scss">
     @import 'assets/scss/style.scss';
-    @import 'assets/scss/style-tablet.scss';
-    @import 'assets/scss/style-phone.scss';
+    // @import 'assets/scss/style-tablet.scss';
+    // @import 'assets/scss/style-phone.scss';
     // @import 'assets/scss/style-dark.css';
-
-    #app {
-        overflow: hidden;
-    }
-
     h1 {
         margin: 0;
     }
@@ -144,10 +140,11 @@ export default {
 
     .waves-background {
         z-index: -1;
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
+        pointer-events: none;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="default-padding fade-wrap">
         <p class="center project-links">
             <!-- <button href="//instagram.com/marimilch93">Instagram</button> -->
             <!-- <button href="//twitter.com/marimilch93">Twitter</button> -->

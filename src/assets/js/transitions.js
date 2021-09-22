@@ -7,10 +7,9 @@ function getMain(){
 }
 
 function overlappingLeave(el){
-  // const main = getMain()
+  const main = getMain()
 
-  // main.style.height = el.getBoundingClientRect().height + 'px'
-
+  main.style.height = el.getBoundingClientRect().height + 'px'
   el.style.position = 'absolute'
 }
 
@@ -18,6 +17,7 @@ function overlappingEnter(el) {
   const main = getMain()
 
   main.style.height = el.getBoundingClientRect().height + 'px'
+  // el.style.position = 'absolute'
 }
 
 function overlappingEnterAfter() {
@@ -48,11 +48,11 @@ function handleMilkGlass(_this){
 
   if (!milkglass.startPositionModel) return
 
-  if (path.includes('project')) {
+  if (path == '/') {
     milkglass.moveTo(
-      -.75,
+      milkglass.startPositionModel.x,
       milkglass.startPositionModel.y,
-      .5
+      milkglass.startPositionModel.z
     )
     return
   }
@@ -60,16 +60,16 @@ function handleMilkGlass(_this){
   if ( path.includes('about') ){
     milkglass.moveTo(
       .1, 
-      milkglass.startPositionModel.y - .08, 
+      milkglass.startPositionModel.y - .1, 
       .5
     )
     return
   }
 
   milkglass.moveTo(
-    milkglass.startPositionModel.x,
+    -.75,
     milkglass.startPositionModel.y,
-    milkglass.startPositionModel.z
+    .5
   )
 }
 
@@ -77,9 +77,16 @@ function handleWave(_this){
   const path = _this.$route.path
   const wave = _this.$refs.wave
 
-  if (path.includes('project/')) {
+  if (path.includes('projects/')) {
     wave.play()
   }
+}
+
+function getAnimeTargets(el){
+  const maybeFadeWrap = el.querySelector('.fade-wrap')
+  if (maybeFadeWrap) return maybeFadeWrap.children
+
+  return el.children
 }
 
 function fadeEnter(el, done) {
@@ -89,7 +96,7 @@ function fadeEnter(el, done) {
   handleWave(this)
 
   anime({
-    targets: el.children,
+    targets: getAnimeTargets(el),
     opacity: [
       {
         value: isBGZoom(1, 0),
@@ -109,7 +116,7 @@ function fadeEnter(el, done) {
         easing: 'linear'
       },
       {
-        value: isBGZoom(2, 1),
+        value: isBGZoom(1, 1),
         duration: 1500,
         easing: 'easeOutElastic(1, .6)'
       },
@@ -122,20 +129,12 @@ function fadeEnter(el, done) {
   })
 }
 
-function isBGElem(el){
-  return el.classList.contains('background-zoom')
-}
-
-function isBGZoom(yes, no){
-  return (el) => { return isBGElem(el) ? yes : no }
-}
-
 function fadeLeave(el, done) {
   overlappingLeave(el)
   colorChangeNav(el)
 
   anime({
-    targets: el.children,
+    targets: getAnimeTargets(el),
     opacity: [
       {
         value: 1,
@@ -150,7 +149,7 @@ function fadeLeave(el, done) {
     ],
     scale: [
       {
-        value: isBGZoom(2, 1),
+        value: isBGZoom(1, 1),
         duration: 0,
         easing: 'linear'
       },
@@ -165,23 +164,64 @@ function fadeLeave(el, done) {
   })
 }
 
-function projectDetailsLeave(el, done) {
-  // overlappingEnter(el)
+function isBGElem(el){
+  return el.classList.contains('background-zoom')
+}
 
+function isBGZoom(yes, no){
+  return (el) => { return isBGElem(el) ? yes : no }
+}
+
+function getScreenDims(){
+  return {
+    width: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
+    height: Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0),
+  } 
+}
+
+function projectDetailsEnter(el, done) {
   const projectSlug = this.$route.params.slug
-  const entryToDetails = el.querySelector(`#${projectSlug} .entry-to-details`)
-  const entryToDetailsRect = entryToDetails.getBoundingClientRect()
 
-  console.log(el, `#${projectSlug} .entry-to-details`, entryToDetails)
+  if (!projectSlug) {
+    fadeEnter.bind(this)(el, done)
+    return
+  }
+
+  handleMilkGlass(this)
+
+  document.body.scrollTo({
+    top: 0,
+    behaviour: 'smooth'
+  })
+
+  const clipBackground = el.querySelector('.project-video')
+  const h1 = el.querySelector('.project-name')
 
   anime({
-    targets: entryToDetails,
-    opacity: { value: 1, easing: 'easeOutCubic', duration: 1000 },
-    width: { value: '100vw', duration: 1500, easing: 'easeOutElastic(1, .6)' },
-    height: { value: '100vh', duration: 1500, easing: 'easeOutElastic(1, .6)' },
-    translateY: { value: -entryToDetailsRect.top + 'px', duration: 1500, easing: 'easeOutElastic(1, .6)' },
-    translateX: { value: -entryToDetailsRect.left + 'px', duration: 1500, easing: 'easeOutElastic(1, .6)' },
-    completed: done
+    targets: clipBackground,
+    opacity: [
+      { value: 0, duration: 0, easing: 'linear' },
+      { value: 1, duration: 1000, easing: 'easeInOutQuad' }
+    ]
+  })
+
+  anime({
+    targets: h1,
+    opacity: [
+      { value: 0, duration: 0 },
+      { value: 1, duration: 750, easing: 'easeInOutQuad' }
+    ],
+    delay: 1500,
+    complete: done
+  })
+
+  anime({
+    targets: el.querySelectorAll('h2, h3, h4, h5, h6, p'),
+    opacity: [
+      { value: 0, duration: 0 },
+      { value: 1, duration: 750, easing: 'easeInOutQuad' }
+    ],
+    delay: anime.stagger(250, { start: 2250 }),
   })
 }
 
@@ -190,7 +230,7 @@ export const Fade = {
   leave: fadeLeave,
 }
 
-export const ProjectDetails = {
-  enter: fadeEnter,
-  leave: projectDetailsLeave,
+export const Project = {
+  enter: projectDetailsEnter,
+  leave: fadeLeave,
 }

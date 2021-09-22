@@ -12,17 +12,17 @@ const routes = [
     name: 'About',
     component: () => import('@/views/About.vue')
   },
+  // {
+  //   path: '/projects',
+  //   name: 'Projects',
+  //   component: () => import('@/views/Projects.vue'),
+  //   meta: { transition: 'Fade' },
+  // },
   {
-    path: '/projects',
-    name: 'Projects',
-    component: () => import('@/views/Projects.vue'),
-    meta: { transition: 'Fade' },
-  },
-  {
-    path: '/project/:slug',
+    path: '/projects/:slug?',
     name: 'Project',
-    component: () => import('@/views/ProjectDetails.vue'),
-    meta: { transition: 'Fade' },
+    component: () => import('@/views/Projects.vue'),
+    meta: { transition: 'Project' },
   },
   {
     path: '/:pathMatch(.*)*',

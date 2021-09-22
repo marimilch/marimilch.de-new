@@ -1,37 +1,60 @@
 <template>
-    <div ref="twoContainer">
+    <div id="wave-mask" ref="twoContainer" class="two-container">
 
     </div>
 </template>
 
+<style scoped>
+.two-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+</style>
+
 <script>
-import Two from "two.js";
+import Two from 'two.js';
 
 export default {
     data() {
         return {
-            resolution: 100,
+            resolution: 50,
             t: 0,
             tStep: 50,
-            maxHeight: 150,
-            sustain: 500,
-            decay: 8000,
+            maxHeight: 125,
+            sustain: 200,
+            decay: 4800,
             waveLength: 100,
         }
     },
     mounted(){
+        const rect = this.$refs.twoContainer.getBoundingClientRect()
         this.two = new Two({
-            fullscreen: true
+            width: rect.width,
+            height: rect.height,
         }).appendTo(this.$refs.twoContainer)
 
         this.wavePath = this.two.makePath(false)
-        this.wavePath.stroke = 'transparent'
-        this.wavePath.fill = '#ee6a7c'
-        this.wavePath.linewidth = 0
+        this.wavePath.clip = true
+        // this.wavePath.stroke = 'transparent'
+        // this.wavePath.fill = '#ee6a7c'
+        // this.wavePath.linewidth = 0
+
+        // const maybeClipPath = this.$refs.twoContainer.querySelector('clipPath')
+        // if (maybeClipPath){
+        //     maybeClipPath.id = 'wave-mask-clip-path'
+        // }
 
         this.two.bind('update', this.renderFrame.bind(this))
+
+        window.addEventListener('resize', this.onResize.bind(this));
     },
     methods: {
+        onResize(){
+            this.two.update()
+        },
         wave(t, {
             sustain = 0,
             decay = 1,
@@ -67,18 +90,18 @@ export default {
             const vh = this.getVH()
             const step = vw / this.resolution
 
-            const vwMid = vw / 3
-            const vhMid = vh + this.maxHeight
+            const pouringCenter = vw / 3
+            const fillTarget = vh + 2 * this.maxHeight
 
             for (let i = 0; i < len; ++i){
-                const t = i * step - vwMid
+                const t = i * step - pouringCenter
                 const t_ = Math.abs(t)
-                arr[i] = new Two.Anchor(t + vwMid, this.wave(-t_ + this.t, {
+                arr[i] = new Two.Anchor(t + pouringCenter, this.wave(-t_ + this.t, {
                     maxHeight: this.maxHeight,
                     sustain: this.sustain,
                     decay: this.decay,
                     waveLength: this.waveLength,
-                }) + vh + this.maxHeight*2 - this.easing() * vhMid)
+                }) + fillTarget - this.easing() * fillTarget)
             }
 
             arr[len] = new Two.Anchor(vw, vh)
@@ -87,6 +110,7 @@ export default {
             return arr
         },
         easing(){
+            // From 0 to 1
             const duration = this.sustain + this.decay/2
             const linear = Math.min(this.t, duration)/duration
 

@@ -1,9 +1,11 @@
 [
     {
-        "name": "Star Fox Stage 1 Clone",
+        "name": "Star Fox in Unity",
         "teaser": "A clone of the first stage of Star Fox I programmed to learn Unity",
         "description": "This is a clone of the first stage of Star Fox (for Super Nintendo) I programmed in Unity in about a month to learn Unity for my bachelor thesis. I worked on it three times a week for about six hours and made three all-nighters a couple of days before I had to show it to my tutor. I programmed all scripts in C#. The models were made by me in Blender.",
         "slug": "starfox-clone",
+        "dateStart": "2020-09",
+        "dateEnd": "2020-10",
         "liveGame": "starfox-webgl",
         "links": [
             {

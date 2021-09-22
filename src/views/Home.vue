@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home default-padding fade-wrap">
     <h2 class="huge">Welcome!</h2>
     <h3 class="nice-to-see-you">Nice to see you here :)</h3>
   </div>
@@ -8,7 +8,6 @@
 <style scoped>
   .home {
     width: 100%;
-    height: var(--content-min-height);
     display: flex;
     flex-direction: column;
     justify-content: center;

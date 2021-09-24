@@ -17,6 +17,9 @@ h1, h2, h3, h4, h5, h5, p {
     padding-right: var(--content-padding-x);
     margin: 0;
 }
+.no-break {
+    white-space: nowrap;
+}
 
 }
 </style>
@@ -30,23 +33,52 @@ h1, h2, h3, h4, h5, h5, p {
         align-items: flex-start;
 
         @media (prefers-color-scheme: dark) {
-            background: var(--brown);
+            background: var(--deep-pink);
         }
 
         p, h2, a {
             color: var(--canvas);
         }
 
+        &:nth-child(2n-1){
+            background: var(--canvas);
+
+            p, h2, a {
+                color: var(--brown);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                background: var(--dark-brown);
+
+                p, h2, a {
+                    color: var(--canvas);
+                }
+            }
+
+            @media (prefers-color-scheme: light) {
+                p:first-of-type, 
+                h1 + p, 
+                h2 + p {
+                    &::first-letter {
+                        background: var(--brown);
+                        color: var(--canvas);
+                    }
+                }
+            }
+        }
+
         p {
             padding-bottom: 50px;
+            line-height: 1.8;
         }
 
         p:first-of-type, 
         h1 + p, 
         h2 + p {
             &::first-letter {
+                text-transform: uppercase;
                 font-family: Pacifico, cursive;
-                font-size: 44px;
+                font-size: 50px;
                 padding: 16px 16px 16px 10px;
                 margin-right: 7px;
                 float: left;
@@ -68,8 +100,8 @@ h1, h2, h3, h4, h5, h5, p {
         }
 
         .left-side {
-            position: sticky;
-            top: 0;
+            // position: sticky;
+            // top: 0;
         }
     }
 </style>

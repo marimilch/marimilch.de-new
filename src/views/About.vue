@@ -52,10 +52,15 @@
     .background-zoom {
         width: calc( 1 * max( 100vw, 100vh ) );
         height: calc( 1 * max( 100vw, 100vh ) );
+        max-width: 100%;
         transform: translate(-50%, -50%);
         background: var(--dark-pink);
         transform-origin: center;
         border-radius: 99999px;
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--brown);
+        }
     }
     .about {
         width: 40%;

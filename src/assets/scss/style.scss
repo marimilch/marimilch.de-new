@@ -274,7 +274,11 @@ button.highlight:active, button.highlight.pressed {
     color: var(--pink);
 }
 a {
-    color: var(--pink);
+    color: var(--dark-pink);
+
+    @media (prefers-color-scheme: dark) {
+        color: var(--pink);
+    }
 }
 .right {
     float:right;
@@ -285,8 +289,8 @@ h1,h2,h3 {
     font-weight: normal;
     text-transform: lowercase;
     color: var(--dark-pink);
-    z-index: 10;
-    position: relative;
+    // z-index: 10;
+    // position: relative;
 }
 p {
     line-height: 1.6;
@@ -448,9 +452,6 @@ article {
     background: var(--pink);
     animation: spinningc 8.5s var(--spinning-time);
 }
-article video {
-    width: 100%;
-}
 .desktop-only {
     display: inline-block;
 }
@@ -470,6 +471,9 @@ article video {
 
 :root   {
     --dark-brown: #33060c;
+    --deep-pink: #6e0a0c;
+    --deep-blue: #042c3a;
+
     --brown: #73464c;
     --light-brown: #ab5675;
     --dark-pink: #ee6a7c;
@@ -483,7 +487,7 @@ article video {
     --timing: .2s;
     --rect-size: 150px;
     --spinning-time: linear 0s infinite;
-    --inset-shadow-blur: 4px;
+    --inset-shadow-blur: 2px;
     --inset-shadow: var(--inset-shadow-blur) 2px;
     --inset-shadow-text: 6px var(--brown);
 

@@ -60,7 +60,8 @@ export default {
 }
 .frame {
     display: flex;
-    width: 100vw;
+    width: 100%;
+    max-width:100%;
     height: 100vh;
     align-content: center; 
     align-items: center; 

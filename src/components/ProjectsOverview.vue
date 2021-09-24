@@ -1,9 +1,9 @@
 <template>
-    <div class="default-padding">
-        <h2>
-            Projects
-        </h2>
+    <div class="default-padding">  
         <div class="projects-wrap fade-wrap">
+            <h2>
+                Projects
+            </h2>
             <ProjectEntry 
                 :project="project" 
                 v-for="(project, key) in projects"
@@ -20,6 +20,8 @@
         text-align: left;
         font-size: 120px;
         padding-left: 30px;
+        top: var(--nav-height);
+        left: var(--content-padding-x);
     }
     .projects-wrap {
         padding: 50px 0 300px;

@@ -1,6 +1,6 @@
 <template>
     <div class="model-wrap">
-        <div ref="modelRef" class="model wh-full" style="opacity:0">
+        <div ref="modelRef" class="model wh-full">
 
         </div>
     </div>      
@@ -50,13 +50,13 @@ export default {
             type: Boolean,
             default: false
         },
-        distanceFraction: {
+        distance: {
             type: Number,
-            default: .1
+            default: 0
         },
         focalLength: {
             type: Number,
-            default: 30
+            default: 40
         },
         modelPath: {
             type: String,
@@ -65,15 +65,19 @@ export default {
         autoInitialize: {
             type: Boolean,
             default: true
-        }
-        // materials: {
-        //     default: [
-        //         new THREE.MeshStandardMaterial({ 
-        //             color: 0xee6a7c,
-        //             roughness: 0,
-        //         }),
-        //     ],
-        // }
+        },
+        rotate: {
+            type: Boolean,
+            default: true
+        },
+        rotationEffectStrength: {
+            type: Number,
+            default: 1
+        },
+        initialRotationRad: {
+            type: Object,
+            default: {x:0, y:0, z:0}
+        },
     },
     data(){
         return {
@@ -91,11 +95,18 @@ export default {
             defaultBackColor: '#000000',
             color: '#000000',
             backColor: '#000000',
+            distanceFractionOrigin: .11,
+            materials: [
+                new THREE.MeshStandardMaterial({ 
+                    color: 0xee6a7c,
+                    roughness: 0,
+                }),
+            ]
         }
     },
     computed: {
         cameraDistance(){
-            return this.distanceFraction * this.focalLength
+            return (this.distanceFractionOrigin + this.distance) * this.focalLength
         },
     },
     mounted(){
@@ -113,8 +124,8 @@ export default {
             this.camera = new THREE.PerspectiveCamera( 
                 this.focalLength, 
                 rect.width / rect.height, 
-                0.1, 
-                1000 
+                0.001, 
+                10
             )
 
             this.renderer = new THREE.WebGLRenderer( { antialias: this.antialias } )
@@ -130,7 +141,7 @@ export default {
             gltfLoader.load( this.modelPath, function ( gltf ) {
                 this.model = gltf.scene
                 // this.model.translateY(-.17)
-                this.model.position.set(...this.startPositionModel)
+                // this.model.position.set(...this.startPositionModel)
                 this.scene.add( this.model )
 
                 this.material = new THREE.MeshStandardMaterial({ 
@@ -138,27 +149,70 @@ export default {
                     roughness: 0,
                 })
 
-                let i = 0
-                this.model.traverse((o) => {
-                    if (o.isMesh) {
-                        o.material = this.material
-                        ++i
-                    }
-                })
+                this.updateMaterials()
+
+                this.containInViewport()
 
                 wrap.style.opacity = '1'
 
                 this.lerpStart = this.model.position.clone()
                 this.lerpEnd = this.model.position.clone()
 
+                this.model.rotation.set(
+                    this.initialRotationRad.x * Math.PI,
+                    this.initialRotationRad.y * Math.PI,
+                    this.initialRotationRad.z * Math.PI,
+                ) 
+
                 this.addLights()
+
+                this.camera.position.setZ(this.cameraDistance)
 
                 this.renderCascade()
             }.bind(this), undefined, function ( error ) {
                 console.error( error )
             } ); 
 
-            this.camera.position.z = this.cameraDistance
+        },
+        containInViewport(){
+            const wrap = this.$refs.modelRef
+            const boundingBox = new THREE.Box3().setFromObject(this.model)
+            const size = new THREE.Vector3()
+            const center = new THREE.Vector3()
+            
+            boundingBox.getSize(size)
+            boundingBox.getCenter(center)
+
+            const scaleFactor = size.x
+
+            this.model.scale.set(
+                1 / scaleFactor,
+                1 / scaleFactor,
+                1 / scaleFactor
+            )
+            this.model.position.sub(center.divideScalar(scaleFactor))
+            
+        },
+        updateMaterials(){
+            // const materialsInit = this.materialsInit
+
+            // prevents reactivity (maybe add later)
+            // this.materials = []
+
+            // for (const matDesc of materialsInit){
+            //     this.materials.push(
+            //         new THREE[matDesc.name](matDesc.attributes)
+            //     )
+            // }
+
+            let i = 0
+            this.model.traverse((o) => {
+                if (!o.isMesh) return
+
+                o.material = this.materials[i % this.materials.length] 
+                ++i
+            })
+
         },
         updateSize(rect){
             this.renderer.setSize( 
@@ -227,7 +281,7 @@ export default {
             this.updateSize(rect)
             
             // Rotate around itself
-			this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
+			if (this.rotate) this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
 
             // Increase transform T
             this.updatePixelation()
@@ -239,7 +293,7 @@ export default {
                 const canvasRect = this.$refs.modelRef.getBoundingClientRect()
                 const canvasMid = canvasRect.top + canvasRect.height / 2
 
-                const effectStrength = .22
+                const effectStrength = this.rotationEffectStrength
                 const midDelta = 2 * (canvasMid - viewMid)/canvasRect.height
                 const midDelta_ = midDelta * effectStrength
 
@@ -249,8 +303,6 @@ export default {
 
                 this.camera.position.setY(midDelta_)
                 this.camera.lookAt(0,0,0)
-
-                console.log('vector', this.camera.position, midDelta)
             }
 
             // Keep rendering

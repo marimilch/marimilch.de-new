@@ -20,5 +20,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+    .fancy-paragraph {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        min-height: 100vh;
+    }
 </style>

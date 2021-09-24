@@ -131,7 +131,7 @@ a {
     pointer-events: none;
 
 
-    &:nth-child(2n - 1) {
+    &:nth-of-type(2n - 1) {
         justify-content: flex-end;
     }
 }

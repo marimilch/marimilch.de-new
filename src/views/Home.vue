@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
   .home {
     width: 100%;
     display: flex;
@@ -23,6 +23,14 @@
   }
   .huge {
     font-size: 160px;
+  }
+
+  .huge, .nice-to-see-you {
+    text-shadow: var(--canvas) 0 0 20px;
+
+    @media (prefers-color-scheme: dark) {
+      text-shadow: var(--dark-brown) 0 0 20px;
+    }
   }
 </style>
 

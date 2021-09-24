@@ -1,16 +1,18 @@
 <template>
-    <div class="fancy-model fancy-paragraph" ref="fancyModelWrap">
+    <div class="fancy-model fancy-paragraph" ref="fancyModelWrap" :data-flip="flip">
         <div class="left-side">
             <slot></slot>
         </div>
         <div class="right-side">
             <Model 
-                modelPath="/glb/glass_milk.glb" 
+                :modelPath="modelPath" 
                 :rotateWithScroll="true" 
                 class="fancy-model-instance"
-                :distanceFraction=".025"
-                :startPositionModel="startPosition"
                 :autoInitialize="false"
+                :initialRotationRad="initialRotationRad"
+                :distance="distance"
+                :rotationEffectStrength="rotationEffectStrength"
+                :rotate="rotate"
                 ref="model"
             ></Model>
         </div>
@@ -18,21 +20,55 @@
 </template>
 
 <script>
+import * as THREE from 'three'
 import Model from '@/components/Model.vue'
 
 export default {
     props: {
         title: {
             type: String,
+        },
+        modelPath: {
+            required: true,
+            type: String,
+        },
+        distance: {
+            default: 0,
+            type: Number,
+        },
+        rotationEffectStrength: {
+            default: 1,
+            type: Number,
+        },
+        initialRotationRad: {
+            default: {x:0, y:0, z:0},
+            type: Object,
+        },
+        flip: {
+            default: false,
+            type: Boolean,
+        },
+        rotate: {
+            default: true,
+            type: Boolean,
+        },
+        autoInitialize: {
+            default: true,
+            type: Boolean,
         }
     },
     mounted(){
-        this.$nextTick(function() {
-            this.$refs.model.backColor = this.getBackColor()
-            this.$refs.model.color = this.getTextColor()
-
-            this.$refs.model.initialize()
-        })
+        if(this.autoInitialize) this.initialize()
+    },
+    data(){
+        return {
+            materials: [
+                new THREE.MeshStandardMaterial({ 
+                    color: 0xee6a7c,
+                    roughness: 0,
+                }),
+            ]
+        }
     },
     computed: {
         startPosition(){
@@ -46,6 +82,15 @@ export default {
         Model
     },
     methods: {
+        initialize(){
+            this.$nextTick(function() {
+                this.$refs.model.backColor = this.getBackColor()
+                this.$refs.model.color = '#ee6a7c'
+                this.$refs.model.materials = this.materials
+
+                this.$refs.model.initialize()
+            })
+        },
         getWrap(){
             const maybeModel = this.$refs.fancyModelWrap
 
@@ -100,8 +145,13 @@ export default {
     // }
 
     .fancy-model {
-        .left-side, .right-side{
-            min-height: 100vh;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        min-height: 100vh;
+
+        &[data-flip="true"]{
+            flex-direction: row-reverse;
         }
 
         .right-side {

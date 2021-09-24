@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style lang="scss">
-    @import 'assets/scss/style.scss';
+    // @import 'assets/scss/style.scss';
     // @import 'assets/scss/style-tablet.scss';
     // @import 'assets/scss/style-phone.scss';
     // @import 'assets/scss/style-dark.css';
@@ -134,7 +134,8 @@ export default {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
+        width: 100%;
+        max-width:100%;
         height: 100vh;
     }
 
@@ -143,7 +144,7 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
+        width: 100%;
         height: 100vh;
         pointer-events: none;
     }

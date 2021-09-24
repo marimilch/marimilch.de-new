@@ -1,5 +1,8 @@
 <template>
-    <video :src="this.videoSrc" ref="videoStream" muted autoplay playsinline loop></video>
+    <video ref="videoStream" loop autoplay playinline muted>
+        <source :src="`${movieSlug}.webm`" type="video/webm">
+        <source :src="`${movieSlug}.mp4`" type="video/mp4">
+    </video>
     <div ref="vintageEffect" class="vintage-effect">
 
     </div>
@@ -29,9 +32,9 @@ import FancyModel from '@/components/project-components/FancyModel.vue'
 
 export default {
     props: {
-        videoSrc: {
+        movieSlug: {
             type: String,
-            default: '/clips/klara/entry.mp4'
+            required: true,
         }
     },
     data() {
@@ -74,6 +77,7 @@ export default {
                 -1.5
             )
             this[textureName].repeat = new THREE.Vector2(inverseScaleX, inverseScaleY)
+            this[textureName].flipX = false
         },
         initMaterials(){
             this.videoTexture = new THREE.VideoTexture( this.$refs.videoStream )

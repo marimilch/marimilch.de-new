@@ -6,7 +6,7 @@
         something with more action and variety.
     </FancyTitle>
 
-    <FancyTV>
+    <FancyTV movieSlug="/clips/starfox-clone/starfox-snes">
         <p>
             When I played Star Fox for the first time I
             was fascinated with the graphics on the very limited hardware.

@@ -23,7 +23,8 @@ pnpm-debug.log*
 *.sw?
 
 # Project specific
-# public/games-live
-# public/downloads
-# public/clips
-# public/glb
+public/games-live
+public/downloads
+public/images
+public/clips
+public/glb

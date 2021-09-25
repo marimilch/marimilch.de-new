@@ -1,26 +1,27 @@
 <template>
-    <video ref="videoStream" loop autoplay playinline muted>
+    <video ref="videoStream" playinline muted>
         <source :src="`${movieSlug}.webm`" type="video/webm">
         <source :src="`${movieSlug}.mp4`" type="video/mp4">
     </video>
-    <div ref="vintageEffect" class="vintage-effect">
-
-    </div>
+    <canvas ref="videoMirror"></canvas>
+    <div ref="vintageEffect" class="vintage-effect"></div>
     <FancyModel
         ref="model"
         modelPath="/glb/tv.glb" 
         :rotationEffectStrength="1.25" 
         :flip="true"
         :rotate="false"
-        :initialRotationRad="{x:0, y:-.3, z:0}"
+        :initialRotationRad="{x:0, y:-.35, z:0}"
         :autoInitialize="false"
+        :distance="-.03"
+        v-on:click="switchChannel()"
     >
         <slot></slot>
     </FancyModel>
 </template>
 
 <style lang="scss" scoped>
-    video, .vintage-effect {
+    video, .vintage-effect, canvas {
         display: none;
     }
 </style>
@@ -40,7 +41,10 @@ export default {
     data() {
         return {
             materials: null,
-            t: 0
+            t: 0,
+            t2: 0,
+            textureX: 2,
+            textureY: -1.5,
         }
     },
     mounted(){
@@ -48,6 +52,7 @@ export default {
         this.$nextTick(function() {
             this.initVintageEffect()
             this.initMaterials()
+            this.initVideoMirror()
             this.$refs.model.initialize()
         })
     },
@@ -57,13 +62,13 @@ export default {
             const rectangleH = this.viewRect.height/2
             this.rectangle.translation.set(
                 this.viewRect.width / 2, 
-                (this.t * 2 % 1) * (viewH + rectangleH * 2) - rectangleH
+                this.t * (viewH + rectangleH * 2) - rectangleH
             )
 
-            const fps = 10
-            this.rectangleBack.fill = `rgba(0, 0, 0, ${(this.t * fps % 1) * .5})`
+            const fps = 30
+            this.rectangleBack.fill = `rgba(0, 0, 0, ${(this.t * fps % 1) * .075})`
 
-            this.t += 1/60
+            this.t += 1/120
             this.t %= 1
 
             if (this.vintageTexture) this.vintageTexture.needsUpdate = true
@@ -73,14 +78,15 @@ export default {
             const inverseScaleX = 4
             const inverseScaleY = 4
             this[textureName].offset = new THREE.Vector2(
-                2, 
-                -1.5
+                this.textureX, 
+                this.textureY
             )
             this[textureName].repeat = new THREE.Vector2(inverseScaleX, inverseScaleY)
-            this[textureName].flipX = false
+            // this.wrapS = THREE.MirroredRepeatWrapping
+            // this.wrapT = THREE.MirroredRepeatWrapping
         },
         initMaterials(){
-            this.videoTexture = new THREE.VideoTexture( this.$refs.videoStream )
+            this.videoTexture = new THREE.CanvasTexture( this.$refs.videoMirror )
             this.vintageTexture = new THREE.CanvasTexture( 
                 this.$refs.vintageEffect.querySelector('canvas')
             )
@@ -102,6 +108,71 @@ export default {
                 }),
             ]
         },
+        videoLoopCascade(){
+            // needed to catch loop and indcue effects
+            if (this.$refs.videoStream.paused) {
+                this.switchChannel()
+                this.$refs.videoStream.play()
+            }
+
+            window.requestAnimationFrame(this.videoLoopCascade.bind(this))
+        },
+        videoMirrorCascade(){
+            const context = this.videoMirrorContext
+            context.drawImage(this.$refs.videoStream, 0, 0, 300, 200)
+            this.videoTexture.needsUpdate = true
+
+            window.requestAnimationFrame(this.videoMirrorCascade.bind(this))
+        },
+        tubeWave(){
+            this.t2 = 0
+            this.tubeWaveCascade()
+        },
+        tubeWaveCascade(){
+            const t = this.t2
+            const yOffset = Math.sin(40*t) * Math.max(1 - t, 0)
+
+            if (this.videoTexture){
+                this.videoTexture.offset = new THREE.Vector2(
+                    this.textureX, 
+                    this.textureY + yOffset
+                )
+
+                this.t2 += 1/30
+
+                if (this.t2 >= 1) {
+                    this.videoTexture.offset = new THREE.Vector2(
+                        this.textureX, 
+                        this.textureY
+                    )
+                    return
+                }
+            }
+
+            window.requestAnimationFrame(this.tubeWaveCascade.bind(this))
+        },
+        switchChannel(){
+            // Show channel number
+            if (this.channelTimeout) clearTimeout(this.channelTimeout)
+
+            this.tubeWave()
+            this.channel.scale = new Two.Vector(-1, 1)
+            this.channelTimeout = setTimeout(this.hideChannel.bind(this), 5000)
+        },
+        hideChannel(){
+            this.channel.scale = 0
+        },
+        initVideoMirror(){
+            this.$refs.videoMirror.width = 300
+            this.$refs.videoMirror.height = 200
+
+            this.videoMirrorContext = this.$refs.videoMirror.getContext('2d')
+            this.videoMirrorContext.translate(300, 0)
+            this.videoMirrorContext.scale(-1, 1)
+
+            this.videoMirrorCascade()
+
+        },
         initVintageEffect(){
             this.viewRect = {
                 width: 300,
@@ -113,32 +184,48 @@ export default {
                 type: Two.Types.canvas
             }).appendTo(this.$refs.vintageEffect)
 
+            // Bright Rectangle
             this.rectangle = this.two.makeRectangle(
                 this.viewRect.width / 2,
                 this.viewRect.height / 2, 
                 this.viewRect.width, 
                 this.viewRect.height / 2, 
             )
-            this.rectangle.fill = 'rgba(255, 255, 255, 0.25)'
+            this.rectangle.fill = 'rgba(255, 255, 255, 0.05)'
             this.rectangle.stroke = 'transparent'
 
+            // Channel number
+            this.channel = new Two.Text('AV2', 245, 25, {
+                family: 'PressStart2P',
+                fill: '#ee6a7c',
+                size: 30
+            })
+            this.channel.scale = new Two.Vector(-1, 1)
+            this.channel.addTo(this.two)
+
+            // Decreasing light intervals
             this.rectangleBack = this.two.makeRectangle(
                 this.viewRect.width / 2,
                 this.viewRect.height / 2, 
                 this.viewRect.width, 
                 this.viewRect.height, 
             )
-            this.rectangleBack.fill = 'rgba(0, 0, 0, 0.5)'
-            this.rectangleBack.stroke = 'transparent'
-            // this.wavePath.stroke = 'transparent'
-            // this.wavePath.fill = '#ee6a7c'
-            // this.wavePath.linewidth = 0
+            
+            // Scanlines
+            const nLines = 45
+            for (let i = 0; i < nLines; i++) {
+                const scanline = this.two.makeRectangle(
+                    this.viewRect.width / 2,
+                    this.viewRect.height / nLines * i, 
+                    this.viewRect.width, 
+                    this.viewRect.height / nLines / 2, 
+                )
 
-            // const maybeClipPath = this.$refs.twoContainer.querySelector('clipPath')
-            // if (maybeClipPath){
-            //     maybeClipPath.id = 'wave-mask-clip-path'
-            // }
-
+                scanline.fill = 'rgba(0, 0, 0, 0.25)'
+                scanline.stroke = 'transparent'
+            }
+            
+            this.videoLoopCascade()
             this.two.bind('update', this.vintageFrame.bind(this))
             this.two.play()
         }

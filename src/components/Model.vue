@@ -31,8 +31,16 @@
 </style>
 
 <script>
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js'
+import { HalftonePass } from 'three/examples/jsm/postprocessing/HalftonePass.js'
+import { HalftonePassAlpha } from '@/assets/js/HalftonePassAlpha.js'
+import { ClearPass } from 'three/examples/jsm/postprocessing/ClearPass.js'
+
 
 // function getBackgroundColor() {
 //     const stylings = window.getComputedStyle(document.body)
@@ -84,6 +92,7 @@ export default {
             lerpStart: null,
             lerpEnd: null,
             t: 1,
+            t2: 0,
             moveSpeed: 0.003,
             pixelation: 1,
             antialias: true,
@@ -119,20 +128,29 @@ export default {
             const wrap = this.$refs.modelRef
             const rect = wrap.getBoundingClientRect()
             const gltfLoader = new GLTFLoader()
+
+            const near = 0.001
+            const far = 10
             
             this.scene = new THREE.Scene()
             this.camera = new THREE.PerspectiveCamera( 
                 this.focalLength, 
                 rect.width / rect.height, 
-                0.001, 
-                10
+                near, 
+                far
             )
 
-            this.renderer = new THREE.WebGLRenderer( { antialias: this.antialias } )
+            this.renderer = new THREE.WebGLRenderer( { 
+                // antialias: this.antialias,
+                alpha: true
+            } )
             this.updateSize(rect)
 
-            this.clearColor = new THREE.Color(this.backColor)
-            this.renderer.setClearColor(this.clearColor)
+            this.addPasses()
+
+            // this.clearColor = new THREE.Color(this.backColor)
+            // this.renderer.setClearColor(this.clearColor)
+            this.renderer.setClearColor( 0x000000, 0 ); // the default
 
             wrap.appendChild( this.renderer.domElement )
             this.renderer.domElement.classList.add('three-js')
@@ -174,6 +192,50 @@ export default {
             } ); 
 
         },
+        addPasses(){
+            this.effectComposer = new EffectComposer(
+                this.renderer
+            )
+
+            const renderPass = new RenderPass( this.scene, this.camera );
+            this.effectComposer.addPass( renderPass );
+
+            // const saoPass = new SAOPass( this.scene, this.camera, false, true )
+            // saoPass.params.saoIntensity = .05
+            // saoPass.params.saoBlurRadius = 4
+            // // saoPass.minDistance = 0.001
+            // // saoPass.maxDistance = 0.3
+            // // saoPass.kernelRadius = 32
+            // this.effectComposer.addPass( saoPass )
+            // const bokehPass = new BokehPass( this.scene, this.camera, {
+            //     focus: this.cameraDistance - .01,
+            //     maxblur: .01,
+            //     aperture: .05
+            // } )
+            // this.effectComposer.addPass( bokehPass )
+
+            const params = {
+                shape: 1,
+                radius: 5,
+                rotateR: Math.PI / 12,
+                rotateB: Math.PI / 12 * 2,
+                rotateG: Math.PI / 12 * 3,
+                scatter: 0,
+                blending: 1,
+                blendingMode: 1,
+                greyscale: false,
+                disable: false
+            }
+            const halftonePassAlpha = new HalftonePassAlpha( 
+                window.innerWidth, 
+                window.innerHeight,
+                params 
+            )
+            this.effectComposer.addPass( halftonePassAlpha )
+
+            // const clearPass = new ClearPass()
+            // this.effectComposer.addPass( clearPass )
+        },
         containInViewport(){
             const wrap = this.$refs.modelRef
             const boundingBox = new THREE.Box3().setFromObject(this.model)
@@ -182,6 +244,7 @@ export default {
             
             boundingBox.getSize(size)
             boundingBox.getCenter(center)
+            this.modelCenter = center
 
             const scaleFactor = size.x
 
@@ -286,27 +349,28 @@ export default {
             // Increase transform T
             this.updatePixelation()
 
+            // Distance to center
+            const viewHeight = window.innerHeight
+            const viewMid = viewHeight / 2
+            const canvasRect = this.$refs.modelRef.getBoundingClientRect()
+            const canvasMid = canvasRect.top + canvasRect.height / 2
+            const midDelta = 2 * (canvasMid - viewMid)/canvasRect.height
+
             // Rotate with scroll
             if (this.rotateWithScroll){
-                const viewHeight = window.innerHeight
-                const viewMid = viewHeight / 2
-                const canvasRect = this.$refs.modelRef.getBoundingClientRect()
-                const canvasMid = canvasRect.top + canvasRect.height / 2
-
-                const effectStrength = this.rotationEffectStrength
-                const midDelta = 2 * (canvasMid - viewMid)/canvasRect.height
-                const midDelta_ = midDelta * effectStrength
-
                 // this.model.rotation.x = midDelta / canvasRect.height
                 //     * effectDampener * Math.PI
                 // this.camera.rotation.x = angle
 
+                const effectStrength = this.rotationEffectStrength
+                const midDelta_ = midDelta * effectStrength
                 this.camera.position.setY(midDelta_)
                 this.camera.lookAt(0,0,0)
             }
 
             // Keep rendering
-            this.renderer.render( this.scene, this.camera )
+            // this.renderer.render( this.scene, this.camera )
+            this.effectComposer.render()
             window.requestAnimationFrame(this.renderCascade.bind(this))
         },
         getCSSProp(elem, prop){

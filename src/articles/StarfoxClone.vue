@@ -1,67 +1,40 @@
 <template>
     <FancyTitle :project="project">
-        I learned a lot programming 
-        <router-link to="/projects/petra" class="no-break">Petra & The Wolves</router-link>. 
-        But for my application for my bachelor thesis I wanted to present 
-        something with more action and variety.
+        Even today Star Fox for Super Nintendo is one of my favorite games.
+        There is action. There is challenge. There are cool characters.
+        And the kick-ass music.
     </FancyTitle>
 
     <FancyTV movieSlug="/clips/starfox-clone/starfox-snes">
         <p>
-            When I played Star Fox for the first time I
-            was fascinated with the graphics on the very limited hardware.
-            With the least amount of polygons every object was still
-            recognisable without sacrificing any gameplay.
-            And the kick-ass music.
-            I knew this was the game I wanted to remake and show to the
-            professors.
+            The original game relied on simple 3D graphics to keep the workload
+            for the Super FX chip low. That meant remaking the models
+            would not be so hard.
         </p>
     </FancyTV>
 
     <FancyModel 
-        modelPath="/glb/fake_wing.glb" 
+        modelPath="/glb/star-fox/fake_wing.glb" 
         :distance="-.06"
         :initialRotationRad="{x:.125, y:0, z:0}"
     >
-        <h2>The models</h2>
         <p>
             Contrary to the usual workflow, I started with building
-            the models instead of programming. The ship, then some enemies 
-            and then the obstacles. As expected it was done fast.
+            the models instead of the game mechanics. The ship, then some enemies 
+            and then the obstacles.
         </p>
     </FancyModel>
 
-    <FancyParagraph title="Mechanics, Visuals & Logic">
+    <FancyModel 
+        modelPath="/glb/star-fox/boss.glb" 
+        :distance="-.02"
+        :flip="true"
+    >
         <p>
-            After that I invested most of the time in camera and player controls.
-            It had to "feel right".
+            Half of the time I invested in camera and player controls.
+            The other half in the boss. I wanted both to "feel right".
         </p>
-
-        <p>
-            The ship never flies forward but instead all the enemies and
-            obstacles fly toward the camera. Objects far away or not visible
-            would be disabled. I did this to keep all coordinates
-            of the objects below 100 - a recommendation by Unity probably
-            to prevent numerical errors.
-        </p>
-
-        <p>
-            To give an additional perception of depth the original version on 
-            Super Nintendo had either white dots on the ground or if in free space
-            stars in-game. When I implemented the star emission for the controls
-            screen I liked the effect so much I added it to the stage as well.
-        </p>
-    </FancyParagraph>
-
-    <FancyParagraph title="The Boss">
-        <p>
-            Small enemies and obstacles could easily be copy and pasted.
-            The boss however required its own programming. It took
-            the other half development time. And since time 
-            was getting short already up until then I had to do one
-            all-nighter before my interview.
-        </p>
-    </FancyParagraph>
+    </FancyModel>
 
     <FancyParagraph title="The interview">
         <p>
@@ -73,7 +46,7 @@
         <p>
             However when I let my friends try it out later
             killing the boss was the most rewarding experience for them. 
-            So it was still worth the effort. ❤️
+            So it was worth the effort. ❤️
         </p>
     </FancyParagraph>
 
@@ -97,6 +70,10 @@
             probably will always learn again and again:
         </p>
     </FancyParagraph>
+
+    <FancyMessage>
+
+    </FancyMessage>
 </template>
 
 <script>

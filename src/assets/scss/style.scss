@@ -66,12 +66,7 @@ body {
     font-family: Manrope, sans-serif;
     font-size: 22px;
     background: var(--canvas);
-    color: var(--brown);
-
-    @media (prefers-color-scheme: dark) {
-        background: var(--dark-brown);
-        color: var(--canvas);
-    }
+    color: var(--neutral);
 }
 main {
     position: relative;
@@ -159,7 +154,7 @@ ul li {
         top var(--timing) ease
     ;
     cursor: pointer;
-    color: var(--canvas);
+    color: var(--beige);
     background: var(--light-brown);
     box-shadow: 
         0 var(--button-height) 0 0 var(--brown),
@@ -227,62 +222,28 @@ button.highlight:active, button.highlight.pressed {
 }*/
 .button.alt {
     color: var(--blue);
-    background: var(--canvas);
+    background: var(--beige);
     box-shadow: 
         0 var(--button-height) 0 0 var(--blue), 
         0 var(--button-height) var(--inset-shadow) var(--dark-pink)
 }
 .button.alt:hover {
-    background: var(--canvas);
+    background: var(--beige);
     box-shadow: 
         0 var(--button-height) 0 var(--green),
         0 var(--button-height) var(--inset-shadow) var(--dark-pink),
-        0 2px 15px var(--canvas)
+        0 2px 15px var(--beige)
     ;
 }
 .button.alt:active, nav .button.pressed {
-    background: var(--canvas);
+    background: var(--beige);
     box-shadow: 
         0 0 0 var(--dark-pink), 
-        0 2px 15px var(--canvas)
+        0 2px 15px var(--beige)
     ;
 }
-.video {
-    display: block;
-    height: 0;
-    overflow: hidden;
-    padding: 0 0 26%;
-    position: relative;
-}
-.video iframe {
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    width: 100%;
-}
-.tour-dates {
-    list-style: none;
-    padding-left: 0;
-}
-.tour-dates li {
-    padding: 10px 0;
-}
-.tour-dates li > * {
-    display: inline-block;
-}
-.tour-dates li > time {
-    width: 170px;
-    font-weight: bold;
-    color: var(--pink);
-}
 a {
-    color: var(--dark-pink);
-
-    @media (prefers-color-scheme: dark) {
-        color: var(--pink);
-    }
+    color: var(--primary);
 }
 .right {
     float:right;
@@ -292,7 +253,7 @@ h1,h2,h3 {
     // text-align: center;
     font-weight: normal;
     text-transform: lowercase;
-    color: var(--dark-pink);
+    color: var(--primary);
     // z-index: 10;
     // position: relative;
 }
@@ -302,40 +263,6 @@ p {
 h2 {
     font-size: 50px;
     margin: 0;
-}
-nav h1 a {
-    text-decoration:none;
-    position: relative;
-    top: calc( var(--button-height) * -1 );
-    font-size: 40px;
-    user-select: none;
-    display: inline-block;
-    z-index: 2;
-    color: var(--canvas);
-    text-shadow:
-        0 5px 0 var(--blue), 
-        0 5px var(--inset-shadow-text);
-    color: var(--canvas);
-    transition: 
-        background-color var(--timing) ease,
-        text-shadow var(--timing) ease,
-        color var(--timing) ease, 
-        top var(--timing) ease
-    ;
-}
-nav h1 a:hover {
-    text-shadow:
-        0 5px 0 var(--green), 
-        0 5px var(--inset-shadow-text),
-        0 3px 15px var(--canvas)
-}
-nav h1 a:active, nav h1 a.pressed {
-    top: 0;
-    text-shadow: 
-        0 0 0 var(--dark-pink),
-        0 0 5px var(--dark-pink),
-        0 2px 15px var(--canvas)
-    ;
 }
 nav, .nav-buttons, nav > div {
     display: flex;
@@ -375,8 +302,8 @@ nav > div{
 .flag, .cookies {
     max-width: none;
     width: 100%;
-    background: var(--pink);
-    color: var(--canvas);
+    background: var(--canvas);
+    color: var(--primary);
     text-align: center;
 }
 .center {
@@ -384,15 +311,15 @@ nav > div{
 }
 .line {
     height: 2px;
-    background: var(--pink);
+    background: var(--primary);
     width: 100%;
     margin: 50px 0;
 }
 .flag h1 {
-    color: var(--brown);
+    color: var(--neutral);
 }
 .cursive {
-    color: var(--dark-pink);
+    color: var(--primary);
     font-family: Pacifico, cursive;
     text-transform: lowercase;
 }
@@ -438,24 +365,6 @@ article {
     width: var(--rect-size);
     margin: 95px 95px 95px 75px;
 }
-.star-box > div {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    animation-play-state: paused;
-}
-.star-box > div:nth-child(3){
-    background: var(--green);
-    animation: spinninga 7.5s var(--spinning-time);
-}
-.star-box > div:nth-child(2){
-    background: var(--brown);
-    animation: spinningb 8s var(--spinning-time) reverse;
-}
-.star-box > div:nth-child(1){
-    background: var(--pink);
-    animation: spinningc 8.5s var(--spinning-time);
-}
 .desktop-only {
     display: inline-block;
 }
@@ -470,20 +379,55 @@ article {
     transition: color var(--timing) ease;
 }
 .hook-link:active {
-    color: var(--blue);
+    color: var(--secondary);
 }
 
-:root   {
-    --dark-brown: #33060c;
-    --deep-pink: #6e0a0c;
-    --deep-blue: #042c3a;
+.style2, .style2 * {
+    --primary: var(--style2-primary); // main color
+    --neutral: var(--style2-neutral); // text color
+    --canvas: var(--style2-canvas); // background color
+}
+
+:root {
+    // explicit colors
+    --style1-primary: var(--dark-pink); // main color
+    --style1-neutral: var(--brown); // text color
+    --style1-canvas: var(--beige); // background color
+
+    --style2-primary: var(--beige); // main color
+    --style2-neutral: var(--beige); // text color
+    --style2-canvas: var(--dark-pink); // background color
+
+    @media (prefers-color-scheme: dark) {
+        // explicit colors
+        --style1-primary: var(--magenta); // main color
+        --style1-neutral: var(--cyan); // text color
+        --style1-canvas: var(--dark-blue); // background color
+
+        --style2-primary: var(--magenta); // main color
+        --style2-neutral: var(--cyan); // text color
+        --style2-canvas: var(--dark-purple); // background color
+    }
+
+    // default colors
+    --primary: var(--style1-primary); // main color
+    --neutral: var(--style1-neutral); // text color
+    --canvas: var(--style1-canvas); // background color
+
+
+
+    // --dark-brown: #33060c;
+    --dark-blue: #0D0E34;
+    --dark-purple: #241E67;
+    --magenta: #EA3863;
+    --cyan: #64D9EB;
 
     --brown: #73464c;
     --light-brown: #ab5675;
     --dark-pink: #ee6a7c;
     --pink: #ffa7a5;
     --gold: #ffe07e;
-    --canvas: #ffe7d6;
+    --beige: #ffe7d6;
     --green: #72dcbb;
     --blue: #34acba;
 

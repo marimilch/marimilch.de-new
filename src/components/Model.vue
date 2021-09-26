@@ -34,12 +34,10 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js'
-import { HalftonePass } from 'three/examples/jsm/postprocessing/HalftonePass.js'
 import { HalftonePassAlpha } from '@/assets/js/HalftonePassAlpha.js'
-import { ClearPass } from 'three/examples/jsm/postprocessing/ClearPass.js'
+
+import { prefersDark } from '@/assets/js/prefers-dark.js'
 
 
 // function getBackgroundColor() {
@@ -107,7 +105,7 @@ export default {
             distanceFractionOrigin: .11,
             materials: [
                 new THREE.MeshStandardMaterial({ 
-                    color: 0xee6a7c,
+                    color: prefersDark() ? 0xEA3863 : 0xee6a7c ,
                     roughness: 0,
                 }),
                 // new THREE.MeshStandardMaterial({ 

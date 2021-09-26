@@ -107,7 +107,7 @@ a {
         .project-thumb {
             filter: none;
             opacity: 1;
-            box-shadow: var(--pink) 0 0 10px;
+            box-shadow: var(--primary) 0 0 10px;
         }
     }
 }
@@ -167,7 +167,7 @@ a {
 
         p {
             text-decoration: none;
-            color: var(--brown);
+            color: var(--neutral);
             margin: 10px 0 0;
         }
     }

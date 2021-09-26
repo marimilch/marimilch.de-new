@@ -31,6 +31,7 @@
 import * as THREE from 'three'
 import Two from 'two.js'
 import FancyModel from '@/components/project-components/FancyModel.vue'
+import { prefersDark } from '@/assets/js/prefers-dark.js'
 
 export default {
     props: {
@@ -97,7 +98,7 @@ export default {
 
             this.$refs.model.materials = [
                 new THREE.MeshStandardMaterial({ 
-                    color: 0xee6a7c,
+                    color: prefersDark() ? 0xEA3863 : 0xee6a7c,
                     roughness: 0,
                 }),
                 new THREE.MeshBasicMaterial({ 

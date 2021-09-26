@@ -76,18 +76,13 @@ export default {
         font-family: Manrope, sans-serif;
         text-transform: uppercase;
         letter-spacing: 3px;
-        border-top: var(--brown) 2px solid;
-        border-bottom: var(--brown) 2px solid;
+        border-top: var(--neutral) 2px solid;
+        border-bottom: var(--neutral) 2px solid;
         
         padding: 50px 0;
         font-size: 32px;
 
-        color: var(--brown);
-        @media (prefers-color-scheme: dark) {
-            color: var(--dark-pink);
-            border-top: var(--dark-pink) 2px solid;
-            border-bottom: var(--dark-pink) 2px solid;
-        }
+        color: var(--neutral);
     }
 }
 h1 {
@@ -96,9 +91,6 @@ h1 {
     letter-spacing: 10px;
     font-size: 180px;
 
-    color: var(--brown);
-    @media (prefers-color-scheme: dark) {
-        color: var(--dark-pink);
-    }
+    color: var(--primary);
 }
 </style>

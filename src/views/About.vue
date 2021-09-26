@@ -1,5 +1,5 @@
 <template>
-    <div class="default-padding about-wrap">
+    <div class="default-padding about-wrap style2">
         <div class="about fade-wrap">
             <h2>About Me</h2>
             <p>I'm a graduate in computer science and I really enjoy programming and anything involving creativity.</p>
@@ -40,7 +40,7 @@
         position: relative;
     }
     .cursive, p, span, h2, h3 {
-        color: var(--canvas);
+        color: var(--neutral);
     }
     .background-zoom-wrap {
         transform-origin: top left;
@@ -54,13 +54,9 @@
         height: calc( 1 * max( 100vw, 100vh ) );
         max-width: 100%;
         transform: translate(-50%, -50%);
-        background: var(--dark-pink);
+        background: var(--canvas);
         transform-origin: center;
         border-radius: 99999px;
-
-        @media (prefers-color-scheme: dark) {
-            background: var(--brown);
-        }
     }
     .about {
         width: 40%;

@@ -26,46 +26,23 @@ h1, h2, h3, h4, h5, h5, p {
 
 <style lang="scss">
     .fancy-paragraph {
-        background: var(--dark-pink);
+        background: var(--canvas);
         position: relative;
         display: flex;
         align-content: flex-start;
         align-items: flex-start;
         font-size: 28px;
 
-        @media (prefers-color-scheme: dark) {
-            background: var(--deep-pink);
+        &:nth-child(2n-1){
+            &, & * {
+                --primary: var(--style2-primary); // main color
+                --neutral: var(--style2-neutral); // text color
+                --canvas: var(--style2-canvas); // background color
+            } 
         }
 
         p, h2, a {
-            color: var(--canvas);
-        }
-
-        &:nth-child(2n-1){
-            background: var(--canvas);
-
-            p, h2, a {
-                color: var(--brown);
-            }
-
-            @media (prefers-color-scheme: dark) {
-                background: var(--dark-brown);
-
-                p, h2, a {
-                    color: var(--canvas);
-                }
-            }
-
-            @media (prefers-color-scheme: light) {
-                p:first-of-type, 
-                h1 + p, 
-                h2 + p {
-                    &::first-letter {
-                        background: var(--brown);
-                        color: var(--canvas);
-                    }
-                }
-            }
+            color: var(--neutral);
         }
 
         p {
@@ -83,13 +60,9 @@ h1, h2, h3, h4, h5, h5, p {
                 padding: 19px 24px 19px 10px;
                 margin-right: 7px;
                 float: left;
-                background: var(--canvas);
-                color: var(--dark-pink);
+                background: var(--primary);
+                color: var(--canvas);
                 border-radius: 5px;
-                
-                @media (prefers-color-scheme: dark) {
-                    color: var(--brown);
-                }
             }
         }
         
@@ -98,11 +71,6 @@ h1, h2, h3, h4, h5, h5, p {
             width: 50%;
             padding-top: 100px;
             padding-bottom: 100px;
-        }
-
-        .left-side {
-            // position: sticky;
-            // top: 0;
         }
     }
 </style>

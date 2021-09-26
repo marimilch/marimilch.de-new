@@ -31,6 +31,7 @@ h1, h2, h3, h4, h5, h5, p {
         display: flex;
         align-content: flex-start;
         align-items: flex-start;
+        font-size: 28px;
 
         @media (prefers-color-scheme: dark) {
             background: var(--deep-pink);
@@ -78,8 +79,8 @@ h1, h2, h3, h4, h5, h5, p {
             &::first-letter {
                 text-transform: uppercase;
                 font-family: Pacifico, cursive;
-                font-size: 50px;
-                padding: 16px 16px 16px 10px;
+                font-size: 64px;
+                padding: 19px 24px 19px 10px;
                 margin-right: 7px;
                 float: left;
                 background: var(--canvas);

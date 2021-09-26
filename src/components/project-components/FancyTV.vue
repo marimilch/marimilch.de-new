@@ -14,6 +14,7 @@
         :initialRotationRad="{x:0, y:-.35, z:0}"
         :autoInitialize="false"
         :distance="-.03"
+        :pixelateOnClick="false"
         v-on:click="switchChannel()"
     >
         <slot></slot>

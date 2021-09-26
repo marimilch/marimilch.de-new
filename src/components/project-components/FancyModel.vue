@@ -3,7 +3,7 @@
         <div class="left-side">
             <slot></slot>
         </div>
-        <div class="right-side">
+        <div class="right-side" v-on:click="pixelateOnClick ? resetPixelation() : null">
             <Model 
                 :modelPath="modelPath" 
                 :rotateWithScroll="true" 
@@ -55,6 +55,10 @@ export default {
         autoInitialize: {
             default: true,
             type: Boolean,
+        },
+        pixelateOnClick: {
+            default: true,
+            type: Boolean
         }
     },
     mounted(){
@@ -62,20 +66,12 @@ export default {
     },
     data(){
         return {
-            materials: [
-                new THREE.MeshStandardMaterial({ 
-                    color: 0xee6a7c,
-                    roughness: 0,
-                }),
-            ]
+            materials: undefined
         }
     },
     computed: {
         startPosition(){
             return [0,-.17,0]
-        },
-        model(){
-            return this.$refs.model
         }
     },
     components: {
@@ -86,10 +82,14 @@ export default {
             this.$nextTick(function() {
                 this.$refs.model.backColor = this.getBackColor()
                 this.$refs.model.color = '#ee6a7c'
-                this.$refs.model.materials = this.materials
+
+                if (this.materials) this.$refs.model.materials = this.materials
 
                 this.$refs.model.initialize()
             })
+        },
+        resetPixelation(){
+            this.$refs.model.resetPixelation()
         },
         getWrap(){
             const maybeModel = this.$refs.fancyModelWrap

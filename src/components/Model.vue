@@ -99,7 +99,7 @@ export default {
             pixelationT: 0,
             pixelationSpeed: .02,
             pixelationTarget: 1,
-            pixelationStart: 100,
+            pixelationStart: 75,
             defaultColor: '#000000',
             defaultBackColor: '#000000',
             color: '#000000',
@@ -110,6 +110,14 @@ export default {
                     color: 0xee6a7c,
                     roughness: 0,
                 }),
+                // new THREE.MeshStandardMaterial({ 
+                //     color: 0xffe7d6,
+                //     roughness: 0,
+                // }),
+                // new THREE.MeshStandardMaterial({ 
+                //     color: 0x73464c,
+                //     roughness: 0,
+                // }),
             ]
         }
     },
@@ -200,20 +208,6 @@ export default {
             const renderPass = new RenderPass( this.scene, this.camera );
             this.effectComposer.addPass( renderPass );
 
-            // const saoPass = new SAOPass( this.scene, this.camera, false, true )
-            // saoPass.params.saoIntensity = .05
-            // saoPass.params.saoBlurRadius = 4
-            // // saoPass.minDistance = 0.001
-            // // saoPass.maxDistance = 0.3
-            // // saoPass.kernelRadius = 32
-            // this.effectComposer.addPass( saoPass )
-            // const bokehPass = new BokehPass( this.scene, this.camera, {
-            //     focus: this.cameraDistance - .01,
-            //     maxblur: .01,
-            //     aperture: .05
-            // } )
-            // this.effectComposer.addPass( bokehPass )
-
             const params = {
                 shape: 1,
                 radius: 5,
@@ -232,9 +226,6 @@ export default {
                 params 
             )
             this.effectComposer.addPass( halftonePassAlpha )
-
-            // const clearPass = new ClearPass()
-            // this.effectComposer.addPass( clearPass )
         },
         containInViewport(){
             const wrap = this.$refs.modelRef
@@ -290,7 +281,8 @@ export default {
             const delta = this.pixelationTarget - this.pixelationStart
             this.pixelationT = Math.min(1, this.pixelationT + this.pixelationSpeed)
 
-            this.pixelation = this.pixelationStart + this.pixelationT * delta
+            this.pixelation = this.pixelationStart 
+                + this.easeOutCubic(this.pixelationT) * delta
         },
         addLights(){
             const light1 = new THREE.DirectionalLight( 0xffffff, .4, .05, .05 ) // soft white light
@@ -384,8 +376,8 @@ export default {
             this.lerpStart = this.model.position
             this.lerpEnd = new THREE.Vector3(x, y, z)
         },
-        easeInOutCubic(x){
-            return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+        easeOutCubic(x) {
+            return 1 - Math.pow(1 - x, 3)
         },
         changeModelColor(color){
             this.material.color.setColor(color)

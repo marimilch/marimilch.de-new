@@ -29,11 +29,12 @@ h1, h2, h3, h4, h5, h5, p {
         background: var(--canvas);
         position: relative;
         display: flex;
-        align-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
+        align-content: center;
+        min-height: 100vh;
         font-size: 28px;
 
-        &:nth-child(2n-1){
+        &:nth-of-type(2n-1){
             &, & * {
                 --primary: var(--style2-primary); // main color
                 --neutral: var(--style2-neutral); // text color
@@ -63,6 +64,7 @@ h1, h2, h3, h4, h5, h5, p {
                 background: var(--primary);
                 color: var(--canvas);
                 border-radius: 5px;
+                line-height: .9;
             }
         }
         

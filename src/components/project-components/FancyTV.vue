@@ -111,6 +111,8 @@ export default {
             ]
         },
         videoLoopCascade(){
+            if (!this.$refs.videoStream) return
+
             // needed to catch loop and indcue effects
             if (this.$refs.videoStream.paused) {
                 this.switchChannel()

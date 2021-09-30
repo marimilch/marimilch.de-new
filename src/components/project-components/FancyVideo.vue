@@ -1,5 +1,5 @@
 <template>
-    <div class="fancy-paragraph">
+    <div class="">
         <video 
             loop
             muted
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import {onVisible} from '@/assets/js/on-visible.js'
+
 export default {
     props: {
         clipSrc: {
@@ -29,28 +31,18 @@ export default {
     },
     mounted(){
         this.$nextTick(function(){
-            this.initObserver()
+            onVisible([this.$refs.video], {
+                onElemVisible: el => {el.play()},
+                onElemHidden: el => {el.pause()},
+                options: {
+                    threshold: .25
+                }
+            })
         })
     },
     methods: {
         initObserver(){
-            const options = {
-                rootMargin: '0px',
-                threshold: .25
-            }
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                for (const entry of entries){
-                    if (!entry.isIntersecting) {
-                        entry.target.pause()
-                        continue
-                    }
-                    
-                    entry.target.play()
-                }
-            }, options)
-
-            observer.observe(this.$refs.video)
+            
         }
     }
 }

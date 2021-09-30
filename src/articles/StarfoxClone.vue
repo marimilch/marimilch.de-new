@@ -29,20 +29,31 @@
 
     <FancyVideo clipSrc="starfox-clone/shoot1"></FancyVideo>
 
+
+    <FancyCode language="csharp" title="PlayerController.cs">
+        <template v-slot:code><pre><code>
+// Linearly lerp to target move vector
+var di = requestedMovement - inertedInput;
+if (di.magnitude > inSpeedTimed)
+{
+    mv += di.normalized * inSpeedTimed;
+}</code></pre>
+        </template>
+        <template v-slot:comment>
+            <p>
+                Half of the time I invested in camera and player controls.
+                The other half in the boss. I wanted both to "feel right".
+            </p>
+        </template> 
+    </FancyCode>
+
+    <FancyVideo clipSrc="starfox-clone/movement"></FancyVideo>
+
     <FancyModel 
         modelPath="/glb/star-fox/boss.glb" 
         :distance="-.02"
         :flip="true"
     >
-        <p>
-            Half of the time I invested in camera and player controls.
-            The other half in the boss. I wanted both to "feel right".
-        </p>
-    </FancyModel>
-
-    <FancyVideo clipSrc="starfox-clone/movement"></FancyVideo>
-
-    <FancyParagraph title="The interview">
         <p>
             Ironically the professors didn't get to the boss 
             since they weren't that much of gamers
@@ -50,11 +61,11 @@
         </p>
 
         <p>
-            However my friends did. And killing the boss 
+            However my friends did. And defeating the boss 
             was the most rewarding experience for them. 
             So it was worth the effort. ❤️
         </p>
-    </FancyParagraph>
+    </FancyModel>
 
     <FancyMessage>
 
@@ -67,6 +78,7 @@ import FancyParagraph from '@/components/project-components/FancyParagraph'
 import FancyModel from '../components/project-components/FancyModel.vue'
 import FancyTV from '../components/project-components/FancyTV.vue'
 import FancyVideo from '../components/project-components/FancyVideo.vue'
+import FancyCode from '../components/project-components/FancyCode.vue'
 
 export default {
     props: {
@@ -80,6 +92,7 @@ export default {
         FancyModel,
         FancyTV,
         FancyVideo,
+        FancyCode,
     }
 }
 </script>

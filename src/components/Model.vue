@@ -38,6 +38,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { HalftonePassAlpha } from '@/assets/js/HalftonePassAlpha.js'
 
 import { prefersDark } from '@/assets/js/prefers-dark.js'
+import { onVisible } from '@/assets/js/on-visible.js'
+import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 
 
 // function getBackgroundColor() {
@@ -87,6 +89,7 @@ export default {
     },
     data(){
         return {
+            isVisible: false,
             lerpStart: null,
             lerpEnd: null,
             t: 1,
@@ -128,7 +131,22 @@ export default {
         if (this.autoInitialize) this.initialize()
     },
     methods: {
+        setVisible(){
+            this.isVisible = true
+            console.log(this.modelPath, 'visible')
+        },
+        setHidden(){
+            this.isVisible = false
+            console.log(this.modelPath, 'hidden')
+        },
         initialize(){
+            // Observe for sensible resource use
+            onVisible([this.$refs.modelRef], {
+                onElemVisible: this.setVisible.bind(this),
+                onElemHidden: this.setHidden.bind(this),
+            })
+
+
             // Not using data on purpose (workaround for three js in vue)
             // Scene
             const wrap = this.$refs.modelRef
@@ -320,47 +338,46 @@ export default {
             const wrap = this.$refs.modelRef
             if (!wrap) return
 
-            // Move to target position
-            if (this.t < 1){
-                this.t += this.moveSpeed
-                this.lerpStart.lerp(this.lerpEnd, this.t)
+            if (this.isVisible){
+                // Move to target position
+                if (this.t < 1){
+                    this.t += this.moveSpeed
+                    this.lerpStart.lerp(this.lerpEnd, this.t)
+                }
+
+                // Handle resize
+                const rect = wrap.getBoundingClientRect()
+                this.camera.aspect = rect.width / rect.height;
+                this.camera.updateProjectionMatrix();
+                
+                this.updateSize(rect)
+                
+                // Rotate around itself
+                if (this.rotate) this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
+
+                // Increase transform T
+                this.updatePixelation()
+
+                // Distance to center
+                const dtc = distanceToCenter(this.$refs.modelRef)
+                const midDelta = dtc.fractionY
+
+                // Rotate with scroll
+                if (this.rotateWithScroll){
+                    // this.model.rotation.x = midDelta / canvasRect.height
+                    //     * effectDampener * Math.PI
+                    // this.camera.rotation.x = angle
+
+                    const effectStrength = this.rotationEffectStrength
+                    const midDelta_ = midDelta * effectStrength
+                    this.camera.position.setY(midDelta_)
+                    this.camera.lookAt(0,0,0)
+                }
+
+                this.effectComposer.render()
             }
 
-            // Handle resize
-            const rect = wrap.getBoundingClientRect()
-            this.camera.aspect = rect.width / rect.height;
-            this.camera.updateProjectionMatrix();
-            
-            this.updateSize(rect)
-            
-            // Rotate around itself
-			if (this.rotate) this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
-
-            // Increase transform T
-            this.updatePixelation()
-
-            // Distance to center
-            const viewHeight = window.innerHeight
-            const viewMid = viewHeight / 2
-            const canvasRect = this.$refs.modelRef.getBoundingClientRect()
-            const canvasMid = canvasRect.top + canvasRect.height / 2
-            const midDelta = 2 * (canvasMid - viewMid)/canvasRect.height
-
-            // Rotate with scroll
-            if (this.rotateWithScroll){
-                // this.model.rotation.x = midDelta / canvasRect.height
-                //     * effectDampener * Math.PI
-                // this.camera.rotation.x = angle
-
-                const effectStrength = this.rotationEffectStrength
-                const midDelta_ = midDelta * effectStrength
-                this.camera.position.setY(midDelta_)
-                this.camera.lookAt(0,0,0)
-            }
-
-            // Keep rendering
-            // this.renderer.render( this.scene, this.camera )
-            this.effectComposer.render()
+            // Keep rendering and/or checking for change
             window.requestAnimationFrame(this.renderCascade.bind(this))
         },
         getCSSProp(elem, prop){

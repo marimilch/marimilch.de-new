@@ -23,7 +23,7 @@ function overlappingEnter(el) {
 function overlappingEnterAfter() {
   const main = getMain()
 
-  main.style.height = ''
+  // main.style.height = ''
 }
 
 function colorChangeNav(view){

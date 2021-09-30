@@ -159,6 +159,7 @@ export default {
             top: 0;
             padding: 0;
             height: 100vh;
+            cursor: pointer;
         }
     }
 </style>

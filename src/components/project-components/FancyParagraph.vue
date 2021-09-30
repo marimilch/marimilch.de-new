@@ -1,21 +1,17 @@
 <template>
     <div class="fancy-paragraph">
         <div class="left-side">
-            <h2>{{title}}</h2>
+            <slot name="side1"></slot>
         </div>
         <div class="right-side">
-            <slot></slot>
+            <slot name="side2"></slot>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: {
-        title: {
-            type: String,
-        }
-    }
+    
 }
 </script>
 

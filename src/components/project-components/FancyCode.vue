@@ -35,9 +35,11 @@
                     <div class="bottom-bar bar"><strong>{{language}}</strong></div>
                 </div>
                 <div 
-                    class="cursive below" 
+                    class="below" 
                     :style="`transform: scaleY( ${scaleYText} ); height: ${heightText}px; padding-top: ${paddingText}px;`"
-                >maricode</div>
+                >
+                    <sup><em>virtuelle</em></sup><strong>macro</strong><span>:pro</span><sup>1999</sup><sub>SE</sub>
+                </div>
             </div>
         </div>
         <div class="right-side">
@@ -196,6 +198,11 @@ $timing: 1s;
         align-items: center;
         position: absolute;
         width: 100%;
+        color: var(--canvas);
+
+        sub, span {
+            color: var(--primary);
+        }
     }
 
     .window-button {

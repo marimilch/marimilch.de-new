@@ -46,29 +46,29 @@ function handleMilkGlass(_this){
   const path = _this.$route.path
   const milkglass = _this.$refs.milkglass
 
-  if (!milkglass.startPositionModel) return
+  // if (!milkglass.startPositionModel) return
 
   if (path == '/') {
     milkglass.moveTo(
-      milkglass.startPositionModel.x,
-      milkglass.startPositionModel.y,
-      milkglass.startPositionModel.z
+      0,
+      0,
+      0
     )
     return
   }
 
   if ( path.includes('about') ){
     milkglass.moveTo(
-      .1, 
-      milkglass.startPositionModel.y - .1, 
-      .5
+      1.4, 
+      -.5, 
+      2
     )
     return
   }
 
   milkglass.moveTo(
-    -.75,
-    milkglass.startPositionModel.y,
+    -4,
+    0,
     .5
   )
 }

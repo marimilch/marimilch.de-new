@@ -6,17 +6,18 @@
     </div>      
 </template>
 
-<style scoped>
-    .model-wrap {
-        width: 100%;
-        height: 100%;
-    }
+<style lang="scss" scoped>
+.model-wrap {
+    width: 100%;
+    height: 100%;
+}
 
-    .model {
-        width: 100%;
-        height: 100%;
-    }
+.model {
+    width: 100%;
+    height: 100%;
+}
 
+::v-deep {
     .three-js {
         width: 100% !important;
         height: 100% !important;
@@ -28,6 +29,7 @@
         image-rendering: pixelated;                 /* Awesome future-browsers       */
         -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
     }
+}
 </style>
 
 <script>
@@ -51,9 +53,6 @@ import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 
 export default {
     props: {
-        startPositionModel: {
-            default: [0,0,0],
-        },
         rotateWithScroll: {
             type: Boolean,
             default: false
@@ -86,20 +85,30 @@ export default {
             type: Object,
             default: {x:0, y:0, z:0}
         },
+        pixelationTarget: {
+            type: Number,
+            default: 4
+        },
+        addPointPass: {
+            type: Boolean,
+            default: false
+        }
+
     },
     data(){
         return {
             isVisible: false,
             lerpStart: null,
             lerpEnd: null,
+            // translation: new THREE.Vector3(0,0,0),
+            // startPositionModel: null,
             t: 1,
             t2: 0,
-            moveSpeed: 0.003,
+            moveSpeed: 0.015,
             pixelation: 1,
             antialias: true,
             pixelationT: 0,
             pixelationSpeed: .02,
-            pixelationTarget: 1,
             pixelationStart: 75,
             defaultColor: '#000000',
             defaultBackColor: '#000000',
@@ -141,10 +150,13 @@ export default {
         },
         initialize(){
             // Observe for sensible resource use
-            onVisible([this.$refs.modelRef], {
-                onElemVisible: this.setVisible.bind(this),
-                onElemHidden: this.setHidden.bind(this),
-            })
+            if (!this.setVisibilityManually){
+                onVisible([this.$refs.modelRef], {
+                    onElemVisible: this.setVisible.bind(this),
+                    onElemHidden: this.setHidden.bind(this),
+                })
+            }
+                
 
 
             // Not using data on purpose (workaround for three js in vue)
@@ -199,6 +211,8 @@ export default {
 
                 this.lerpStart = this.model.position.clone()
                 this.lerpEnd = this.model.position.clone()
+                this.translation = new THREE.Vector3()
+                this.startPositionModel = this.model.position.clone()
 
                 this.model.rotation.set(
                     this.initialRotationRad.x * Math.PI,
@@ -221,12 +235,17 @@ export default {
                 this.renderer
             )
 
-            const renderPass = new RenderPass( this.scene, this.camera );
-            this.effectComposer.addPass( renderPass );
+            const wrap = this.$refs.modelRef
+            const rect = wrap.getBoundingClientRect()
+
+            const renderPass = new RenderPass( this.scene, this.camera )
+            this.effectComposer.addPass( renderPass )
+
+            if (!this.addPointPass) return
 
             const params = {
                 shape: 1,
-                radius: 5,
+                radius: 10,
                 rotateR: Math.PI / 12,
                 rotateB: Math.PI / 12 * 2,
                 rotateG: Math.PI / 12 * 3,
@@ -236,15 +255,15 @@ export default {
                 greyscale: false,
                 disable: false
             }
+
             const halftonePassAlpha = new HalftonePassAlpha( 
-                window.innerWidth, 
-                window.innerHeight,
+                rect.width, 
+                rect.height,
                 params 
             )
             this.effectComposer.addPass( halftonePassAlpha )
         },
         containInViewport(){
-            const wrap = this.$refs.modelRef
             const boundingBox = new THREE.Box3().setFromObject(this.model)
             const size = new THREE.Vector3()
             const center = new THREE.Vector3()
@@ -334,6 +353,11 @@ export default {
                 this.scene.add( light3 )
                 this.scene.add( ambientLight )
         },
+        easing(x){
+            const f1 = x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+
+            return f1
+        },
         renderCascade() {
             const wrap = this.$refs.modelRef
             if (!wrap) return
@@ -342,7 +366,14 @@ export default {
                 // Move to target position
                 if (this.t < 1){
                     this.t += this.moveSpeed
-                    this.lerpStart.lerp(this.lerpEnd, this.t)
+                    this.translation = this.lerpStart.clone()
+                    this.translation.lerp(this.lerpEnd, this.easing(this.t))
+
+                    const target = this.startPositionModel.clone()
+                    target.add(this.translation)
+
+
+                    this.model.position.set(target.x, target.y, target.z)
                 }
 
                 // Handle resize
@@ -387,9 +418,11 @@ export default {
             return res
         },
         moveTo(x, y, z){
-            this.t = 0
-            this.lerpStart = this.model.position
+            if (!this.model) return
+            console.log('move called')
+            this.lerpStart = this.translation.clone()
             this.lerpEnd = new THREE.Vector3(x, y, z)
+            this.t = 0
         },
         easeOutCubic(x) {
             return 1 - Math.pow(1 - x, 3)

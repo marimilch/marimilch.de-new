@@ -122,6 +122,8 @@ export default {
             window.requestAnimationFrame(this.videoLoopCascade.bind(this))
         },
         videoMirrorCascade(){
+            if (!this.$refs.videoStream) return
+
             const context = this.videoMirrorContext
             context.drawImage(this.$refs.videoStream, 0, 0, 300, 200)
             this.videoTexture.needsUpdate = true

@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import * as THREE from 'three'
 import Model from '@/components/Model.vue'
 
 export default {
@@ -67,11 +66,6 @@ export default {
     data(){
         return {
             materials: undefined
-        }
-    },
-    computed: {
-        startPosition(){
-            return [0,-.17,0]
         }
     },
     components: {

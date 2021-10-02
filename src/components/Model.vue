@@ -87,9 +87,13 @@ export default {
         },
         pixelationTarget: {
             type: Number,
-            default: 4
+            default: 6
         },
         addPointPass: {
+            type: Boolean,
+            default: false
+        },
+        setVisibilityManually: {
             type: Boolean,
             default: false
         }
@@ -151,13 +155,12 @@ export default {
         initialize(){
             // Observe for sensible resource use
             if (!this.setVisibilityManually){
+                // Check if canvas in viewport
                 onVisible([this.$refs.modelRef], {
                     onElemVisible: this.setVisible.bind(this),
                     onElemHidden: this.setHidden.bind(this),
                 })
             }
-                
-
 
             // Not using data on purpose (workaround for three js in vue)
             // Scene
@@ -266,6 +269,7 @@ export default {
         containInViewport(){
             const boundingBox = new THREE.Box3().setFromObject(this.model)
             const size = new THREE.Vector3()
+            this.boxSize = size
             const center = new THREE.Vector3()
             
             boundingBox.getSize(size)
@@ -283,17 +287,6 @@ export default {
             
         },
         updateMaterials(){
-            // const materialsInit = this.materialsInit
-
-            // prevents reactivity (maybe add later)
-            // this.materials = []
-
-            // for (const matDesc of materialsInit){
-            //     this.materials.push(
-            //         new THREE[matDesc.name](matDesc.attributes)
-            //     )
-            // }
-
             let i = 0
             this.model.traverse((o) => {
                 if (!o.isMesh) return
@@ -358,33 +351,65 @@ export default {
 
             return f1
         },
+        handleMovement(){
+            // Move to target position
+            if (this.t < 1){
+                this.t += this.moveSpeed
+                this.translation = this.lerpStart.clone()
+                this.translation.lerp(this.lerpEnd, this.easing(this.t))
+
+                const target = this.startPositionModel.clone()
+                target.add(this.translation)
+
+
+                this.model.position.set(target.x, target.y, target.z)
+            }
+        },
+        handleResize(wrap){
+            // Handle resize
+            const rect = wrap.getBoundingClientRect()
+            this.camera.aspect = rect.width / rect.height;
+            this.camera.updateProjectionMatrix();
+            
+            this.updateSize(rect)
+        },
+        modelIsInView(){
+            // @TODO correctly calculate this
+            if (!this.boxSize) return false
+
+            const modelZ = Math.abs(this.model.position.z)
+            const dist = 
+                modelZ
+                - this.boxSize.z / 2
+                + this.cameraDistance
+            
+            const maxDistX = dist + this.boxSize.x
+            if ( Math.abs(this.model.position.x) > maxDistX ) return false
+
+            const maxDistY = dist + this.boxSize.y
+            if ( Math.abs(this.model.position.y) > maxDistY ) return false
+
+            return true
+        },
         renderCascade() {
             const wrap = this.$refs.modelRef
-            if (!wrap) return
+            if ( !wrap ) return
 
-            if (this.isVisible){
-                // Move to target position
-                if (this.t < 1){
-                    this.t += this.moveSpeed
-                    this.translation = this.lerpStart.clone()
-                    this.translation.lerp(this.lerpEnd, this.easing(this.t))
+            // Handle movement here, so the model can
+            // return to the view and be rendered again
+            this.handleMovement()
 
-                    const target = this.startPositionModel.clone()
-                    target.add(this.translation)
+            if ( this.isVisible ){
+                this.handleResize(wrap)
 
-
-                    this.model.position.set(target.x, target.y, target.z)
+                // Only render if model is in view
+                if ( !this.modelIsInView() ) {
+                    this.requestNewFrame()
+                    return
                 }
 
-                // Handle resize
-                const rect = wrap.getBoundingClientRect()
-                this.camera.aspect = rect.width / rect.height;
-                this.camera.updateProjectionMatrix();
-                
-                this.updateSize(rect)
-                
                 // Rotate around itself
-                if (this.rotate) this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
+                if ( this.rotate ) this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
 
                 // Increase transform T
                 this.updatePixelation()
@@ -394,11 +419,7 @@ export default {
                 const midDelta = dtc.fractionY
 
                 // Rotate with scroll
-                if (this.rotateWithScroll){
-                    // this.model.rotation.x = midDelta / canvasRect.height
-                    //     * effectDampener * Math.PI
-                    // this.camera.rotation.x = angle
-
+                if ( this.rotateWithScroll ){
                     const effectStrength = this.rotationEffectStrength
                     const midDelta_ = midDelta * effectStrength
                     this.camera.position.setY(midDelta_)
@@ -409,6 +430,9 @@ export default {
             }
 
             // Keep rendering and/or checking for change
+            this.requestNewFrame()
+        },
+        requestNewFrame(){
             window.requestAnimationFrame(this.renderCascade.bind(this))
         },
         getCSSProp(elem, prop){
@@ -419,7 +443,7 @@ export default {
         },
         moveTo(x, y, z){
             if (!this.model) return
-            console.log('move called')
+
             this.lerpStart = this.translation.clone()
             this.lerpEnd = new THREE.Vector3(x, y, z)
             this.t = 0

@@ -7,7 +7,6 @@
             :autoInitialize="false"
             :addPointPass="true"
             :pixelationTarget="1"
-            :setVisibilityManually="true"
             ref="model"
         ></Model>
     </div>      

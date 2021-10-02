@@ -38,7 +38,7 @@
                     class="below" 
                     :style="`transform: scaleY( ${scaleYText} ); height: ${heightText}px; padding-top: ${paddingText}px;`"
                 >
-                    <sup><em>virtuelle</em></sup><strong>macro</strong><span>:pro</span><sup>1999</sup><sub>SE</sub>
+                    <sup><em>virtuelle</em></sup><strong>macro</strong><span>:pro</span><sup>2003</sup><sub>SE</sub>
                 </div>
             </div>
         </div>
@@ -121,6 +121,8 @@ export default {
             window.requestAnimationFrame(this.renderCascade.bind(this))
         },
         backAndForth(){
+            this.back = !this.back
+
             if (this.back){
                 this.scaleY = .5
                 this.scaleYText = 2
@@ -136,8 +138,6 @@ export default {
                 this.minHeight = 382
                 this.buttonHeight = 3
             }
-
-            this.back = !this.back
         }
     }
 }

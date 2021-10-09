@@ -1,5 +1,5 @@
 <template>
-  <div class="home default-padding fade-wrap">
+  <div class="home fade-wrap">
     <h2 class="huge">Welcome!</h2>
     <h3 class="nice-to-see-you">Nice to see you here :)</h3>
   </div>
@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    padding: 15px var(--content-padding-x);
   }
   .nice-to-see-you {
     font-family: Manrope, sans-serif;

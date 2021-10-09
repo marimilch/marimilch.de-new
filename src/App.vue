@@ -1,55 +1,54 @@
 <template>
-    <div>
-        <nav>
-            <div>
-                <div class="logo">
-                    <h1>marimilch</h1>
-                    <h2 class="sub">too poor for cereal</h2>
-                </div>
-                <div class="nav-buttons">
-                    <Button 
-                        v-for="(value, key) in navigationPoints" 
-                        v-bind:key="key"
-                        :to="value.to"
-                    >
-                        {{ value.label }}
-                    </Button>
-                </div>
+    <LoadingBar ref="loadingBar"></LoadingBar>
+    <nav>
+        <div>
+            <div class="logo">
+                <h1>marimilch</h1>
+                <h2 class="sub">too poor for cereal</h2>
             </div>
-        </nav>
-
-        <main ref="main">
-            <router-view v-slot="{ Component, route }">
-                <transition 
-                    @enter="enter" 
-                    @leave="leave" 
-                    :name="route.meta.transition"
+            <div class="nav-buttons">
+                <Button 
+                    v-for="(value, key) in navigationPoints" 
+                    v-bind:key="key"
+                    :to="value.to"
                 >
-                    <component :is="Component" :key="route.path"/>
-                </transition>
-            </router-view>
-        </main>
+                    {{ value.label }}
+                </Button>
+            </div>
+        </div>
+    </nav>
 
-        <div class="milkglass-background">
+    <main ref="main">
+        <router-view v-slot="{ Component, route }">
+            <transition 
+                @enter="enter" 
+                @leave="leave" 
+                :name="route.meta.transition"
+            >
+                <component :is="Component" :key="route.path"/>
+            </transition>
+        </router-view>
+    </main>
+
+    <footer>
+        <p class="center footer-content">
+            © marimilch. all rights reserved or something. i don't know, i'm just a footer, lol.
+        </p>
+    </footer>
+
+    <div class="milkglass-background">
             <MilkGlass ref="milkglass"></MilkGlass>
         </div>
 
         <div class="waves-background">
             <Wave ref="wave"></Wave>
         </div>
-
-        <footer>
-            <p class="center footer-content">
-                © marimilch. all rights reserved or something. i don't know, i'm just a footer, lol.
-            </p>
-        </footer>
-        
-    </div>
 </template>
 
 <script>
 import Button from './components/Button'
 import MilkGlass from '@/components/MilkGlass'
+import LoadingBar from '@/components/LoadingBar'
 import Wave from '@/components/Wave'
 import * as transitions from './assets/js/transitions'
 
@@ -79,6 +78,9 @@ export default {
         },
     },
     methods: {
+        startLoadingBar(){
+            if (this.$refs.loadingBar) this.$refs.loadingBar.startLoading()
+        },
         getCurrentHeight(el){
             return el.getBoundingClientRect().height
         },
@@ -92,21 +94,26 @@ export default {
             const el = this.getCurrentContentElement()
             this.enter(el)
         },
-        enter(el, done){
+        async enter(el, done){
             return transitions[this.routeTransition].enter.bind(this)(el, done)
         },
-        leave(el, done){
+        async leave(el, done){
             return transitions[this.routeTransition].leave.bind(this)(el, done)
         }
     },
     components: {
         Button,
         MilkGlass,
-        Wave
+        Wave,
+        LoadingBar,
     },
     watch: {
         contentHeight(val){
             this.$refs.main.style.height = val + 'px'
+        },
+        '$route' (to, from) {
+            if (to == from) return
+            this.startLoadingBar()
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="default-padding about-wrap style2">
+    <div class="about-wrap style2">
         <div class="about fade-wrap">
             <h2>About Me</h2>
             <p>I'm a graduate in computer science and I really enjoy programming and anything involving creativity.</p>
@@ -19,17 +19,19 @@
                 <span>My mother, </span>
                 <span>my father, </span>
                 <span>Arkady, </span>
-                <span>Felix, </span>
-                <span>Renyo, </span>
-                <span>Marko, </span>
-                <span>Batiste, </span>
-                <span>Cedric, </span>
                 <span>Sev, </span>
+                <span>Felix, </span>
+                <span>Marko, </span>
+                <span>Renyo, </span>
+                <span>Cedric, </span>
+                <span>Batiste, </span>
                 <span>Yamina</span>
             </div>
 
-            <div class="background-zoom-wrap">
-                <div class="background-zoom"></div>
+            <div class="overflow-chamber">
+                <div class="background-zoom-wrap">
+                    <div class="background-zoom"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -38,22 +40,38 @@
 <style lang="scss" scoped>
     .about-wrap {
         position: relative;
+        padding: 15px var(--content-padding-x);
+        height: var(--content-height);
+        display: flex;
+        align-content: center;
+        align-items: center;
     }
     .cursive, p, span, h2, h3 {
         color: var(--neutral);
     }
-    .background-zoom-wrap {
-        transform-origin: top left;
+    .overflow-chamber {
         position: absolute;
-        top: 50%;
+        top: 0;
         left: 0;
         z-index: -1;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .background-zoom-wrap {
+        width: 100%;
+        height: 100vh;
+        overflow: visible;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
     }
     .background-zoom {
         width: calc( 1 * max( 100vw, 100vh ) );
         height: calc( 1 * max( 100vw, 100vh ) );
         max-width: 100%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 0);
         background: var(--canvas);
         transform-origin: center;
         border-radius: 99999px;

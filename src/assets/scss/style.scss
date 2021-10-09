@@ -70,7 +70,7 @@ body {
 }
 main {
     position: relative;
-    transition: height .5s ease;
+    // transition: height .5s ease;
 }
 main > div {
     min-height: var(--content-min-height);
@@ -97,14 +97,9 @@ footer, .cookies {
     line-height: 1.6;
 }
 footer {
-    height: 0;
-    overflow: visible;
-
     .footer-content {
         margin: 0;
         height: var(--footer-height);
-        position: relative;
-        bottom: var(--footer-height);
         padding: var(--content-padding);
     }
 }
@@ -334,8 +329,6 @@ body pre code.hljs {
     --neutral: var(--style1-neutral); // text color
     --canvas: var(--style1-canvas); // background color
 
-
-
     // --dark-brown: #33060c;
     --dark-blue: #0D0E34;
     --dark-purple: #241E67;
@@ -371,5 +364,5 @@ body pre code.hljs {
     --footer-height: 93px;
     --nav-height: 160px;
 
-    --content-min-height: 100vh;
+    --content-min-height: calc( 100vh - var(--footer-height) );
 }

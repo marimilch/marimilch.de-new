@@ -11,19 +11,28 @@ function overlappingLeave(el){
 
   main.style.height = el.getBoundingClientRect().height + 'px'
   el.style.position = 'absolute'
+
+  el.style.overflow = 'hidden'
 }
 
 function overlappingEnter(el) {
   const main = getMain()
+  const leaving = document.querySelector('.v-leave-active')
+  const rect = el.getBoundingClientRect()
 
-  main.style.height = el.getBoundingClientRect().height + 'px'
+  if (leaving){
+    console.log('found leaving')
+    leaving.style.height = rect.height + 'px'
+  }
+
+  main.style.height = rect.height + 'px'
   // el.style.position = 'absolute'
 }
 
 function overlappingEnterAfter() {
   const main = getMain()
 
-  // main.style.height = ''
+  main.style.height = ''
 }
 
 function colorChangeNav(view){
@@ -93,10 +102,46 @@ function getAnimeTargets(el){
   return el.children
 }
 
+function stopLoadingBar(_this){
+  if (_this.$refs.loadingBar) _this.$refs.loadingBar.finishLoading()
+}
+
 function fadeEnter(el, done) {
+  stopLoadingBar(this)
   overlappingEnter(el)
   colorChangeNav(el)
   handleMilkGlass(this)
+
+  anime({
+    targets: el,
+    opacity: [
+      {
+        value: isBGZoom(1, 0),
+        duration: 0,
+        easing: 'linear'
+      },
+      {
+        value: 1,
+        duration: 2000,
+        easing: 'easeOutQuad'
+      },
+    ],
+    filter: [
+      {
+        value: 'blur(100px)',
+        duration: 0,
+        easing: 'linear'
+      },
+      {
+        value: 'blur(0)',
+        duration: 2000,
+        easing: 'easeOutQuad'
+      },
+    ],
+    complete: done
+  })
+  return
+
   handleWave(this)
 
   anime({
@@ -137,6 +182,39 @@ function fadeLeave(el, done) {
   overlappingLeave(el)
   colorChangeNav(el)
 
+  // el.style.position = 'relative'
+  // el.style.zIndex = '10'
+
+  anime({
+    targets: el,
+    opacity: [
+      {
+        value: 1,
+        duration: 0,
+        easing: 'linear'
+      },
+      {
+        value: isBGZoom(1, 0),
+        duration: 2000,
+        easing: 'easeOutQuad'
+      },
+    ],
+    filter: [
+      {
+        value: 'blur(0px)',
+        duration: 0,
+        easing: 'linear'
+      },
+      {
+        value: 'blur(100px)',
+        duration: 2000,
+        easing: 'easeOutQuad'
+      },
+    ],
+    complete: done
+  })
+
+  return
   anime({
     targets: getAnimeTargets(el),
     opacity: [
@@ -184,6 +262,7 @@ function getScreenDims(){
 }
 
 function projectDetailsEnter(el, done) {
+  stopLoadingBar(this)
   const projectSlug = this.$route.params.slug
 
   if (!projectSlug) {

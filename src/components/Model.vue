@@ -41,6 +41,7 @@ import { HalftonePassAlpha } from '@/assets/js/HalftonePassAlpha.js'
 
 import { prefersDark } from '@/assets/js/prefers-dark.js'
 import { onVisible } from '@/assets/js/on-visible.js'
+import { TimedFrames } from '@/assets/js/timed-frames.js'
 import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 
 
@@ -85,9 +86,10 @@ export default {
             type: Object,
             default: {x:0, y:0, z:0}
         },
+        // if set to zero render as crisp as possible
         pixelationTarget: {
             type: Number,
-            default: 6
+            default: 4
         },
         addPointPass: {
             type: Boolean,
@@ -96,7 +98,11 @@ export default {
         setVisibilityManually: {
             type: Boolean,
             default: false
-        }
+        },
+        rotationSpeed: {
+            type: Number,
+            default: 1
+        },
 
     },
     data(){
@@ -108,11 +114,11 @@ export default {
             // startPositionModel: null,
             t: 1,
             t2: 0,
-            moveSpeed: 0.015,
+            moveSpeed: .45,
             pixelation: 1,
             antialias: true,
             pixelationT: 0,
-            pixelationSpeed: .02,
+            pixelationSpeed: .6,
             pixelationStart: 75,
             defaultColor: '#000000',
             defaultBackColor: '#000000',
@@ -139,20 +145,37 @@ export default {
         cameraDistance(){
             return (this.distanceFractionOrigin + this.distance) * this.focalLength
         },
+        pixelation_(){
+            return this.pixelation * window.devicePixelRatio + 1
+        },
     },
     mounted(){
         if (this.autoInitialize) this.initialize()
     },
+    beforeUnmount(){
+        this.scene.traverse( child => {
+            if ( !child.isMesh ) return
+
+            child.geometry.dispose()
+        })
+
+        for (const material of this.materials){
+            material.dispose()
+        }
+
+        this.renderer.dispose()
+    },
     methods: {
         setVisible(){
             this.isVisible = true
-            console.log(this.modelPath, 'visible')
         },
         setHidden(){
             this.isVisible = false
-            console.log(this.modelPath, 'hidden')
         },
         initialize(){
+            // Timed frames
+            this.timedFrames = new TimedFrames(this.renderCascade.bind(this))
+
             // Observe for sensible resource use
             if (!this.setVisibilityManually){
                 // Check if canvas in viewport
@@ -181,6 +204,7 @@ export default {
 
             this.renderer = new THREE.WebGLRenderer( { 
                 // antialias: this.antialias,
+                // devicePixelRatio: window.devicePixelRatio,
                 alpha: true
             } )
             this.updateSize(rect)
@@ -196,6 +220,7 @@ export default {
 
             // Model
             gltfLoader.load( this.modelPath, function ( gltf ) {
+                this.gltf = gltf
                 this.model = gltf.scene
                 // this.model.translateY(-.17)
                 // this.model.position.set(...this.startPositionModel)
@@ -227,7 +252,7 @@ export default {
 
                 this.camera.position.setZ(this.cameraDistance)
 
-                this.renderCascade()
+                this.requestNewFrame()
             }.bind(this), undefined, function ( error ) {
                 console.error( error )
             } ); 
@@ -246,9 +271,15 @@ export default {
 
             if (!this.addPointPass) return
 
+            // if (this.pixelationTarget < 4) 
+            //     console.warn(
+            //         'When using the point pass keeping the '
+            //         + 'pixelationTarget higher than 4 is recommended.'
+            //     )
+
             const params = {
                 shape: 1,
-                radius: 10,
+                radius: 15,
                 rotateR: Math.PI / 12,
                 rotateB: Math.PI / 12 * 2,
                 rotateG: Math.PI / 12 * 3,
@@ -260,8 +291,8 @@ export default {
             }
 
             const halftonePassAlpha = new HalftonePassAlpha( 
-                rect.width, 
-                rect.height,
+                rect.width * window.devicePixelRatio, 
+                rect.height * window.devicePixelRatio,
                 params 
             )
             this.effectComposer.addPass( halftonePassAlpha )
@@ -298,18 +329,18 @@ export default {
         },
         updateSize(rect){
             this.renderer.setSize( 
-                rect.width / this.pixelation, 
-                rect.height / this.pixelation
+                rect.width * window.devicePixelRatio / this.pixelation_, 
+                rect.height * window.devicePixelRatio / this.pixelation_
             )
         },
         resetPixelation(){
             this.pixelationT = 0
         },
-        updatePixelation(){
+        updatePixelation(dt){
             const delta = this.pixelationTarget - this.pixelationStart
-            this.pixelationT = Math.min(1, this.pixelationT + this.pixelationSpeed)
+            this.pixelationT = Math.min(1, this.pixelationT + this.pixelationSpeed * dt)
 
-            this.pixelation = this.pixelationStart 
+            this.pixelation = this.pixelationStart
                 + this.easeOutCubic(this.pixelationT) * delta
         },
         addLights(){
@@ -351,23 +382,23 @@ export default {
 
             return f1
         },
-        handleMovement(){
+        handleMovement(dt){
             // Move to target position
-            if (this.t < 1){
-                this.t += this.moveSpeed
-                this.translation = this.lerpStart.clone()
-                this.translation.lerp(this.lerpEnd, this.easing(this.t))
+            this.t += this.moveSpeed * dt
+            this.t = Math.min(1, this.t)
+            this.translation = this.lerpStart.clone()
+            this.translation.lerp(this.lerpEnd, this.easing(this.t))
 
-                const target = this.startPositionModel.clone()
-                target.add(this.translation)
+            const target = this.startPositionModel.clone()
+            target.add(this.translation)
 
 
-                this.model.position.set(target.x, target.y, target.z)
-            }
+
+            this.model.position.set(target.x, target.y, target.z)
         },
-        handleResize(wrap){
+        handleResize(){
             // Handle resize
-            const rect = wrap.getBoundingClientRect()
+            const rect = this.rect
             this.camera.aspect = rect.width / rect.height;
             this.camera.updateProjectionMatrix();
             
@@ -391,16 +422,28 @@ export default {
 
             return true
         },
-        renderCascade() {
+        viewportDependantPosition(){
+            // position depending on window size
+            const x = this.model.position.x
+            this.model.position.setX(
+                (575 / this.rect.height * this.rect.width / 1440) * x,
+            )
+        },
+        renderCascade(dt) {
             const wrap = this.$refs.modelRef
             if ( !wrap ) return
 
+            // Make Bounding Client Rect available
+            this.rect = wrap.getBoundingClientRect()
+
             // Handle movement here, so the model can
             // return to the view and be rendered again
-            this.handleMovement()
+            this.handleMovement(dt)
 
             if ( this.isVisible ){
-                this.handleResize(wrap)
+                this.handleResize()
+
+                this.viewportDependantPosition()
 
                 // Only render if model is in view
                 if ( !this.modelIsInView() ) {
@@ -409,10 +452,11 @@ export default {
                 }
 
                 // Rotate around itself
-                if ( this.rotate ) this.model.rotation.y = (this.model.rotation.y + 0.01) % 360
+                if ( this.rotate ) this.model.rotation.y = 
+                    (this.model.rotation.y + this.rotationSpeed * dt) % 360
 
-                // Increase transform T
-                this.updatePixelation()
+                // "Pixelate" in
+                this.updatePixelation(dt)
 
                 // Distance to center
                 const dtc = distanceToCenter(this.$refs.modelRef)
@@ -433,7 +477,7 @@ export default {
             this.requestNewFrame()
         },
         requestNewFrame(){
-            window.requestAnimationFrame(this.renderCascade.bind(this))
+            this.timedFrames.requestFrame()
         },
         getCSSProp(elem, prop){
             const stylings = window.getComputedStyle(elem)

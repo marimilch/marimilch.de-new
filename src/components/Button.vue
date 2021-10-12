@@ -1,11 +1,13 @@
 <template>
     <router-link :to="to" :class="'button' + (alt ? ' alt' : '')" v-if="!external">
-        <span :class="icon ? 'desktop-only' : ''"><slot></slot></span>
-        <i class="mobile-only" v-if="icon" :data-feather="icon"></i>
+        <i v-if="icon" :data-feather="icon"></i>
+        <span><slot></slot></span>
+        <i class="external-link-icon" v-if="external" data-feather="external-link"></i>
     </router-link>
     <a :href="to" :class="'button' + (alt ? ' alt' : '')" v-else target="_blank">
-        <span :class="icon ? 'desktop-only' : ''"><slot></slot></span>
-        <i class="mobile-only" v-if="icon" :data-feather="icon"></i>
+        <i v-if="icon" :data-feather="icon"></i>
+        <span><slot></slot></span>
+        <i class="external-link-icon" v-if="external" data-feather="external-link"></i>
     </a>
 </template>
 
@@ -13,24 +15,48 @@
 // separate on purpose (easier to read)
 .button {
     --text:   var(--beige);
-    --shade0: var(--pink);
-    --shade1: var(--dark-pink);
-    --shade2: var(--light-brown);
-    --shade3: var(--brown);
-    --shade4: var(--brown);
+    --main:   var(--light-brown);
+    --side:   var(--brown);
+
+    --main-hover:   var(--dark-pink);
+    --side-hover:   var(--light-brown);
 
     @media (prefers-color-scheme: dark) {
         --text:   var(--beige);
-        --shade0: var(--pink);
-        --shade1: var(--magenta);
-        --shade2: var(--med-magenta);
-        --shade3: var(--dark-magenta);
-        --shade4: var(--black-magenta);
+        --main:   var(--med-magenta);
+        --side:   var(--dark-magenta);
+
+        --main-hover:   var(--magenta);
+        --side-hover:   var(--med-magenta);
+    }
+}
+
+.button.alt {
+    --text:   var(--blue);
+    --main:   var(--beige);
+    --side:   var(--blue);
+
+    --main-hover:   var(--beige);
+    --side-hover:   var(--green);
+
+    @media (prefers-color-scheme: dark) {
+        --text:   var(--beige);
+        --main:   var(--med-magenta);
+        --side:   var(--dark-magenta);
+
+        --main-hover:   var(--magenta);
+        --side-hover:   var(--med-magenta);
     }
 }
 
 $buttonOuterSpread: 2px;
 $buttonOuterBlur: 10px;
+
+.external-link-icon {
+    margin-left: 5px;
+    position: relative;
+    top: 3px;
+}
 
 .button {
     display: inline-block;
@@ -40,7 +66,6 @@ $buttonOuterBlur: 10px;
     text-decoration: none;
     border: none;
     padding: 15px 35px;
-    margin: 10px 15px;
     border-radius: 9999px;
     font-size: 20px;
     text-transform: uppercase;
@@ -52,27 +77,27 @@ $buttonOuterBlur: 10px;
     ;
     cursor: pointer;
     color: var(--text);
-    background: var(--shade2);
+    background: var(--main);
     box-shadow: 
-        0 var(--button-height) 0 0 var(--shade3),
-        0 calc( var(--button-height) * .5 ) 0 0 var(--shade3),
-        0 var(--button-height) $buttonOuterBlur $buttonOuterSpread var(--shade3)
+        0 var(--button-height) 0 0 var(--side),
+        0 calc( var(--button-height) * .5 ) 0 0 var(--side),
+        0 var(--button-height) $buttonOuterBlur $buttonOuterSpread var(--side)
     ;
 }
 .button:hover, .router-link-exact-active.button {
-    background: var(--shade1);
+    background: var(--main-hover);
     box-shadow: 
-        0 var(--button-height) 0 0 var(--shade2), 
-        0 calc( var(--button-height) * .5 ) 0 0 var(--shade2),
-        0 var(--button-height) $buttonOuterBlur $buttonOuterSpread var(--shade2)
+        0 var(--button-height) 0 0 var(--side-hover), 
+        0 calc( var(--button-height) * .5 ) 0 0 var(--side-hover),
+        0 var(--button-height) $buttonOuterBlur $buttonOuterSpread var(--side-hover)
     ;
 }
 .button:active, .button.pressed {
-    background: var(--shade1);
+    background: var(--main-hover);
     box-shadow: 
-        0 0px 0 0 var(--shade3),
-        0 3px 15px var(--shade1),
-        0 0 0 0 var(--shade1)
+        0 0px 0 0 var(--side),
+        0 3px 15px var(--main-hover),
+        0 0 0 0 var(--main-hover)
     ;
     top: 0;
 }
@@ -95,31 +120,33 @@ $buttonOuterBlur: 10px;
 }
 
 // Alternative design
-.button.alt {
-    color: var(--blue);
-    background: var(--beige);
-    box-shadow: 
-        0 var(--button-height) 0 0 var(--blue), 
-        0 var(--button-height) var(--inset-shadow) var(--dark-pink)
-}
-.button.alt:hover {
-    background: var(--beige);
-    box-shadow: 
-        0 var(--button-height) 0 var(--green),
-        0 var(--button-height) var(--inset-shadow) var(--dark-pink),
-        0 2px 15px var(--beige)
-    ;
-}
-.button.alt:active, nav .button.pressed {
-    background: var(--beige);
-    box-shadow: 
-        0 0 0 var(--dark-pink), 
-        0 2px 15px var(--beige)
-    ;
-}
+// .button.alt {
+//     color: var(--blue);
+//     background: var(--beige);
+//     box-shadow: 
+//         0 var(--button-height) 0 0 var(--blue), 
+//         0 var(--button-height) var(--inset-shadow) var(--dark-pink)
+// }
+// .button.alt:hover {
+//     background: var(--beige);
+//     box-shadow: 
+//         0 var(--button-height) 0 var(--green),
+//         0 var(--button-height) var(--inset-shadow) var(--dark-pink),
+//         0 2px 15px var(--beige)
+//     ;
+// }
+// .button.alt:active, nav .button.pressed {
+//     background: var(--beige);
+//     box-shadow: 
+//         0 0 0 var(--dark-pink), 
+//         0 2px 15px var(--beige)
+//     ;
+// }
 </style>
 
 <script>
+import FeatherIcons from 'feather-icons'
+
 export default {
     name: 'Button',
     props: {
@@ -139,6 +166,9 @@ export default {
             type: String,
             default: null
         },
+    },
+    mounted(){
+        FeatherIcons.replace()
     }
 }
 </script>

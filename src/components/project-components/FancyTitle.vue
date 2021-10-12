@@ -4,23 +4,26 @@
             <ClipBackground :src="`/clips/${project.slug}/fancy`" class="clip-background"></ClipBackground>
         </div>
 
-        <div class="frame main">
-            <h1 class="project-name">{{project.name}}</h1>
+        <Appearing class="frame main" effect="letterplay">
+            <h1 class="project-name"><slot name="title"></slot></h1>
             <p class="date">{{niceDate}}</p>
-        </div>
+        </Appearing>
 
         <div class="frame additional-text">
-            <p><slot></slot></p>
+            <Appearing class="content" effect="fancyTitleBlockAppear">
+                <p><slot name="description"></slot></p>
+            </Appearing>
         </div>
     </div>
 </template>
 
 <script>
 import ClipBackground from '@/components/project-components/ClipBackground'
+import Appearing from '@/components/effects/Appearing'
 
 export default {
     mounted(){
-        console.log('project', this.project)
+        // console.log('project', this.project)
     },
     computed: {
         niceDate(){
@@ -38,7 +41,8 @@ export default {
         },
     },
     components: {
-        ClipBackground
+        ClipBackground,
+        Appearing
     }
 }
 </script>
@@ -61,13 +65,12 @@ export default {
 .frame {
     display: flex;
     width: 100%;
-    max-width:100%;
+    max-width: 100%;
     height: 100vh;
     align-content: center; 
     align-items: center; 
 }
 .additional-text {
-    display: flex;
     justify-content: flex-end;
     padding: 0 var(--content-padding-x);
 
@@ -90,6 +93,7 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 10px;
     font-size: 180px;
+    width: 100%;
 
     color: var(--primary);
 }

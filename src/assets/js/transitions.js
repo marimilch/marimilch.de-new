@@ -13,6 +13,7 @@ function overlappingLeave(el){
   el.style.position = 'absolute'
 
   el.style.overflow = 'hidden'
+  el.style.zIndex = '5'
 }
 
 function overlappingEnter(el) {
@@ -61,7 +62,7 @@ function handleMilkGlass(_this){
   if (path == '/') {
     // model.setVisible()
     milkglass.moveTo(
-      0,
+      -1.4,
       0,
       0
     )
@@ -71,7 +72,7 @@ function handleMilkGlass(_this){
   if ( path.includes('about') ){
     // model.setVisible()
     milkglass.moveTo(
-      1.4, 
+      1.2, 
       -.5, 
       2
     )
@@ -122,7 +123,7 @@ function fadeEnter(el, done) {
       },
       {
         value: 1,
-        duration: 2000,
+        duration: 500,
         easing: 'easeOutQuad'
       },
     ],
@@ -134,7 +135,7 @@ function fadeEnter(el, done) {
       },
       {
         value: 'blur(0)',
-        duration: 2000,
+        duration: 500,
         easing: 'easeOutQuad'
       },
     ],
@@ -195,7 +196,7 @@ function fadeLeave(el, done) {
       },
       {
         value: isBGZoom(1, 0),
-        duration: 2000,
+        duration: 1000,
         easing: 'easeOutQuad'
       },
     ],
@@ -207,7 +208,7 @@ function fadeLeave(el, done) {
       },
       {
         value: 'blur(100px)',
-        duration: 2000,
+        duration: 1000,
         easing: 'easeOutQuad'
       },
     ],
@@ -288,24 +289,24 @@ function projectDetailsEnter(el, done) {
     ]
   })
 
-  anime({
-    targets: h1,
-    opacity: [
-      { value: 0, duration: 0 },
-      { value: 1, duration: 750, easing: 'easeInOutQuad' }
-    ],
-    delay: 1500,
-    complete: done
-  })
+  // anime({
+  //   targets: h1,
+  //   opacity: [
+  //     { value: 0, duration: 0 },
+  //     { value: 1, duration: 750, easing: 'easeInOutQuad' }
+  //   ],
+  //   delay: 1500,
+  //   complete: done
+  // })
 
-  anime({
-    targets: el.querySelectorAll('h2, h3, h4, h5, h6, p'),
-    opacity: [
-      { value: 0, duration: 0 },
-      { value: 1, duration: 750, easing: 'easeInOutQuad' }
-    ],
-    delay: anime.stagger(250, { start: 2250 }),
-  })
+  // anime({
+  //   targets: el.querySelectorAll('h2, h3, h4, h5, h6, p'),
+  //   opacity: [
+  //     { value: 0, duration: 0 },
+  //     { value: 1, duration: 750, easing: 'easeInOutQuad' }
+  //   ],
+  //   delay: anime.stagger(250, { start: 2250 }),
+  // })
 }
 
 export const Fade = {

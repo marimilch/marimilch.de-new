@@ -1,8 +1,8 @@
 <template>
     <div class="fancy-model fancy-paragraph" ref="fancyModelWrap" :data-flip="flip">
-        <div class="left-side">
+        <Appearing class="left-side" effect="fancyParagraphAppear">
             <slot></slot>
-        </div>
+        </Appearing>
         <div class="right-side" v-on:click="pixelateOnClick ? resetPixelation() : null">
             <Model 
                 :modelPath="modelPath" 
@@ -21,6 +21,7 @@
 
 <script>
 import Model from '@/components/Model.vue'
+import Appearing from '@/components/effects/Appearing'
 
 export default {
     props: {
@@ -69,7 +70,8 @@ export default {
         }
     },
     components: {
-        Model
+        Model,
+        Appearing
     },
     methods: {
         initialize(){

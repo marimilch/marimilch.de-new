@@ -1,6 +1,9 @@
 <template>
     <div class="wrap">
-        <div class="bar" :style="`opacity: ${opacity}; width: ${percentage}%`"></div>
+        <div 
+            class="bar background-rainbow" 
+            :style="`opacity: ${opacity}; width: ${percentage}%`"
+        ></div>
     </div>
 </template>
 
@@ -61,10 +64,6 @@ export default {
     height: 100%;
     width: 100%;
     transition: opacity .5s ease;
-    background: var(--primary);
-
-    @media (prefers-color-scheme: dark) {
-        background: var(--dark-pink);
-    }
+    animation: RainbowAnimation .5s linear infinite;
 }
 </style>

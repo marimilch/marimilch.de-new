@@ -1,8 +1,15 @@
 <template>
     <FancyTitle :project="project">
-        Even today Star Fox for Super Nintendo is one of my favorite games.
-        There is action. There is challenge. There are cool characters.
-        And the kick-ass music.
+        <template v-slot:title>
+            Star Fox<br>in Unity
+        </template>
+        <template v-slot:description>
+            Even today Star Fox for Super Nintendo is one of my 
+            <RainbowText>favorite games</RainbowText>.
+            There is action. There is challenge. 
+            There are cool characters.
+            And the kick-ass music.
+        </template>
     </FancyTitle>
 
     <FancyTV movieSlug="/clips/starfox-clone/starfox-snes">
@@ -79,6 +86,8 @@ import FancyModel from '../components/project-components/FancyModel.vue'
 import FancyTV from '../components/project-components/FancyTV.vue'
 import FancyVideo from '../components/project-components/FancyVideo.vue'
 import FancyCode from '../components/project-components/FancyCode.vue'
+import RainbowText from '@/components/effects/RainbowText'
+
 
 export default {
     props: {
@@ -93,6 +102,7 @@ export default {
         FancyTV,
         FancyVideo,
         FancyCode,
+        RainbowText
     }
 }
 </script>

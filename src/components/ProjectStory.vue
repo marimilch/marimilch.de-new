@@ -78,8 +78,6 @@ h1, h2, h3, h4, h5, h5, p {
 </style>
 
 <script>
-import { ref } from 'vue'
-
 // Get all article components
 const requireComponent = require.context(
     // The relative path of the components folder
@@ -87,7 +85,7 @@ const requireComponent = require.context(
     // Whether or not to look in subfolders
     false,
     // The regular expression used to match base component filenames
-    /[A-Z]\w+\.(vue)$/
+    /[A-Za-z\-]\w*\.(vue)$/
 )
 
 const dComponents = {}
@@ -108,26 +106,6 @@ requireComponent.keys().forEach(fileName => {
 });
 
 export default {
-    setup(props){
-        let compiledMD = ref('')
-        let failed = ref(false)
-
-        const getMarkdown = async () => {
-            try {
-                const component = await import(`@/articles/${kebabToCamel(props.project.slug)}.vue`)
-                this.components.Story = component
-            } catch (e) {
-                console.error('Something went wrong', e)
-                failed.value = true
-            }
-        }
-
-        return {
-            compiledMD,
-            failed,
-            getMarkdown
-        }
-    },
     props: {
         project: {
             required: true

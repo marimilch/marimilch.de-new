@@ -42,9 +42,9 @@
                 </div>
             </div>
         </div>
-        <div class="right-side">
+        <Appearing class="right-side" effect="fancyParagraphAppear">
             <slot name="comment"></slot>
-        </div>
+        </Appearing>
     </div>
 </template>
 
@@ -52,6 +52,7 @@
 import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 import hljs from 'highlight.js'
 import { prefersDark } from '@/assets/js/prefers-dark.js'
+import Appearing from '@/components/effects/Appearing'
 
 if ( prefersDark() ){
     import('highlight.js/styles/github-dark.css')
@@ -139,7 +140,10 @@ export default {
                 this.buttonHeight = 3
             }
         }
-    }
+    },
+    components: {
+        Appearing,
+    },
 }
 </script>
 

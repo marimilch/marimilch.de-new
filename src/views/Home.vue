@@ -1,18 +1,24 @@
 <template>
-  <div class="home fade-wrap">
-    <h2 class="huge">Welcome!</h2>
-    <h3 class="nice-to-see-you">Nice to see you here :)</h3>
+  <div class="home-wrap">
+    <div class="home">
+        <h2 class="huge">Welcome!</h2>
+        <h3 class="nice-to-see-you">Nice to see you here :)</h3>
+      </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  .home-wrap {
+    display: flex;
+    justify-content: flex-end;
+  }
   .home {
-    width: 100%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    align-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
     padding: 15px var(--content-padding-x);
   }
   .nice-to-see-you {
@@ -20,7 +26,6 @@
     font-size: 24px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    text-align: center;
   }
   .huge {
     font-size: 160px;

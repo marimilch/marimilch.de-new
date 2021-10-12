@@ -120,12 +120,12 @@ export default {
 </script>
 
 <style lang="scss">
-    // @import 'assets/scss/style.scss';
-    // @import 'assets/scss/style-tablet.scss';
-    // @import 'assets/scss/style-phone.scss';
-    // @import 'assets/scss/style-dark.css';
     h1 {
         margin: 0;
+    }
+
+    .nav-buttons > *{
+        margin-left: 25px;
     }
 
     .sub {

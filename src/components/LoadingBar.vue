@@ -1,9 +1,10 @@
 <template>
-    <div class="wrap">
+    <div class="loading-bar wrap" :style="`opacity: ${opacity};`">
         <div 
             class="bar background-rainbow" 
-            :style="`opacity: ${opacity}; width: ${percentage}%`"
+            :style="`width: ${percentage}%`"
         ></div>
+        <div class="star" :style="`filter: blur(${blurStar}px);`"></div>
     </div>
 </template>
 
@@ -18,6 +19,7 @@ export default {
             finish: true,
             percentage: 0,
             opacity: 0,
+            blurStar: 0,
         }
     },
     mounted(){
@@ -28,6 +30,7 @@ export default {
             this.finish = false
             this.percentage = 0
             this.opacity = 1
+            // this.blurStar = 0
 
             this.timedFrames.requestReset()
             this.timedFrames.requestFrame()
@@ -49,6 +52,7 @@ export default {
                 return
             }
             this.opacity = 0
+            // this.blurStar = 20
         }
     }
 }
@@ -59,11 +63,32 @@ export default {
     position: absolute;
     height: 5px;
     width: 100%;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    transition: opacity .5s ease;
 }
+
+.star {
+    background: white;
+    border-radius: 99px;
+    width: 7px;
+    height: 7px;
+    box-shadow: 
+        white 0 0 3px 1px,
+        var(--dark-magenta) 0 0 3px 1px,
+        white 0 0 5px 5px,
+        var(--magenta) 0 0 10px 10px,
+        var(--cyan) 0 0 20px 20px,
+        white 0 0 60px 20px
+    ;
+    transition: filter 1s ease;
+}
+
 .bar {
     height: 100%;
     width: 100%;
-    transition: opacity .5s ease;
-    animation: RainbowAnimation .5s linear infinite;
+    animation: RainbowAnimation 2s linear infinite;
 }
 </style>

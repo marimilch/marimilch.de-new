@@ -42,7 +42,7 @@
                 <!-- <Button :alt="true" to="//instagram.com/marimilch93" :external="true">Instagram</Button> -->
                 <!-- <button href="//twitter.com/marimilch93">Twitter</button> -->
                 <Button :alt="true" to="//github.com/marimilch" :external="true">GitHub</Button>
-                <Button to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button>
+                <Button :alt="true" to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button>
                 <!-- <button href="//dank-games.com">Dank-Games</button> -->
             </p>
         </div>

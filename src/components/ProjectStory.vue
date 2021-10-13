@@ -26,6 +26,8 @@ h1, h2, h3, h4, h5, h5, p {
 
 <style lang="scss">
     .fancy-paragraph {
+        position: relative;
+        z-index: 5;
         background: var(--canvas);
         position: relative;
         display: flex;

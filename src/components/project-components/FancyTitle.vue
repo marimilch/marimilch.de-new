@@ -4,15 +4,25 @@
             <ClipBackground :src="`/clips/${project.slug}/fancy`" class="clip-background"></ClipBackground>
         </div>
 
-        <Appearing class="frame main" effect="letterplay">
+        <Appearing class="h-screen frame main" effect="letterplay">
             <h1 class="project-name"><slot name="title"></slot></h1>
-            <p class="date">{{niceDate}}</p>
+            <Lerpy scrollWithStrength=".4" lerpSpeedInit="3">
+                <p class="date">{{niceDate}}</p>
+            </Lerpy>
         </Appearing>
 
-        <div class="frame additional-text">
-            <Appearing class="content" effect="fancyTitleBlockAppear">
-                <p><slot name="description"></slot></p>
-            </Appearing>
+        <div class="h-screen additional-text-wrap frame">
+            <div class="additional-text">
+                <Lerpy scrollWithStrength=".4" lerpSpeedInit="3"><hr></Lerpy>
+
+                <Lerpy scrollWithStrength=".25" lerpSpeedInit="2.5">
+                    <Appearing class="content" effect="fancyTitleBlockAppear">
+                        <p><slot name="description"></slot></p>
+                    </Appearing>
+                </Lerpy>
+
+                <Lerpy scrollWithStrength=".1" lerpSpeedInit="2"><hr></Lerpy>
+            </div>  
         </div>
     </div>
 </template>
@@ -20,6 +30,7 @@
 <script>
 import ClipBackground from '@/components/project-components/ClipBackground'
 import Appearing from '@/components/effects/Appearing'
+import Lerpy from '@/components/effects/Lerpy'
 
 export default {
     mounted(){
@@ -42,7 +53,8 @@ export default {
     },
     components: {
         ClipBackground,
-        Appearing
+        Appearing,
+        Lerpy,
     }
 }
 </script>
@@ -62,25 +74,32 @@ export default {
     letter-spacing: 3px;
     font-size: 24px;
 }
+.h-screen {
+    height: 100vh;
+}
 .frame {
     display: flex;
     width: 100%;
     max-width: 100%;
-    height: 100vh;
     align-content: center; 
     align-items: center; 
 }
-.additional-text {
+hr {
+    border-top: var(--neutral) 2px solid;
+}
+.additional-text-wrap {
+    display: flex;
     justify-content: flex-end;
     padding: 0 var(--content-padding-x);
 
-    p {
+    .additional-text {
         max-width: 800px;
+    }
+
+    p {
         font-family: Manrope, sans-serif;
         text-transform: uppercase;
         letter-spacing: 3px;
-        border-top: var(--neutral) 2px solid;
-        border-bottom: var(--neutral) 2px solid;
         
         padding: 50px 0;
         font-size: 32px;

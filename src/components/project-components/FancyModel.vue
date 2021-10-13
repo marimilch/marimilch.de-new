@@ -1,20 +1,24 @@
 <template>
     <div class="fancy-model fancy-paragraph" ref="fancyModelWrap" :data-flip="flip">
-        <Appearing class="left-side" effect="fancyParagraphAppear">
-            <slot></slot>
-        </Appearing>
+        <Lerpy class="left-side">
+            <Appearing effect="fancyParagraphAppear">
+                <slot></slot>
+            </Appearing>
+        </Lerpy>
         <div class="right-side" v-on:click="pixelateOnClick ? resetPixelation() : null">
-            <Model 
-                :modelPath="modelPath" 
-                :rotateWithScroll="true" 
-                class="fancy-model-instance"
-                :autoInitialize="false"
-                :initialRotationRad="initialRotationRad"
-                :distance="distance"
-                :rotationEffectStrength="rotationEffectStrength"
-                :rotate="rotate"
-                ref="model"
-            ></Model>
+            <Lerpy :whFull="true" scrollWithStrength=".75" lerpSpeedInit="3">
+                <Model 
+                    :modelPath="modelPath" 
+                    :rotateWithScroll="true" 
+                    class="fancy-model-instance"
+                    :autoInitialize="false"
+                    :initialRotationRad="initialRotationRad"
+                    :distance="distance"
+                    :rotationEffectStrength="rotationEffectStrength"
+                    :rotate="rotate"
+                    ref="model"
+                ></Model>
+            </Lerpy>
         </div>
     </div>
 </template>
@@ -22,6 +26,7 @@
 <script>
 import Model from '@/components/Model.vue'
 import Appearing from '@/components/effects/Appearing'
+import Lerpy from '@/components/effects/Lerpy'
 
 export default {
     props: {
@@ -71,7 +76,8 @@ export default {
     },
     components: {
         Model,
-        Appearing
+        Appearing,
+        Lerpy
     },
     methods: {
         initialize(){

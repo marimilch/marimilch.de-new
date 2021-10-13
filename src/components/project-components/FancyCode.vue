@@ -1,6 +1,6 @@
 <template>
     <div class="fancy-paragraph" :data-flip="flip" ref="toFancifyWrap">
-        <div class="left-side">
+        <Lerpy class="left-side" scrollWithStrength=".4" lerpSpeedInit="3">
             <div 
                 class="code-window-wrap" 
                 ref="codeWindowWrap" 
@@ -41,10 +41,12 @@
                     <sup><em>virtuelle</em></sup><strong>macro</strong><span>:pro</span><sup>2003</sup><sub>SE</sub>
                 </div>
             </div>
-        </div>
-        <Appearing class="right-side" effect="fancyParagraphAppear">
-            <slot name="comment"></slot>
-        </Appearing>
+        </Lerpy>
+        <Lerpy class="right-side">
+            <Appearing effect="fancyParagraphAppear">
+                <slot name="comment"></slot>
+            </Appearing>
+        </Lerpy>
     </div>
 </template>
 
@@ -53,6 +55,7 @@ import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 import hljs from 'highlight.js'
 import { prefersDark } from '@/assets/js/prefers-dark.js'
 import Appearing from '@/components/effects/Appearing'
+import Lerpy from '@/components/effects/Lerpy'
 
 if ( prefersDark() ){
     import('highlight.js/styles/github-dark.css')
@@ -143,6 +146,7 @@ export default {
     },
     components: {
         Appearing,
+        Lerpy,
     },
 }
 </script>

@@ -314,20 +314,20 @@ body pre code.hljs {
     background-image: linear-gradient( 
         90deg, 
         var(--blue), 
-        var(--cyan), 
+        var(--primary), 
         var(--blue), 
-        var(--cyan), 
+        var(--primary), 
         var(--blue) 
     );
 
     @media (prefers-color-scheme: dark) {
         background-image: linear-gradient( 
             90deg, 
-            var(--magenta), 
+            var(--primary), 
             var(--cyan), 
-            var(--magenta), 
+            var(--primary), 
             var(--cyan), 
-            var(--magenta) 
+            var(--primary) 
         );
     }
     background-size: 200% 100% !important;

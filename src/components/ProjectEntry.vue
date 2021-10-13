@@ -175,6 +175,7 @@ a {
     .project-thumb {
         transform-origin: right;
         border-radius: 9999px;
+        background: var(--primary);
         height: $projectWidth;
         width: $projectWidth;
         overflow: hidden;

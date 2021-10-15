@@ -6,7 +6,7 @@
             </Appearing>
         </Lerpy>
         <div class="right-side" v-on:click="pixelateOnClick ? resetPixelation() : null">
-            <Lerpy :whFull="true" scrollWithStrength=".75" lerpSpeedInit="3">
+            <Lerpy :whFull="true" scrollWithStrength=".4" lerpSpeedInit="3">
                 <Model 
                     :modelPath="modelPath" 
                     :rotateWithScroll="true" 

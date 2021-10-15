@@ -8,25 +8,27 @@
             @mouseleave="projectMouseLeave"
         >
             <article class="project w-full" ref="projectElem">
-                <div class="project-thumb">
-                    <video 
-                        loop
-                        muted
-                        v-if="project.clips"
-                        preload="metadata"
-                    >
-                        <source 
-                            :src="`/clips/${project.slug}/entry.mp4#t=.1`" 
-                            type="video/mp4"
+                <Lerpy :scrollWithStrength=".4">
+                    <div class="project-thumb">
+                        <video 
+                            loop
+                            muted
+                            v-if="project.clips"
+                            preload="metadata"
                         >
-                        <source 
-                            :src="`/clips/${project.slug}/entry.webm#t=.1`" 
-                            type="video/webm"
-                        >
-                    </video>
-                </div>
+                            <source 
+                                :src="`/clips/${project.slug}/entry.mp4#t=.1`" 
+                                type="video/mp4"
+                            >
+                            <source 
+                                :src="`/clips/${project.slug}/entry.webm#t=.1`" 
+                                type="video/webm"
+                            >
+                        </video>
+                    </div>
+                </Lerpy>
                 
-                <div class="project-description">
+                <Lerpy class="project-description">
                     <h3 class="project-title">
                         <!-- <a class="hook-link" :href="'#' + project.slug">#</a> -->
                         <span>
@@ -36,14 +38,16 @@
                     <p>
                         {{ project.teaser }}
                     </p>
-                </div>
+                </Lerpy>
             </article>
         </router-link>
     </div>
 </template>
 
 <script>
+import Lerpy from './effects/Lerpy.vue'
 export default {
+    components: { Lerpy },
     props: {
         project: {
             type: Object,

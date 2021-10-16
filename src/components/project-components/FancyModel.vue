@@ -1,12 +1,16 @@
 <template>
-    <div class="fancy-model fancy-paragraph" ref="fancyModelWrap" :data-flip="flip">
-        <Lerpy class="left-side">
-            <Appearing effect="fancyParagraphAppear">
-                <slot></slot>
-            </Appearing>
-        </Lerpy>
-        <div class="right-side" v-on:click="pixelateOnClick ? resetPixelation() : null">
-            <Lerpy :whFull="true" scrollWithStrength=".4" lerpSpeedInit="3">
+    <FancyHalves class="fancy-model block-halves" ref="fancyModelWrap">
+        <template v-slot:description>
+            <Lerpy>
+                <Appearing effect="fancyParagraphAppear">
+                    <FancyParagraph>
+                        <slot></slot>
+                    </FancyParagraph>
+                </Appearing>
+            </Lerpy>
+        </template>
+        <template v-slot:media v-on:click="pixelateOnClick ? resetPixelation() : null">
+            <Lerpy :whFull="true" :scrollWithStrength=".3" :lerpSpeedInit="3.5">
                 <Model 
                     :modelPath="modelPath" 
                     :rotateWithScroll="true" 
@@ -19,14 +23,16 @@
                     ref="model"
                 ></Model>
             </Lerpy>
-        </div>
-    </div>
+        </template>
+    </FancyHalves>
 </template>
 
 <script>
 import Model from '@/components/Model.vue'
 import Appearing from '@/components/effects/Appearing'
 import Lerpy from '@/components/effects/Lerpy'
+import FancyParagraph from '@/components/project-components/FancyParagraph'
+import FancyHalves from '@/components/project-components/FancyHalves.vue'
 
 export default {
     props: {
@@ -77,14 +83,13 @@ export default {
     components: {
         Model,
         Appearing,
-        Lerpy
+        Lerpy,
+        FancyParagraph,
+        FancyHalves
     },
     methods: {
         initialize(){
             this.$nextTick(function() {
-                this.$refs.model.backColor = this.getBackColor()
-                this.$refs.model.color = '#ee6a7c'
-
                 if (this.materials) this.$refs.model.materials = this.materials
 
                 this.$refs.model.initialize()
@@ -98,33 +103,6 @@ export default {
 
             if (!maybeModel) return console.log('no model'), null
             return maybeModel
-        },
-        getCSSProp(elem, prop){
-            const stylings = window.getComputedStyle(elem)
-            const res = stylings.getPropertyValue(prop)
-
-            return res
-        },
-        getBackColor(){
-            const maybeWrap = this.getWrap()
-            if (!maybeWrap) return '#000000'
-
-            return this.getCSSProp(
-                maybeWrap,
-                'background-color'
-            )
-        },
-        getTextColor(){
-            const maybeWrap = this.getWrap()
-            if (!maybeWrap) return '#000000'
-
-            const maybeText = maybeWrap.querySelector('h2')
-            if (!maybeText) return '#000000'
-
-            return this.getCSSProp(
-                maybeText,
-                'color'
-            )
         },
         updateModelColors(){
             const maybeModel = this.$refs.model
@@ -151,10 +129,6 @@ export default {
         align-items: center;
         align-content: center;
         min-height: 100vh;
-
-        &[data-flip="true"]{
-            flex-direction: row-reverse;
-        }
 
         .right-side {
             position: sticky;

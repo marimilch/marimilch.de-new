@@ -12,68 +12,73 @@
         </template>
     </FancyTitle>
 
-    <FancyTV movieSlug="/clips/starfox-clone/starfox-snes">
-        <p>
-            The original game relied on simple 3D graphics to keep the workload
-            for the Super FX chip low. That meant remaking the models
-            would not be so hard.
-        </p>
-    </FancyTV>
+    <FancyBlock>
+        <FancyTV movieSlug="/clips/starfox-clone/starfox-snes">
+            <p>
+                The original game relied on simple 3D graphics to keep the workload
+                for the Super FX chip low. That meant remaking the models
+                would not be so hard.
+            </p>
+        </FancyTV>
 
-    <FancyVideo clipSrc="starfox-clone/fancy"></FancyVideo>
+        <FancyVideo clipSrc="starfox-clone/fancy"></FancyVideo>
+    </FancyBlock>
 
-    <FancyModel 
-        modelPath="/glb/star-fox/fake_wing.glb" 
-        :distance="-.06"
-        :initialRotationRad="{x:.125, y:0, z:0}"
-    >
-        <p>
-            Contrary to the usual workflow, I started with building
-            the models instead of the game mechanics. The ship, then some enemies 
-            and then the obstacles.
-        </p>
-    </FancyModel>
+    <FancyBlock>
+        <FancyModel 
+            modelPath="/glb/star-fox/fake_wing.glb" 
+            :distance="-.06"
+            :initialRotationRad="{x:.125, y:0, z:0}"
+        >
+            <p>
+                Contrary to the usual workflow, I started with building
+                the models instead of the game mechanics. The ship, then some enemies 
+                and then the obstacles.
+            </p>
+        </FancyModel>
+        <FancyVideo clipSrc="starfox-clone/shoot1"></FancyVideo>
+    </FancyBlock>
 
-    <FancyVideo clipSrc="starfox-clone/shoot1"></FancyVideo>
-
-
-    <FancyCode language="csharp" title="PlayerController.cs">
-        <template v-slot:code><pre><code>
+    <FancyBlock>
+        <FancyCode language="csharp" title="PlayerController.cs">
+            <template v-slot:code><pre><code>
 // Linearly lerp to target move vector
 var di = requestedMovement - inertedInput;
 if (di.magnitude > inSpeedTimed)
 {
     mv += di.normalized * inSpeedTimed;
 }</code></pre>
-        </template>
-        <template v-slot:comment>
+            </template>
+            <template v-slot:comment>
+                <p>
+                    Half of the time I invested in camera and player controls.
+                    The other half in the boss. I wanted both to "feel right".
+                </p>
+            </template> 
+        </FancyCode>
+        <FancyVideo clipSrc="starfox-clone/movement"></FancyVideo>
+    </FancyBlock>
+
+    <FancyBlock>
+        <FancyModel 
+            modelPath="/glb/star-fox/boss.glb" 
+            :distance="-.02"
+            :flip="true"
+        >
             <p>
-                Half of the time I invested in camera and player controls.
-                The other half in the boss. I wanted both to "feel right".
+                Ironically the professors didn't get to the boss 
+                since they weren't that much of gamers
+                themselves. 😄
             </p>
-        </template> 
-    </FancyCode>
 
-    <FancyVideo clipSrc="starfox-clone/movement"></FancyVideo>
-
-    <FancyModel 
-        modelPath="/glb/star-fox/boss.glb" 
-        :distance="-.02"
-        :flip="true"
-    >
-        <p>
-            Ironically the professors didn't get to the boss 
-            since they weren't that much of gamers
-            themselves. 😄
-        </p>
-
-        <p>
-            However my friends did. And defeating the boss 
-            was the most rewarding experience for them. 
-            So it was worth the effort. ❤️
-        </p>
-    </FancyModel>
-
+            <p>
+                However my friends did. And defeating the boss 
+                was the most rewarding experience for them. 
+                So it was worth the effort. ❤️
+            </p>
+        </FancyModel>
+    </FancyBlock>
+    
     <FancyMessage>
 
     </FancyMessage>
@@ -81,11 +86,11 @@ if (di.magnitude > inSpeedTimed)
 
 <script>
 import FancyTitle from '@/components/project-components/FancyTitle'
-import FancyParagraph from '@/components/project-components/FancyParagraph'
-import FancyModel from '../components/project-components/FancyModel.vue'
-import FancyTV from '../components/project-components/FancyTV.vue'
-import FancyVideo from '../components/project-components/FancyVideo.vue'
-import FancyCode from '../components/project-components/FancyCode.vue'
+import FancyBlock from '@/components/project-components/FancyBlock'
+import FancyModel from '../components/project-components/FancyModel'
+import FancyTV from '../components/project-components/FancyTV'
+import FancyVideo from '../components/project-components/FancyVideo'
+import FancyCode from '../components/project-components/FancyCode'
 import RainbowText from '@/components/effects/RainbowText'
 
 
@@ -97,7 +102,7 @@ export default {
     },
     components: {
         FancyTitle,
-        FancyParagraph,
+        FancyBlock,
         FancyModel,
         FancyTV,
         FancyVideo,

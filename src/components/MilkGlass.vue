@@ -5,8 +5,8 @@
             :initialRotationRad="{x:0, y:-.35, z:0}"
             :distance="0"
             :autoInitialize="false"
-            :addPointPass="true"
-            :pixelationTarget="4"
+            :addPointPass="false"
+            :pixelationTarget="6"
             ref="model"
         ></Model>
     </div>      

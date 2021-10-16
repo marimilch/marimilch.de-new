@@ -120,10 +120,7 @@ export default {
             pixelationT: 0,
             pixelationSpeed: .6,
             pixelationStart: 75,
-            defaultColor: '#000000',
-            defaultBackColor: '#000000',
-            color: '#000000',
-            backColor: '#000000',
+
             distanceFractionOrigin: .11,
             materials: [
                 new THREE.MeshStandardMaterial({ 
@@ -225,11 +222,6 @@ export default {
                 // this.model.translateY(-.17)
                 // this.model.position.set(...this.startPositionModel)
                 this.scene.add( this.model )
-
-                this.material = new THREE.MeshStandardMaterial({ 
-                    color: this.color,
-                    roughness: 0,
-                })
 
                 this.updateMaterials()
 
@@ -494,9 +486,6 @@ export default {
         },
         easeOutCubic(x) {
             return 1 - Math.pow(1 - x, 3)
-        },
-        changeModelColor(color){
-            this.material.color.setColor(color)
         },
         changeCanvasColor(color){
             this.clearColor.set(color)

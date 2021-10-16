@@ -24,11 +24,11 @@ import { TimedFrames } from '@/assets/js/timed-frames.js'
 export default {
     props: {
         lerpSpeedInit: {
-            default: 4,
+            default: 4.5,
             type: Number
         },
         scrollWithStrength: {
-            default: .25,
+            default: .2,
             type: Number
         },
         deltaMax: {

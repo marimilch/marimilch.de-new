@@ -6,22 +6,36 @@ export default {
         // el.style.opacity
         const toLetterize = new Letterize({ targets: el, className: 'letter' })
 
+        let i = 0
         for (const l of toLetterize.listAll) {
-            l.style.opacity = 0
-            l.style.filter = 'blur(50px)'
-            // l.style.display = 'inline-block'
+            // l.style.opacity = '0'
+            const neg = i % 2 == 0 ? '' : '-'
+            l.style.height = '0'
+            l.style.display = 'inline-block'
+            l.style.overflow = 'hidden'
+            l.style.transform = 
+                `rotate(${neg}60deg) translateY(200px) translateX(${neg}100px)`
+
+            ++i
         }
     },
     appear(el) {
-        console.log('aappearnigg el', el.querySelectorAll('.letter'))
+        const targets = el.querySelectorAll('.letter')
+        if (!targets) return
+
+        const targetHeight = anime.get(targets[0], 'font-size', 'px')
+        console.log('targetHeight', targetHeight)
 
         anime({
             targets: el.querySelectorAll('.letter'),
-            filter: 'blur(0px)',
-            opacity: 1,
-            easing: 'linear',
-            duration: 1000,
-            delay: anime.stagger(100),
+            height: targetHeight,
+            // opacity: 1,
+            easing: 'easeOutQuad',
+            duration: 500,
+            rotate: 0,
+            translateY: 0,
+            translateX: 0,
+            delay: anime.stagger(70),
         })
     }
 }

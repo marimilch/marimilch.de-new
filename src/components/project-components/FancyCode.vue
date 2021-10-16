@@ -1,53 +1,60 @@
 <template>
-    <div class="fancy-paragraph" :data-flip="flip" ref="toFancifyWrap">
-        <Lerpy class="left-side" scrollWithStrength=".4" lerpSpeedInit="3">
-            <div 
-                class="code-window-wrap" 
-                ref="codeWindowWrap" 
-                :style="`
-                    filter: hue-rotate(${hueRotate}deg);
-                    min-height: ${minHeight}px;
-                    transform: scaleY(${scaleY})
-                `"
+    <FancyHalves :data-flip="flip" ref="toFancifyWrap">
+        <template v-slot:media>
+            <Lerpy 
+                :scrollWithStrength=".3"
+                :lerpSpeedInit="3.5"
             >
-                <div 
-                    class="code-window" 
-                    ref="codeWindow"
+                <div
+                    class="code-window-wrap" 
+                    ref="codeWindowWrap"
+                    :style="`
+                        filter: hue-rotate(${hueRotate}deg);
+                        min-height: ${minHeight}px;
+                        transform: scaleY(${scaleY})
+                    `"
                 >
-                    <div class="top-bar bar">
-                        <div 
-                            class="window-button"
-                            :style="`--button-height: ${buttonHeight}px;`"
-                        ></div>
-                        <div 
-                            class="window-button"
-                            v-on:click="backAndForth()"
-                            :style="`--button-height: ${buttonHeight}px;`"
-                        ></div>
-                        <div 
-                            class="window-button" 
-                            v-on:click="hueRotate = (hueRotate + 45) % 360"
-                            :style="`--button-height: ${buttonHeight}px;`"
-                        ></div>
-                        <span class="title">{{ title }}</span>
+                    <div 
+                        class="code-window" 
+                        ref="codeWindow"
+                    >
+                        <div class="top-bar bar">
+                            <div 
+                                class="window-button"
+                                :style="`--button-height: ${buttonHeight}px;`"
+                            ></div>
+                            <div 
+                                class="window-button"
+                                v-on:click="backAndForth()"
+                                :style="`--button-height: ${buttonHeight}px;`"
+                            ></div>
+                            <div 
+                                class="window-button" 
+                                v-on:click="hueRotate = (hueRotate + 45) % 360"
+                                :style="`--button-height: ${buttonHeight}px;`"
+                            ></div>
+                            <span class="title">{{ title }}</span>
+                        </div>
+                        <div class="code-content"><slot name="code"></slot></div>
+                        <div class="bottom-bar bar"><strong>{{language}}</strong></div>
                     </div>
-                    <div class="code-content"><slot name="code"></slot></div>
-                    <div class="bottom-bar bar"><strong>{{language}}</strong></div>
+                    <div 
+                        class="below" 
+                        :style="`transform: scaleY( ${scaleYText} ); height: ${heightText}px; padding-top: ${paddingText}px;`"
+                    >
+                        <sup><em>virtuelle</em></sup><strong>macro</strong><span>:pro</span><sup>2003</sup><sub>SE</sub>
+                    </div>
                 </div>
-                <div 
-                    class="below" 
-                    :style="`transform: scaleY( ${scaleYText} ); height: ${heightText}px; padding-top: ${paddingText}px;`"
-                >
-                    <sup><em>virtuelle</em></sup><strong>macro</strong><span>:pro</span><sup>2003</sup><sub>SE</sub>
-                </div>
-            </div>
-        </Lerpy>
-        <Lerpy class="right-side">
-            <Appearing effect="fancyParagraphAppear">
-                <slot name="comment"></slot>
-            </Appearing>
-        </Lerpy>
-    </div>
+            </Lerpy>
+        </template>
+        <template v-slot:description>
+            <Lerpy>
+                <Appearing effect="fancyParagraphAppear">
+                    <FancyParagraph><slot name="comment"></slot></FancyParagraph>
+                </Appearing>
+            </Lerpy>
+        </template>
+    </FancyHalves>
 </template>
 
 <script>
@@ -56,6 +63,8 @@ import hljs from 'highlight.js'
 import { prefersDark } from '@/assets/js/prefers-dark.js'
 import Appearing from '@/components/effects/Appearing'
 import Lerpy from '@/components/effects/Lerpy'
+import FancyHalves from '@/components/project-components/FancyHalves'
+import FancyParagraph from '@/components/project-components/FancyParagraph'
 
 if ( prefersDark() ){
     import('highlight.js/styles/github-dark.css')
@@ -147,6 +156,8 @@ export default {
     components: {
         Appearing,
         Lerpy,
+        FancyHalves,
+        FancyParagraph
     },
 }
 </script>

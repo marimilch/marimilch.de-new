@@ -1,22 +1,20 @@
 <template>
-    <div class="">
-        <video 
-            loop
-            muted
-            preload="metadata"
-            playinline
-            ref="video"
+    <video 
+        loop
+        muted
+        preload="metadata"
+        playinline
+        ref="video"
+    >
+        <source 
+            :src="`/clips/${clipSrc}.webm#t=.1`" 
+            type="video/mp4"
         >
-            <source 
-                :src="`/clips/${clipSrc}.webm#t=.1`" 
-                type="video/mp4"
-            >
-            <source 
-                :src="`/clips/${clipSrc}.mp4#t=.1`" 
-                type="video/webm"
-            >
-        </video>
-    </div>
+        <source 
+            :src="`/clips/${clipSrc}.mp4#t=.1`" 
+            type="video/webm"
+        >
+    </video>
 </template>
 
 <script>

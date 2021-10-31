@@ -1,12 +1,12 @@
 <template>
     <div class="about-wrap">
         <div class="about fade-wrap">
-            <h2 class="style2">About Me</h2>
+            <h2 class="style2 about-header">About Me</h2>
             <p class="style2">I'm a graduate in computer science and I really enjoy programming and anything involving creativity.</p>
             <p class="style2"><RainbowText class="cursive">marimilch</RainbowText> is a reference to the german version of the book <em>A Shadow Like A Leopard</em> by Myron Levoy.</p>
 
             <div class="style2">
-                <h3>I would like to thank</h3>
+                <h3 class="style2">I would like to thank</h3>
 
                 <span>My mother, </span>
                 <span>my father, </span>
@@ -21,7 +21,7 @@
             </div>
 
             <div class="style2">
-                <h3>Tools used</h3>
+                <h3 class="style2">Tools used</h3>
 
                 <span>Vue.js 3, </span>
                 <span>Feather Icons, </span>
@@ -42,7 +42,7 @@
                 <!-- <Button :alt="true" to="//instagram.com/marimilch93" :external="true">Instagram</Button> -->
                 <!-- <button href="//twitter.com/marimilch93">Twitter</button> -->
                 <Button :alt="true" to="//github.com/marimilch" :external="true">GitHub</Button>
-                <Button :alt="true" to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button>
+                <!-- <Button :alt="true" to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button> -->
                 <!-- <button href="//dank-games.com">Dank-Games</button> -->
             </p>
         </div>
@@ -50,6 +50,9 @@
 </template>
 
 <style lang="scss" scoped>
+    .about-header {
+        margin-top: 150px;
+    }
     .about-wrap {
         position: relative;
         padding: 15px var(--content-padding-x);
@@ -58,7 +61,7 @@
         align-content: center;
         align-items: center;
     }
-    p, span, h2, h3 {
+    p, span {
         color: var(--neutral);
     }
     .overflow-chamber {
@@ -98,12 +101,11 @@
         width: 40%;
 
         h2 {
-            font-size: 120px;
+            font-size: 80px;
         }
     }
     span {
         display: inline-block;
-        margin-right: 7px;
     }
 </style>
 

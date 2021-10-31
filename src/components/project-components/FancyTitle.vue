@@ -6,22 +6,22 @@
 
         <Appearing class="h-screen frame main" effect="letterplay">
             <h1 class="project-name"><slot name="title"></slot></h1>
-            <Lerpy :scrollWithStrength=".3" :lerpSpeedInit="3.5">
+            <Lerpy :scrollWithStrength=".3" :lerpSpeed="3.5">
                 <p class="date">{{niceDate}}</p>
             </Lerpy>
         </Appearing>
 
         <div class="h-screen additional-text-wrap frame">
             <div class="additional-text">
-                <Lerpy :scrollWithStrength=".4" :lerpSpeedInit="3"><hr></Lerpy>
+                <Lerpy :scrollWithStrength=".4" :lerpSpeed="3"><hr></Lerpy>
 
-                <Lerpy :scrollWithStrength=".25" :lerpSpeedInit="2.5">
+                <Lerpy :scrollWithStrength=".25" :lerpSpeed="2.5">
                     <Appearing class="content" effect="fancyTitleBlockAppear">
                         <p><slot name="description"></slot></p>
                     </Appearing>
                 </Lerpy>
 
-                <Lerpy :scrollWithStrength=".1" :lerpSpeedInit="2"><hr></Lerpy>
+                <Lerpy :scrollWithStrength=".1" :lerpSpeed="2"><hr></Lerpy>
             </div>  
         </div>
     </div>
@@ -108,12 +108,12 @@ hr {
     }
 }
 h1 {
-    font-family: Manrope, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    font-size: 180px;
+    // font-family: Manrope, sans-serif;
+    // text-transform: uppercase;
+    // letter-spacing: 10px;
+    font-size: 140px;
     width: 100%;
 
-    color: var(--primary);
+    // color: var(--primary);
 }
 </style>

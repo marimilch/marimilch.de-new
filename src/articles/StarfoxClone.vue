@@ -21,7 +21,10 @@
             </p>
         </FancyTV>
 
-        <FancyVideo clipSrc="starfox-clone/fancy"></FancyVideo>
+        <!-- <FancyVideos 
+            srcPrefix="starfox-clone" 
+            :slugs="['fancy', 'shoot1', 'movement']"
+        ></FancyVideos> -->
     </FancyBlock>
 
     <FancyBlock>
@@ -36,11 +39,15 @@
                 and then the obstacles.
             </p>
         </FancyModel>
-        <FancyVideo clipSrc="starfox-clone/shoot1"></FancyVideo>
+        <!-- <FancyVideo srcPrefix="starfox-clone" slug="shoot1"></FancyVideo> -->
     </FancyBlock>
 
     <FancyBlock>
-        <FancyCode language="csharp" title="PlayerController.cs">
+        <FancyCode 
+            language="csharp" 
+            title="PlayerController.cs"
+            href="https://github.com/marimilch/starfox-clone-scripts/blob/main/PlayerController.cs#L155"
+        >
             <template v-slot:code><pre><code>
 // Linearly lerp to target move vector
 var di = requestedMovement - inertedInput;
@@ -56,7 +63,7 @@ if (di.magnitude > inSpeedTimed)
                 </p>
             </template> 
         </FancyCode>
-        <FancyVideo clipSrc="starfox-clone/movement"></FancyVideo>
+        <!-- <FancyVideo srcPrefix="starfox-clone" slug="movement"></FancyVideo> -->
     </FancyBlock>
 
     <FancyBlock>
@@ -89,7 +96,8 @@ import FancyTitle from '@/components/project-components/FancyTitle'
 import FancyBlock from '@/components/project-components/FancyBlock'
 import FancyModel from '../components/project-components/FancyModel'
 import FancyTV from '../components/project-components/FancyTV'
-import FancyVideo from '../components/project-components/FancyVideo'
+import FancyVideos from '../components/project-components/fancy-videos/FancyVideos'
+// import FancyVideo from '../components/project-components/fancy-videos/FancyVideo'
 import FancyCode from '../components/project-components/FancyCode'
 import RainbowText from '@/components/effects/RainbowText'
 
@@ -105,7 +113,8 @@ export default {
         FancyBlock,
         FancyModel,
         FancyTV,
-        FancyVideo,
+        // FancyVideo,
+        FancyVideos,
         FancyCode,
         RainbowText
     }

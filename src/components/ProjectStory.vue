@@ -10,7 +10,8 @@
 ::v-deep {
 
 .modal-wrap {
-    margin-top: var(--content-padding-y)
+    margin-top: var(--content-padding-y);
+    counter-reset: fancy-block-counter;
 }
 h1, h2, h3, h4, h5, h5, p {
     padding-left: var(--content-padding-x);

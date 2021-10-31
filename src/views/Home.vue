@@ -2,7 +2,7 @@
   <div class="home-wrap">
     <div class="home">
         <h2 class="huge">Welcome!</h2>
-        <h3 class="nice-to-see-you">Nice to see you here :)</h3>
+        <p class="nice-to-see-you">Nice to see you here :)</p>
       </div>
   </div>
 </template>
@@ -22,21 +22,17 @@
     padding: 15px var(--content-padding-x);
   }
   .nice-to-see-you {
-    font-family: Manrope, sans-serif;
-    font-size: 24px;
+  //   font-family: Manrope, sans-serif;
+  //   font-size: 24px;
     text-transform: uppercase;
     letter-spacing: 3px;
+  //   text-shadow: none;
+  //   color: var(--primary);
+  //   animation: none;
+  //   font-weight: normal;
   }
   .huge {
-    font-size: 160px;
-  }
-
-  .huge, .nice-to-see-you {
-    text-shadow: var(--canvas) 0 0 20px;
-
-    @media (prefers-color-scheme: dark) {
-      text-shadow: var(--dark-brown) 0 0 20px;
-    }
+    font-size: 100px;
   }
 </style>
 

@@ -14,7 +14,7 @@ export default {
             l.style.display = 'inline-block'
             l.style.overflow = 'hidden'
             l.style.transform = 
-                `rotate(${neg}60deg) translateY(200px) translateX(${neg}100px)`
+                `rotate(${neg}60deg) translateY(300px) translateX(${neg}100px)`
 
             ++i
         }

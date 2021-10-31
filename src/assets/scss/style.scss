@@ -3,8 +3,16 @@
     src: url(/fonts/Manrope-VariableFont_wght.ttf);
 }
 @font-face {
+    font-family: Comfortaa;
+    src: url(/fonts/Comfortaa-VariableFont_wght.ttf);
+}
+@font-face {
     font-family: Pacifico;
     src: url(/fonts/Pacifico-Regular.ttf);
+}
+@font-face {
+    font-family: Mama;
+    src: url(/fonts/Mama-D0YW.ttf);
 }
 @font-face {
     font-family: PressStart2P;
@@ -160,14 +168,47 @@ a {
 .right {
     float:right;
 }
+
+$glowSpreadStart: 3px;
+$glowSpreadEnd: 2.5px;
+$glowBlurStart: 10px;
+$glowBlurEnd: 9px;
+
+@keyframes TextGlowAnimaton {
+    0% {
+        color: white;
+        text-shadow: 
+            var(--glow-color) 0 ($glowSpreadStart) $glowBlurStart,
+            var(--glow-color) 0 (-$glowSpreadStart) $glowBlurStart,
+            var(--glow-color) ($glowSpreadStart) 0 $glowBlurStart,
+            var(--glow-color) (-$glowSpreadStart) 0 $glowBlurStart,
+        ;
+    }
+    100% {
+        color: white;
+        text-shadow: 
+            var(--glow-color) 0 ($glowSpreadEnd) $glowBlurEnd,
+            var(--glow-color) 0 (-$glowSpreadEnd) $glowBlurEnd,
+            var(--glow-color) ($glowSpreadEnd) 0 $glowBlurEnd,
+            var(--glow-color) (-$glowSpreadEnd) 0 $glowBlurEnd,
+        ;
+    }
+}
 h1,h2,h3 {
-    font-family: Pacifico, cursive;
+    font-family: Comfortaa, sans-serif;
     // text-align: center;
-    font-weight: normal;
-    text-transform: lowercase;
-    color: var(--primary);
+    font-weight: 300;
+    text-transform: uppercase;
+    color: white;
+    animation: .15s TextGlowAnimaton cubic-bezier(.65,.05,.36,1) infinite alternate;
+    --glow-color: var(--primary);
     // z-index: 10;
     // position: relative;
+
+    &.style2 {
+        --glow-color: var(--cyan);
+    }
+
 }
 p {
     line-height: 1.6;
@@ -232,8 +273,8 @@ nav > div{
 }
 .cursive {
     color: var(--primary);
-    font-family: Pacifico, cursive;
-    text-transform: lowercase;
+    // font-family: Comfortaa, monospace;
+    // text-transform: lowercase;
 }
 .flex {
     display: flex;
@@ -306,7 +347,21 @@ body pre code.hljs {
 @keyframes RainbowAnimation {
     0%{ background-position: 0% 0% }
     100%{ background-position: 100% 0% }
-    // 100%{ background-position: 200% 0% !important }
+}
+
+@keyframes FlangerAnimation {
+    0%{ opacity: .9 }
+    100%{ transform: 1 }
+}
+
+@keyframes FlickerAnimation {
+    0%{ opacity: .75 }
+    100%{ opacity: 1 }
+}
+
+@keyframes FlickerSoftAnimation {
+    0%{ opacity: .93 }
+    100%{ opacity: 1 }
 }
 
 .background-rainbow {

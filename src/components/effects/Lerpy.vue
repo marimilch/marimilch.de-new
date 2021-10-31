@@ -1,7 +1,7 @@
 <template>
-    <div :class="whFull ? 'wh-full' : ''" ref="target">
+    <div :class="(whFull ? 'wh-full' : '')" ref="target">
         <div 
-            :class="whFull ? 'wh-full' : ''" 
+            :class="whFull ? 'wh-full lerpy-content' : ' lerpy-content'" 
             ref="content" 
             :style="`transform: translateY(${dy}px);`"
         >
@@ -23,7 +23,7 @@ import { TimedFrames } from '@/assets/js/timed-frames.js'
 
 export default {
     props: {
-        lerpSpeedInit: {
+        lerpSpeed: {
             default: 4.5,
             type: Number
         },
@@ -54,7 +54,6 @@ export default {
             lastScrollPosition: 0,
             scrollTarget: null,
             timedFrames: null,
-            lerpSpeed: 0,
             minDelta: 2,
             prec: 2,
             enabled: false
@@ -65,7 +64,6 @@ export default {
         this.enabled = true
 
         this.scrollTarget = document.querySelector('html')
-        this.lerpSpeed = Math.max(0, this.lerpSpeedInit)
 
         this.$nextTick(function(){
             this.timedFrames = new TimedFrames(this.renderCascade.bind(this))

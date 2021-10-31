@@ -110,7 +110,7 @@ function stopLoadingBar(_this){
 function fadeEnter(el, done) {
   stopLoadingBar(this)
   overlappingEnter(el)
-  colorChangeNav(el)
+  // colorChangeNav(el)
   handleMilkGlass(this)
 
   anime({
@@ -181,7 +181,7 @@ function fadeEnter(el, done) {
 
 function fadeLeave(el, done) {
   overlappingLeave(el)
-  colorChangeNav(el)
+  // colorChangeNav(el)
 
   // el.style.position = 'relative'
   // el.style.zIndex = '10'

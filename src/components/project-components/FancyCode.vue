@@ -3,7 +3,7 @@
         <template v-slot:media>
             <Lerpy 
                 :scrollWithStrength=".3"
-                :lerpSpeedInit="3.5"
+                :lerpSpeed="3.5"
             >
                 <div
                     class="code-window-wrap" 
@@ -21,19 +21,24 @@
                         <div class="top-bar bar">
                             <div 
                                 class="window-button"
-                                :style="`--button-height: ${buttonHeight}px;`"
-                            ></div>
-                            <div 
-                                class="window-button"
                                 v-on:click="backAndForth()"
                                 :style="`--button-height: ${buttonHeight}px;`"
-                            ></div>
+                            >
+                            </div>
                             <div 
                                 class="window-button" 
                                 v-on:click="hueRotate = (hueRotate + 45) % 360"
                                 :style="`--button-height: ${buttonHeight}px;`"
-                            ></div>
-                            <span class="title">{{ title }}</span>
+                            >
+                            </div>
+                            <a 
+                                class="title"
+                                target="_blank"
+                                :href="href"
+                            >
+                                {{ title }}
+                                <i data-feather="external-link"></i>
+                            </a>
                         </div>
                         <div class="code-content"><slot name="code"></slot></div>
                         <div class="bottom-bar bar"><strong>{{language}}</strong></div>
@@ -65,6 +70,7 @@ import Appearing from '@/components/effects/Appearing'
 import Lerpy from '@/components/effects/Lerpy'
 import FancyHalves from '@/components/project-components/FancyHalves'
 import FancyParagraph from '@/components/project-components/FancyParagraph'
+import FeatherIcons from 'feather-icons'
 
 if ( prefersDark() ){
     import('highlight.js/styles/github-dark.css')
@@ -103,13 +109,18 @@ export default {
             default: 'javascript',
             type: String
         },
+        href: {
+            required: true,
+            type: String
+        },
         title: {
             default: '',
             type: String
         },
     },
     mounted(){
-        this.$nextTick( function(){
+        this.$nextTick( function(){        
+            FeatherIcons.replace()
             // Unfortunately, to keep the indentations, we have to do it this way
             const codeBlock = this.$refs.codeWindow.querySelector('code')
             
@@ -165,9 +176,25 @@ export default {
 <style lang="scss" scoped>
 $windowPaddingX: 50px;
 $windowPaddingY: 15px;
-$windowButtonSize: 15px;
+$windowButtonSize: 18px;
 $fontSize: 18px;
 $timing: 1s;
+
+.title {
+    color: var(--neutral);
+    text-decoration: none;
+    transition: border-bottom .1s linear;
+    border-bottom: var(--neutral) 0 solid;
+
+    .feather {
+        transform: translateY(4px);
+        margin-left: 5px;
+    }
+
+    &:hover, &:active {
+        border-bottom: var(--neutral) 2px solid;
+    }
+}
 
 ::v-deep {
     @keyframes blink {
@@ -236,7 +263,7 @@ $timing: 1s;
             var(--neutral) 0 calc( .5 * var(--button-height) ) 0 0,
             var(--neutral) 0 var(--button-height) 0 0;
         position: relative;
-        top: 0;
+        // top: 0;
         cursor: pointer;
         transition: 
             top $timing ease,
@@ -254,6 +281,19 @@ $timing: 1s;
                 var(--neutral) 0 0px 0 0,
                 var(--neutral) 0 0px 0 0
             ;
+
+            &::before {
+                content: ' ';
+                display: block;
+                height: var(--button-height);
+                width: 100%;
+                transform: translateY(-100%);
+            }
+        }
+
+        color: transparent;
+        &:hover, &:active {
+            color: var(--style2-neutral);
         }
     }
 

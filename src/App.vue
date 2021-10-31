@@ -2,10 +2,12 @@
     <LoadingBar ref="loadingBar"></LoadingBar>
     <nav>
         <div>
-            <div class="logo">
+            <Logo></Logo>
+
+            <!-- <div class="logo">
                 <h1>marimilch</h1>
                 <h2 class="sub">too poor for cereal</h2>
-            </div>
+            </div> -->
             <div class="nav-buttons">
                 <Button 
                     v-for="(value, key) in navigationPoints" 
@@ -47,6 +49,7 @@
 
 <script>
 import Button from './components/Button'
+import Logo from './components/Logo'
 import MilkGlass from '@/components/MilkGlass'
 import LoadingBar from '@/components/LoadingBar'
 import Wave from '@/components/Wave'
@@ -106,6 +109,7 @@ export default {
         MilkGlass,
         Wave,
         LoadingBar,
+        Logo,
     },
     watch: {
         contentHeight(val){

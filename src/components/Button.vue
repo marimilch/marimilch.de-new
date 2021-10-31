@@ -59,6 +59,7 @@ $buttonOuterBlur: 10px;
 }
 
 .button {
+    --button-speed: .1s;
     display: inline-block;
     top: calc( -1 * var(--button-height) ); 
     position: relative;
@@ -70,10 +71,10 @@ $buttonOuterBlur: 10px;
     font-size: 20px;
     text-transform: uppercase;
     transition: 
-        background-color var(--timing) ease,
-        box-shadow var(--timing) ease,
-        color var(--timing) ease, 
-        top var(--timing) ease
+        background-color var(--button-speed) ease,
+        box-shadow var(--button-speed) ease,
+        color var(--button-speed) ease, 
+        top var(--button-speed) ease
     ;
     cursor: pointer;
     color: var(--text);

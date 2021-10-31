@@ -83,12 +83,13 @@ export default {
         var(--cyan) 0 0 20px 20px,
         white 0 0 60px 20px
     ;
-    transition: filter 1s ease;
+    // transition: filter 1s ease;
+    animation: .125s FlangerAnimation cubic-bezier(.65,.05,.36,1) infinite alternate;
 }
 
 .bar {
     height: 100%;
     width: 100%;
-    animation: RainbowAnimation 2s linear infinite;
+    animation: 2s RainbowAnimation linear infinite;
 }
 </style>

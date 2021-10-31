@@ -10,7 +10,7 @@
             </Lerpy>
         </template>
         <template v-slot:media v-on:click="pixelateOnClick ? resetPixelation() : null">
-            <Lerpy :whFull="true" :scrollWithStrength=".3" :lerpSpeedInit="3.5">
+            <Lerpy :whFull="true" :scrollWithStrength=".3" :lerpSpeed="3.5">
                 <Model 
                     :modelPath="modelPath" 
                     :rotateWithScroll="true" 
@@ -20,6 +20,7 @@
                     :distance="distance"
                     :rotationEffectStrength="rotationEffectStrength"
                     :rotate="rotate"
+                    :pixelationTarget="pixelationTarget"
                     ref="model"
                 ></Model>
             </Lerpy>
@@ -42,6 +43,10 @@ export default {
         modelPath: {
             required: true,
             type: String,
+        },
+        pixelationTarget: {
+            default: 8,
+            type: Number,
         },
         distance: {
             default: 0,

@@ -15,6 +15,7 @@
         :autoInitialize="false"
         :distance="-.03"
         :pixelateOnClick="false"
+        :pixelationTarget="5"
         v-on:click="switchChannel()"
     >
         <slot></slot>

@@ -22,12 +22,12 @@
         width: 100% !important;
         height: 100% !important;
 
-        image-rendering: optimizeSpeed;             /* Older versions of FF          */
-        image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
-        image-rendering: -webkit-optimize-contrast; /* Safari                        */
-        image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
-        image-rendering: pixelated;                 /* Awesome future-browsers       */
-        -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+        // image-rendering: optimizeSpeed;             /* Older versions of FF          */
+        // image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+        // image-rendering: -webkit-optimize-contrast; /* Safari                        */
+        // image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+        // image-rendering: pixelated;                 /* Awesome future-browsers       */
+        // -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
     }
 }
 </style>
@@ -36,6 +36,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { HalftonePassAlpha } from '@/assets/js/HalftonePassAlpha.js'
 
@@ -89,7 +90,7 @@ export default {
         // if set to zero render as crisp as possible
         pixelationTarget: {
             type: Number,
-            default: 4
+            default: 8
         },
         addPointPass: {
             type: Boolean,
@@ -260,6 +261,9 @@ export default {
 
             const renderPass = new RenderPass( this.scene, this.camera )
             this.effectComposer.addPass( renderPass )
+
+            const filmPass = new FilmPass(.2, .5, 200, 0)
+            this.effectComposer.addPass( filmPass )
 
             if (!this.addPointPass) return
 

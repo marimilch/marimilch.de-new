@@ -39,11 +39,12 @@
 
 <script>
 import ProjectEntry from '@/components/ProjectEntry'
+import projectsJson from '@/assets/json/projects.json'
 
 export default {
-    props: {
-        projects: {
-            required: true
+    data() {
+        return {
+            projects: projectsJson,
         }
     },
     components: {

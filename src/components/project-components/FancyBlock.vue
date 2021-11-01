@@ -1,16 +1,35 @@
 <template>
-    <div class="fancy-block">
+    <div :class="'fancy-block' + (centerDown ? ' center-down' : '')">
         <slot></slot>
     </div>
 </template>
 
 <script>
 export default {
-    
+    props: {
+        centerDown: {
+            default: false,
+            type: Boolean,
+        }
+    }
 }
 </script>
 
-<style lang="scss">
+<style>
+/* .fancy-block .block-halves:nth-of-type(2n-1) {
+    flex-direction: row-reverse;
+} */
+</style>
+
+<style lang="scss" scoped>
+.center-down {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .fancy-block {
     position: relative;
 
@@ -28,7 +47,7 @@ export default {
             --neutral: var(--style2-neutral); // text color
             --canvas: var(--style2-canvas); // background color
             color: var(--neutral);
-        } 
+        }
     }
 }
 </style>

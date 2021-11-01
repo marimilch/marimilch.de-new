@@ -1,5 +1,9 @@
 <template>
-    <FancyTitle :project="project">
+    <FancyTitle 
+        backgroundVideoSrc="starfox-clone/fancy"
+        dateStart="2020-09"
+        dateEnd="2020-10"
+    >
         <template v-slot:title>
             Star Fox<br>in Unity
         </template>
@@ -85,10 +89,52 @@ if (di.magnitude > inSpeedTimed)
             </p>
         </FancyModel>
     </FancyBlock>
-    
-    <FancyMessage>
 
-    </FancyMessage>
+    <FancyBlock :centerDown="true">
+        <FancyButtons label="Links">
+            <Button 
+                :external="true" 
+                :alt="true"
+                to="/games-live/starfox-clone"
+            >
+                Play in Browser
+            </Button>
+
+            <Button 
+                :external="true" 
+                :alt="true"
+                to="//github.com/marimilch/starfox-clone-scripts"
+            >
+                GitHub
+            </Button>
+        </FancyButtons>    
+
+        <FancyButtons label="Downloads">
+            <Button 
+                :external="true" 
+                :alt="true"
+                to="/downloads/starfox-clone/starfox-clone-win.zip"
+            >
+                Win32
+            </Button>
+
+            <Button 
+                :external="true" 
+                :alt="true"
+                to="/downloads/starfox-clone/starfox-clone-mac.zip"
+            >
+                macOS
+            </Button>
+
+            <Button 
+                :external="true" 
+                :alt="true"
+                to="/downloads/starfox-clone/starfox-clone-source.zip"
+            >
+                Full Source
+            </Button>
+        </FancyButtons>    
+    </FancyBlock>
 </template>
 
 <script>
@@ -99,24 +145,23 @@ import FancyTV from '../components/project-components/FancyTV'
 import FancyVideos from '../components/project-components/fancy-videos/FancyVideos'
 // import FancyVideo from '../components/project-components/fancy-videos/FancyVideo'
 import FancyCode from '../components/project-components/FancyCode'
+import FancyButtons from '../components/project-components/FancyButtons'
+import Button from '../components/Button'
 import RainbowText from '@/components/effects/RainbowText'
 
 
 export default {
-    props: {
-        project: {
-            required: true
-        }
-    },
     components: {
         FancyTitle,
         FancyBlock,
         FancyModel,
         FancyTV,
         // FancyVideo,
+        FancyButtons,
         FancyVideos,
         FancyCode,
-        RainbowText
+        RainbowText,
+        Button,
     }
 }
 </script>

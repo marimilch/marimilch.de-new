@@ -13,8 +13,8 @@
                         <video 
                             loop
                             muted
-                            v-if="project.clips"
                             preload="metadata"
+                            playinline
                         >
                             <source 
                                 :src="`/clips/${project.slug}/entry.mp4#t=.1`" 

@@ -22,7 +22,7 @@ export default {
             if (!slug) return null
 
             const maybeProject = projectsJson.find(project => project.slug == slug)
-            if (!maybeProject) return this.$router.push('/404')
+            if (!maybeProject) return this.$router.push({name: '404'})
 
             return maybeProject
         }

@@ -345,23 +345,23 @@ body pre code.hljs {
 }
 
 @keyframes RainbowAnimation {
-    0%{ background-position: 0% 0% }
-    100%{ background-position: 100% 0% }
+    0% { background-position: 0% 0% }
+    100% { background-position: 100vw 0% }
 }
 
 @keyframes FlangerAnimation {
-    0%{ opacity: .9 }
-    100%{ transform: 1 }
+    0% { opacity: .9 }
+    100% { transform: 1 }
 }
 
 @keyframes FlickerAnimation {
-    0%{ opacity: .75 }
-    100%{ opacity: 1 }
+    0% { opacity: .75 }
+    100% { opacity: 1 }
 }
 
 @keyframes FlickerSoftAnimation {
-    0%{ opacity: .93 }
-    100%{ opacity: 1 }
+    0% { opacity: .93 }
+    100% { opacity: 1 }
 }
 
 .background-rainbow {
@@ -382,10 +382,14 @@ body pre code.hljs {
             var(--cyan), 
             var(--primary), 
             var(--cyan), 
+            var(--primary),
+            var(--cyan), 
+            var(--primary), 
+            var(--cyan), 
             var(--primary) 
         );
     }
-    background-size: 200% 100% !important;
+    background-size: 200vw 100% !important;
 }
 
 :root {

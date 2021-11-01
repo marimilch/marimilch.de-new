@@ -14,9 +14,7 @@ export default {
         el.style.paddingBottom = 0
     },
     appear() {
-        const el = this.el
-        console.log('appearing el block-appear', el)
-        
+        const el = this.el        
 
         anime({
             targets: el,

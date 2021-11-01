@@ -1,7 +1,7 @@
 <template>
     <div class="modal-wrap project-story">
         <article class="fade-wrap">
-            <component :is="thisKebabToCamel(project.slug)" :project="project"></component>
+            <component :is="projectNameComponent"></component>
         </article>
     </div>
 </template>
@@ -38,8 +38,6 @@ const requireComponent = require.context(
 
 const dComponents = {}
 
-const kebabToCamel = s => s.replace(/-./g, x=>x.toUpperCase()[1])
-
 requireComponent.keys().forEach(fileName => {
     const componentConfig = requireComponent(fileName)
     
@@ -50,22 +48,27 @@ requireComponent.keys().forEach(fileName => {
         .split(".")[0]
         
     // register the component locally
-    dComponents[kebabToCamel(componentName)] = componentConfig.default
+    dComponents[componentName] = componentConfig.default
 });
 
 export default {
-    props: {
-        project: {
-            required: true
+    methods: {
+        kebabToPascal(s) {
+            const s_ = s.replace(/-./g, x=>x.toUpperCase()[1])
+            return s_.charAt(0).toUpperCase() + s_.slice(1)
         },
     },
-    methods: {
-        thisKebabToCamel(s) { return kebabToCamel(s) }
-    },
-    watch: {
-        failed(v){
+    mounted(){
+        if ( !dComponents[this.projectNameComponent] ) 
             this.$router.push('/404')
-        } 
+    },
+    computed: {
+        projectName() {
+            return this.$route.params.project
+        },
+        projectNameComponent() {
+            return this.kebabToPascal(this.projectName)
+        }
     },
     components: {
         ...dComponents

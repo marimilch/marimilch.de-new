@@ -13,6 +13,8 @@
                     v-for="(value, key) in navigationPoints" 
                     v-bind:key="key"
                     :to="value.to"
+                    :beforeTrigger="startLoading"
+                    :afterTrigger="finishLoading"
                 >
                     {{ value.label }}
                 </Button>
@@ -54,6 +56,7 @@ import MilkGlass from '@/components/MilkGlass'
 import LoadingBar from '@/components/LoadingBar'
 import Wave from '@/components/Wave'
 import * as transitions from './assets/js/transitions'
+import {onBeforeRouteLeave} from 'vue-router'
 
 export default {
     data() {
@@ -81,8 +84,11 @@ export default {
         },
     },
     methods: {
-        startLoadingBar(){
+        startLoading(){
             if (this.$refs.loadingBar) this.$refs.loadingBar.startLoading()
+        },
+        finishLoading(){
+            if (this.$refs.loadingBar) this.$refs.loadingBar.finishLoading()
         },
         getCurrentHeight(el){
             return el.getBoundingClientRect().height
@@ -102,7 +108,7 @@ export default {
         },
         async leave(el, done){
             return transitions[this.routeTransition].leave.bind(this)(el, done)
-        }
+        },
     },
     components: {
         Button,
@@ -114,10 +120,6 @@ export default {
     watch: {
         contentHeight(val){
             this.$refs.main.style.height = val + 'px'
-        },
-        '$route' (to, from) {
-            if (to == from) return
-            this.startLoadingBar()
         }
     }
 }

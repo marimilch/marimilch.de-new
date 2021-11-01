@@ -4,24 +4,24 @@ import Home from '../views/Home'
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
     path: '/aboutme',
-    name: 'About',
-    component: () => import('@/views/About.vue')
+    name: 'about',
+    component: () => import('@/views/About.vue'),
   },
-  // {
-  //   path: '/projects',
-  //   name: 'Projects',
-  //   component: () => import('@/views/Projects.vue'),
-  //   meta: { transition: 'Fade' },
-  // },
   {
-    path: '/projects/:slug?',
-    name: 'Project',
-    component: () => import('@/views/Projects.vue'),
+    path: '/projects',
+    name: 'projects',
+    component: () => import('@/views/ProjectsOverview.vue'),
+    meta: { transition: 'Fade' },
+  },
+  {
+    path: '/projects/:project',
+    name: 'project',
+    component: () => import('@/views/ProjectStory.vue'),
     meta: { transition: 'Project' },
   },
   {

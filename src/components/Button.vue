@@ -1,9 +1,31 @@
 <template>
-    <router-link :to="to" :class="'button' + (alt ? ' alt' : '')" v-if="!external">
+    <!-- <router-link :to="to" :class="'button' + (alt ? ' alt' : '')" v-if="!external">
         <i v-if="icon" :data-feather="icon"></i>
         <span><slot></slot></span>
         <i class="external-link-icon" v-if="external" data-feather="external-link"></i>
+    </router-link> -->
+
+    <router-link 
+        :to="to" 
+        v-if="!external" 
+        custom 
+        v-slot="{ navigate, href, isActive }"
+    >
+        <i v-if="icon" :data-feather="icon"></i>
+        <a 
+            :href="href" 
+            @click.prevent="async ()=>{
+                await beforeTrigger(), 
+                await navigate(), 
+                await afterTrigger()
+            }" 
+            :class="'button' + (alt ? ' alt' : '') + (isActive ? ' router-link-active' : '')"
+        >
+            <span><slot></slot></span>
+        </a>
+        <i class="external-link-icon" v-if="external" data-feather="external-link"></i>
     </router-link>
+
     <a :href="to" :class="'button' + (alt ? ' alt' : '')" v-else target="_blank">
         <i v-if="icon" :data-feather="icon"></i>
         <span><slot></slot></span>
@@ -55,7 +77,8 @@ $buttonOuterBlur: 10px;
 .external-link-icon {
     margin-left: 5px;
     position: relative;
-    top: 3px;
+    top: 2px;
+    height: 19px;
 }
 
 .button {
@@ -166,6 +189,14 @@ export default {
         icon: {
             type: String,
             default: null
+        },
+        beforeTrigger: {
+            type: Function,
+            default: () => {},
+        },
+        afterTrigger: {
+            type: Function,
+            default: () => {},
         },
     },
     mounted(){

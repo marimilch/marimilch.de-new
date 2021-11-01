@@ -1,7 +1,7 @@
 <template>
     <div class="fancy-title">
         <div class="sticky">
-            <ClipBackground :src="`/clips/${project.slug}/fancy`" class="clip-background"></ClipBackground>
+            <ClipBackground :src="'/clips/' + backgroundVideoSrc" class="clip-background"></ClipBackground>
         </div>
 
         <Appearing class="h-screen frame main" effect="letterplay">
@@ -38,8 +38,8 @@ export default {
     },
     computed: {
         niceDate(){
-            const dateStart = new Date(this.project.dateStart)
-            const dateEnd = new Date(this.project.dateEnd)
+            const dateStart = new Date(this.dateStart)
+            const dateEnd = new Date(this.dateEnd)
             const dateStartStr = `${dateStart.getMonth() + 1}.${dateStart.getFullYear()}`
             const dateEndStr = `${dateEnd.getMonth() + 1}.${dateEnd.getFullYear()}`
 
@@ -47,8 +47,17 @@ export default {
         }
     },
     props: {
-        project: {
-            required: true
+        backgroundVideoSrc: {
+            required: true,
+            type: String,
+        },
+        dateStart: {
+            required: true,
+            type: String,
+        },
+        dateEnd: {
+            required: true,
+            type: String,
         },
     },
     components: {

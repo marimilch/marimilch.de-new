@@ -24,7 +24,6 @@ export default {
         if (!targets) return
 
         const targetHeight = anime.get(targets[0], 'font-size', 'px')
-        console.log('targetHeight', targetHeight)
 
         anime({
             targets: el.querySelectorAll('.letter'),

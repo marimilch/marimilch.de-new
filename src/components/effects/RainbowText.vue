@@ -6,6 +6,6 @@
 .rainbow-text {
     background-clip: text;
     color: transparent !important;
-    animation: RainbowAnimation 1.5s linear infinite;
+    animation: RainbowAnimation 2.5s linear infinite;
 }
 </style>

@@ -45,14 +45,6 @@ import { onVisible } from '@/assets/js/on-visible.js'
 import { TimedFrames } from '@/assets/js/timed-frames.js'
 import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 
-
-// function getBackgroundColor() {
-//     const stylings = window.getComputedStyle(document.body)
-//     const rgb = stylings.getPropertyValue('background-color')
-
-//     return rgb
-// }
-
 export default {
     props: {
         rotateWithScroll: {
@@ -140,6 +132,8 @@ export default {
         },
     },
     mounted(){
+        // TODO Trash all of this garbage and use vue-gl
+
         if (this.autoInitialize) this.initialize()
     },
     beforeUnmount(){
@@ -163,6 +157,9 @@ export default {
             this.isVisible = false
         },
         initialize(){
+            // Translation will contain the displacement from the startPosition
+            if (!this.translation) this.translation = new THREE.Vector3()
+
             // Timed frames
             this.timedFrames = new TimedFrames(this.renderCascade.bind(this))
 
@@ -176,15 +173,13 @@ export default {
             }
 
             // Not using data on purpose (workaround for three js in vue)
-            // Scene
-            // const wrap = this.$refs.modelRef
-            // const rect = wrap.getBoundingClientRect()
             const wrap = this.$refs.modelRef
             const gltfLoader = new GLTFLoader()
 
             const near = 0.001
             const far = 10
             
+            // Scene
             // Correct aspect ratio is calculated in update size
             this.scene = new THREE.Scene()
             this.camera = new THREE.PerspectiveCamera( 
@@ -195,16 +190,12 @@ export default {
             )
 
             this.renderer = new THREE.WebGLRenderer( { 
-                // antialias: this.antialias,
-                // devicePixelRatio: window.devicePixelRatio,
                 alpha: true
             } )
 
             this.addPasses()
 
-            // this.clearColor = new THREE.Color(this.backColor)
-            // this.renderer.setClearColor(this.clearColor)
-            this.renderer.setClearColor( 0x000000, 0 ); // the default
+            this.renderer.setClearColor( 0x000000, 0 )
 
             wrap.appendChild( this.renderer.domElement )
             this.renderer.domElement.classList.add('three-js')
@@ -213,20 +204,23 @@ export default {
             gltfLoader.load( this.modelPath, function ( gltf ) {
                 this.gltf = gltf
                 this.model = gltf.scene
-                // this.model.translateY(-.17)
-                // this.model.position.set(...this.startPositionModel)
+                
                 this.scene.add( this.model )
 
                 this.updateMaterials()
 
+                // Set the models position so it's in the viewport
                 this.containInViewport()
 
                 wrap.style.opacity = '1'
 
+                // Now the position is the "correct" position so we can clone the vector
+                // This will be called startPosition
+                this.startPositionModel = this.model.position.clone()
+
+                // Lerping for nice transitions when translation changes
                 this.lerpStart = this.model.position.clone()
                 this.lerpEnd = this.model.position.clone()
-                this.translation = new THREE.Vector3()
-                this.startPositionModel = this.model.position.clone()
 
                 this.model.rotation.set(
                     this.initialRotationRad.x * Math.PI,
@@ -237,6 +231,12 @@ export default {
                 this.addLights()
 
                 this.camera.position.setZ(this.cameraDistance)
+
+                if (this.moveToWhenReady) this.moveTo(
+                    this.moveToWhenReady.x,
+                    this.moveToWhenReady.y,
+                    this.moveToWhenReady.z,
+                )
 
                 this.requestNewFrame()
             }.bind(this), undefined, function ( error ) {
@@ -442,7 +442,11 @@ export default {
             return res
         },
         moveTo(x, y, z){
-            if (!this.model) return
+
+            if (!this.model) {
+                this.moveToWhenReady = {x: x, y: y, z: z}
+                return
+            }
 
             this.lerpStart = this.translation.clone()
             this.lerpEnd = new THREE.Vector3(x, y, z)

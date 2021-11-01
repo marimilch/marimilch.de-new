@@ -55,9 +55,6 @@ function colorChangeNav(view){
 function handleMilkGlass(_this){
   const path = _this.$route.path
   const milkglass = _this.$refs.milkglass
-  // const model = milkglass.$refs.model
-
-  // if (!milkglass.startPositionModel) return
 
   if (path == '/') {
     // model.setVisible()

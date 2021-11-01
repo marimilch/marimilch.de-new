@@ -2,7 +2,7 @@
     <div class="milkglass-wrap">
         <Model 
             modelPath="/glb/glass_milk.glb" 
-            :initialRotationRad="{x:0, y:-.35, z:0}"
+            :initialRotationRad="{x:.05, y:0, z:0}"
             :distance="0"
             :autoInitialize="false"
             :addPointPass="false"

@@ -59,6 +59,10 @@ export default {
             type: Boolean,
             default: false
         },
+        debug: {
+            type: Boolean,
+            default: false
+        },
         distance: {
             type: Number,
             default: 0
@@ -90,11 +94,7 @@ export default {
         // if set to zero render as crisp as possible
         pixelationTarget: {
             type: Number,
-            default: 8
-        },
-        addPointPass: {
-            type: Boolean,
-            default: false
+            default: 5
         },
         setVisibilityManually: {
             type: Boolean,
@@ -128,14 +128,6 @@ export default {
                     color: prefersDark() ? 0xEA3863 : 0xee6a7c ,
                     roughness: 0,
                 }),
-                // new THREE.MeshStandardMaterial({ 
-                //     color: 0xffe7d6,
-                //     roughness: 0,
-                // }),
-                // new THREE.MeshStandardMaterial({ 
-                //     color: 0x73464c,
-                //     roughness: 0,
-                // }),
             ]
         }
     },
@@ -185,17 +177,19 @@ export default {
 
             // Not using data on purpose (workaround for three js in vue)
             // Scene
+            // const wrap = this.$refs.modelRef
+            // const rect = wrap.getBoundingClientRect()
             const wrap = this.$refs.modelRef
-            const rect = wrap.getBoundingClientRect()
             const gltfLoader = new GLTFLoader()
 
             const near = 0.001
             const far = 10
             
+            // Correct aspect ratio is calculated in update size
             this.scene = new THREE.Scene()
             this.camera = new THREE.PerspectiveCamera( 
                 this.focalLength, 
-                rect.width / rect.height, 
+                1, 
                 near, 
                 far
             )
@@ -205,7 +199,6 @@ export default {
                 // devicePixelRatio: window.devicePixelRatio,
                 alpha: true
             } )
-            this.updateSize(rect)
 
             this.addPasses()
 
@@ -256,42 +249,11 @@ export default {
                 this.renderer
             )
 
-            const wrap = this.$refs.modelRef
-            const rect = wrap.getBoundingClientRect()
-
             const renderPass = new RenderPass( this.scene, this.camera )
             this.effectComposer.addPass( renderPass )
 
             const filmPass = new FilmPass(.2, .5, 200, 0)
             this.effectComposer.addPass( filmPass )
-
-            if (!this.addPointPass) return
-
-            // if (this.pixelationTarget < 4) 
-            //     console.warn(
-            //         'When using the point pass keeping the '
-            //         + 'pixelationTarget higher than 4 is recommended.'
-            //     )
-
-            const params = {
-                shape: 1,
-                radius: 15,
-                rotateR: Math.PI / 12,
-                rotateB: Math.PI / 12 * 2,
-                rotateG: Math.PI / 12 * 3,
-                scatter: 0,
-                blending: 1,
-                blendingMode: 1,
-                greyscale: false,
-                disable: false
-            }
-
-            const halftonePassAlpha = new HalftonePassAlpha( 
-                rect.width * window.devicePixelRatio, 
-                rect.height * window.devicePixelRatio,
-                params 
-            )
-            this.effectComposer.addPass( halftonePassAlpha )
         },
         containInViewport(){
             const boundingBox = new THREE.Box3().setFromObject(this.model)
@@ -322,12 +284,6 @@ export default {
                 ++i
             })
 
-        },
-        updateSize(rect){
-            this.renderer.setSize( 
-                rect.width * window.devicePixelRatio / this.pixelation_, 
-                rect.height * window.devicePixelRatio / this.pixelation_
-            )
         },
         resetPixelation(){
             this.pixelationT = 0
@@ -398,7 +354,10 @@ export default {
             this.camera.aspect = rect.width / rect.height;
             this.camera.updateProjectionMatrix();
             
-            this.updateSize(rect)
+            this.renderer.setSize( 
+                rect.width * window.devicePixelRatio / this.pixelation_, 
+                rect.height * window.devicePixelRatio / this.pixelation_
+            )
         },
         modelIsInView(){
             // @TODO correctly calculate this
@@ -431,6 +390,7 @@ export default {
 
             // Make Bounding Client Rect available
             this.rect = wrap.getBoundingClientRect()
+            if (this.debug) console.log('this.rect', this.rect)
 
             // Handle movement here, so the model can
             // return to the view and be rendered again

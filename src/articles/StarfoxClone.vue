@@ -94,7 +94,6 @@ if (di.magnitude > inSpeedTimed)
         <FancyButtons label="Links">
             <Button 
                 :external="true" 
-                :alt="true"
                 to="/games-live/starfox-clone"
             >
                 Play in Browser
@@ -102,7 +101,6 @@ if (di.magnitude > inSpeedTimed)
 
             <Button 
                 :external="true" 
-                :alt="true"
                 to="//github.com/marimilch/starfox-clone-scripts"
             >
                 GitHub
@@ -112,7 +110,6 @@ if (di.magnitude > inSpeedTimed)
         <FancyButtons label="Downloads">
             <Button 
                 :external="true" 
-                :alt="true"
                 to="/downloads/starfox-clone/starfox-clone-win.zip"
             >
                 Win32
@@ -120,7 +117,6 @@ if (di.magnitude > inSpeedTimed)
 
             <Button 
                 :external="true" 
-                :alt="true"
                 to="/downloads/starfox-clone/starfox-clone-mac.zip"
             >
                 macOS
@@ -128,7 +124,6 @@ if (di.magnitude > inSpeedTimed)
 
             <Button 
                 :external="true" 
-                :alt="true"
                 to="/downloads/starfox-clone/starfox-clone-source.zip"
             >
                 Full Source

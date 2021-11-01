@@ -6,7 +6,7 @@
             :distance="0"
             :autoInitialize="false"
             :addPointPass="false"
-            :pixelationTarget="10"
+            :pixelationTarget="7"
             ref="model"
         ></Model>
     </div>      

@@ -9,9 +9,10 @@
                 </Appearing>
             </Lerpy>
         </template>
-        <template v-slot:media v-on:click="pixelateOnClick ? resetPixelation() : null">
+        <template v-slot:media>
             <Lerpy :whFull="true" :scrollWithStrength=".3" :lerpSpeed="3.5">
-                <Model 
+                <Model
+                    v-on:click="pixelateOnClick ? resetPixelation() : null"
                     :modelPath="modelPath" 
                     :rotateWithScroll="true" 
                     class="fancy-model-instance"
@@ -21,6 +22,7 @@
                     :rotationEffectStrength="rotationEffectStrength"
                     :rotate="rotate"
                     :pixelationTarget="pixelationTarget"
+                    :debug="debug"
                     ref="model"
                 ></Model>
             </Lerpy>
@@ -44,8 +46,12 @@ export default {
             required: true,
             type: String,
         },
+        debug: {
+            default: false,
+            type: Boolean,
+        },
         pixelationTarget: {
-            default: 8,
+            default: 5,
             type: Number,
         },
         distance: {
@@ -129,6 +135,10 @@ export default {
     //     justify-content: center;
     // }
 
+    .fancy-model-instance {
+        cursor: pointer;
+    }
+
     .fancy-model {
         display: flex;
         align-items: center;
@@ -136,8 +146,8 @@ export default {
         min-height: 100vh;
 
         .right-side {
-            position: sticky;
-            top: 0;
+            // position: sticky;
+            // top: 0;
             padding: 0;
             height: 100vh;
             cursor: pointer;

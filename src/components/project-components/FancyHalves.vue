@@ -45,11 +45,11 @@ export default {
     }
 
     .left-side[data-sticky="true"]{
-        position: sticky;
-        top: 0;
+        // position: sticky;
+        // top: 0;
         padding: 0;
         height: 100vh;
-        cursor: pointer;
+        // cursor: pointer;
     }
 
 

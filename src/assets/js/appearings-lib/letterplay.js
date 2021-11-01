@@ -7,12 +7,12 @@ export default {
         const toLetterize = new Letterize({ targets: el, className: 'letter' })
 
         let i = 0
-        for (const l of toLetterize.listAll) {
-            // l.style.opacity = '0'
+        this.listAll = toLetterize.listAll
+        for (const l of this.listAll) {
+            l.style.opacity = '0'
             const neg = i % 2 == 0 ? '' : '-'
             l.style.height = '0'
             l.style.display = 'inline-block'
-            l.style.overflow = 'hidden'
             l.style.transform = 
                 `rotate(${neg}60deg) translateY(300px) translateX(${neg}100px)`
 
@@ -28,13 +28,18 @@ export default {
         anime({
             targets: el.querySelectorAll('.letter'),
             height: targetHeight,
-            // opacity: 1,
+            opacity: 1,
             easing: 'easeOutQuad',
             duration: 500,
             rotate: 0,
             translateY: 0,
             translateX: 0,
             delay: anime.stagger(70),
+            // complete: () => {
+            //     for (const l of this.listAll) {
+            //         l.style.overflow = 'visible'
+            //     }
+            // }
         })
     }
 }

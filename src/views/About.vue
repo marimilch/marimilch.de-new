@@ -8,28 +8,18 @@
             <div class="style2">
                 <h3 class="style2">I would like to thank</h3>
 
-                <span>My mother, </span>
-                <span>my father, </span>
-                <span>Arkady, </span>
-                <span>Sev, </span>
-                <span>Felix, </span>
-                <span>Marko, </span>
-                <span>Renyo, </span>
-                <span>Cedric, </span>
-                <span>Batiste, </span>
-                <span>Yamina</span>
-            </div>
-
-            <div class="style2">
-                <h3 class="style2">Tools used</h3>
-
-                <span>Vue.js 3, </span>
-                <span>Feather Icons, </span>
-                <span>anime.js, </span>
-                <span>highlight.js, </span>
-                <span>Normalize.css, </span>
-                <span>Three.js, </span>
-                <span>Two.js</span>
+                <p>
+                    My mother, 
+                    my father, 
+                    Arkady, 
+                    Sev, 
+                    Felix, 
+                    Marko, 
+                    Renyo, 
+                    Cedric, 
+                    Batiste, 
+                    Yamina
+                </p>
             </div>
 
             <div class="overflow-chamber style2">

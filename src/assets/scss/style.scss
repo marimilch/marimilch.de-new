@@ -105,6 +105,9 @@ footer, .cookies {
     line-height: 1.6;
 }
 footer {
+    position: relative;
+    z-index: 10;
+    
     .footer-content {
         margin: 0;
         height: var(--footer-height);
@@ -133,10 +136,6 @@ ul li {
 }
 .mb-5 {
     margin-bottom: 50px
-}
-.http-cat {
-    height: 600px;
-    border-radius: 30px;
 }
 /*button.highlight {
     color: var(--canvas);
@@ -432,7 +431,7 @@ body pre code.hljs {
     --dark-pink: #ee6a7c;
     --pink: #ffa7a5;
     --gold: #ffe07e;
-    --beige: #ffe7d6;
+    --beige: #ffdfc7;
     --green: #72dcbb;
     --blue: #34acba;
 

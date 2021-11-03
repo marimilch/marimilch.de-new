@@ -36,6 +36,7 @@
 <style lang="scss" scoped>
 // separate on purpose (easier to read)
 .button {
+    white-space: nowrap;
     --text:   var(--beige);
     --main:   var(--med-magenta);
     --side:   var(--dark-magenta);
@@ -154,35 +155,35 @@ $buttonOuterBlur: 10px;
 import FeatherIcons from 'feather-icons'
 
 export default {
-    name: 'Button',
-    props: {
-        external: {
-            type: Boolean,
-            default: false
-        },
-        alt: {
-            type: Boolean,
-            default: false
-        },
-        to: {
-            type: String,
-            required: true
-        },
-        icon: {
-            type: String,
-            default: null
-        },
-        beforeTrigger: {
-            type: Function,
-            default: () => {},
-        },
-        afterTrigger: {
-            type: Function,
-            default: () => {},
-        },
+  name: 'Button',
+  props: {
+    external: {
+      type: Boolean,
+      default: false
     },
-    mounted(){
-        FeatherIcons.replace()
-    }
+    alt: {
+      type: Boolean,
+      default: false
+    },
+    to: {
+      type: String,
+      required: true
+    },
+    icon: {
+      type: String,
+      default: null
+    },
+    beforeTrigger: {
+      type: Function,
+      default: () => {},
+    },
+    afterTrigger: {
+      type: Function,
+      default: () => {},
+    },
+  },
+  mounted(){
+    FeatherIcons.replace()
+  }
 }
 </script>

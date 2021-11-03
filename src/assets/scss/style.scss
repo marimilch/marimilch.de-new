@@ -19,6 +19,9 @@
     src: url(/fonts/PressStart2P-vaV7.ttf);
 }
 
+$tabletWidth: 1280px;
+$phoneWidth: 640px;
+
 @keyframes spinninga {
     from {
         transform: 
@@ -69,12 +72,6 @@
 }
 * {
     box-sizing: border-box;
-}
-body {
-    font-family: Manrope, sans-serif;
-    font-size: 22px;
-    background: var(--canvas);
-    color: var(--neutral);
 }
 main {
     position: relative;
@@ -212,10 +209,6 @@ h1,h2,h3 {
 p {
     line-height: 1.6;
 }
-h2 {
-    font-size: 50px;
-    margin: 0;
-}
 nav, .nav-buttons, nav > div {
     display: flex;
 }
@@ -232,21 +225,7 @@ ul.center li {
 }
 nav, footer {
     width:100%;
-    // background: var(--pink);
-    /*position:relative;*/
-    // box-shadow: var(--light-brown) 0 0 20px 0;
 }
-.heart {
-    font-size: 22px;
-}
-/*nav::after {
-    content: " ";
-    position: absolute;
-    background: var(--green);
-    height: 10px;
-    width: 100%;
-    bottom: 0;
-}*/
 nav > div{
     justify-content: space-between;
     align-content: center;
@@ -431,4 +410,12 @@ body pre code.hljs {
     --nav-height: 160px;
 
     --content-min-height: calc( 100vh - var(--footer-height) );
+
+    @media (max-width: $tabletWidth){
+        --content-padding-x: 75px;
+    }
+
+    @media (max-width: $phoneWidth){
+        --content-padding-x: 25px;
+    }
 }

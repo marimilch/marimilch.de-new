@@ -38,89 +38,89 @@ import FancyParagraph from '@/components/project-components/FancyParagraph'
 import FancyHalves from '@/components/project-components/FancyHalves.vue'
 
 export default {
-    props: {
-        title: {
-            type: String,
-        },
-        modelPath: {
-            required: true,
-            type: String,
-        },
-        debug: {
-            default: false,
-            type: Boolean,
-        },
-        pixelationTarget: {
-            default: 5,
-            type: Number,
-        },
-        distance: {
-            default: 0,
-            type: Number,
-        },
-        rotationEffectStrength: {
-            default: 1,
-            type: Number,
-        },
-        initialRotationRad: {
-            default: {x:0, y:0, z:0},
-            type: Object,
-        },
-        flip: {
-            default: false,
-            type: Boolean,
-        },
-        rotate: {
-            default: true,
-            type: Boolean,
-        },
-        autoInitialize: {
-            default: true,
-            type: Boolean,
-        },
-        pixelateOnClick: {
-            default: true,
-            type: Boolean
-        }
+  props: {
+    title: {
+      type: String,
     },
-    mounted(){
-        if(this.autoInitialize) this.initialize()
+    modelPath: {
+      required: true,
+      type: String,
     },
-    data(){
-        return {
-            materials: undefined
-        }
+    debug: {
+      default: false,
+      type: Boolean,
     },
-    components: {
-        Model,
-        Appearing,
-        Lerpy,
-        FancyParagraph,
-        FancyHalves
+    pixelationTarget: {
+      default: 5,
+      type: Number,
     },
-    methods: {
-        initialize(){
-            this.$nextTick(function() {
-                if (this.materials) this.$refs.model.materials = this.materials
+    distance: {
+      default: 0,
+      type: Number,
+    },
+    rotationEffectStrength: {
+      default: 1,
+      type: Number,
+    },
+    initialRotationRad: {
+      default: () => { return {x:0, y:0, z:0} },
+      type: Object,
+    },
+    flip: {
+      default: false,
+      type: Boolean,
+    },
+    rotate: {
+      default: true,
+      type: Boolean,
+    },
+    autoInitialize: {
+      default: true,
+      type: Boolean,
+    },
+    pixelateOnClick: {
+      default: true,
+      type: Boolean
+    }
+  },
+  mounted(){
+    if(this.autoInitialize) this.initialize()
+  },
+  data(){
+    return {
+      materials: undefined
+    }
+  },
+  components: {
+    Model,
+    Appearing,
+    Lerpy,
+    FancyParagraph,
+    FancyHalves
+  },
+  methods: {
+    initialize(){
+      this.$nextTick(function() {
+        if (this.materials) this.$refs.model.materials = this.materials
 
-                this.$refs.model.initialize()
-            })
-        },
-        resetPixelation(){
-            this.$refs.model.resetPixelation()
-        },
-        getWrap(){
-            const maybeModel = this.$refs.fancyModelWrap
-
-            if (!maybeModel) return console.log('no model'), null
-            return maybeModel
-        },
-        updateModelColors(){
-            const maybeModel = this.$refs.model
-
-            if (!maybeModel) return null
-        }
+        this.$refs.model.initialize()
+      })
     },
+    resetPixelation(){
+      this.$refs.model.resetPixelation()
+    },
+    getWrap(){
+      const maybeModel = this.$refs.fancyModelWrap
+
+      if (!maybeModel) return console.log('no model'), null
+      return maybeModel
+    },
+    updateModelColors(){
+      const maybeModel = this.$refs.model
+
+      if (!maybeModel) return null
+    }
+  },
 }
 </script>
 

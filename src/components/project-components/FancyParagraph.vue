@@ -6,10 +6,6 @@
 
 <style lang="scss">
 .fancy-paragraph {
-    p, h2, a {
-        // color: var(--neutral);
-    }
-
     p {
         padding-bottom: 50px;
         line-height: 1.8;
@@ -30,7 +26,10 @@
             color: var(--canvas);
             border-radius: 5px;
             line-height: .9;
-            // animation: .125s TextGlowAnimaton cubic-bezier(.65,.05,.36,1) infinite alternate;
+        
+            @media (max-width: $phoneWidth) {
+                font-size: 48px;
+            }
         }
     }
 }

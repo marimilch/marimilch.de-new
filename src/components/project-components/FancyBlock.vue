@@ -6,12 +6,12 @@
 
 <script>
 export default {
-    props: {
-        centerDown: {
-            default: false,
-            type: Boolean,
-        }
+  props: {
+    centerDown: {
+      default: false,
+      type: Boolean,
     }
+  }
 }
 </script>
 
@@ -48,6 +48,10 @@ export default {
             --canvas: var(--style2-canvas); // background color
             color: var(--neutral);
         }
+    }
+
+    @media (max-width: $phoneWidth){
+        font-size: 24px;
     }
 }
 </style>

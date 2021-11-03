@@ -47,35 +47,35 @@
 <script>
 import Lerpy from './effects/Lerpy.vue'
 export default {
-    components: { Lerpy },
-    props: {
-        project: {
-            type: Object,
-            required: true,
-        }
-    },
-    data() {
-        return {
-            staggerWidth: 15, // dont forget to change scss as well
-            staggerHeight: 15
-        }
-    },
-    methods: {
-        projectMouseEnter(ev){
-            const elem = ev.target.closest('.project-wrap')
-            const video = elem.querySelector('.project-thumb video')
-
-            video.classList.add('playing')
-            video.play();
-        },
-        projectMouseLeave(ev){
-            const elem = ev.target.closest('.project-wrap')
-            const video = elem.querySelector('.project-thumb video')
-
-            video.classList.remove('playing')
-            video.pause()
-        },
+  components: { Lerpy },
+  props: {
+    project: {
+      type: Object,
+      required: true,
     }
+  },
+  data() {
+    return {
+      staggerWidth: 15, // dont forget to change scss as well
+      staggerHeight: 15
+    }
+  },
+  methods: {
+    projectMouseEnter(ev){
+      const elem = ev.target.closest('.project-wrap')
+      const video = elem.querySelector('.project-thumb video')
+
+      video.classList.add('playing')
+      video.play()
+    },
+    projectMouseLeave(ev){
+      const elem = ev.target.closest('.project-wrap')
+      const video = elem.querySelector('.project-thumb video')
+
+      video.classList.remove('playing')
+      video.pause()
+    },
+  }
 }
 </script>
 

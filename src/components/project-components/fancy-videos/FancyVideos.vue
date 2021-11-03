@@ -18,43 +18,42 @@
 </template>
 
 <script>
-import {onVisible} from '@/assets/js/on-visible.js'
 import FancyVideo from '@/components/project-components/fancy-videos/FancyVideo'
 
 export default {
-    props: {
-        srcPrefix: {
-            type: String,
-            required: true,
-        },
-        slugs: {
-            type: Array,
-            required: true,
-        },
-        activeIndex: {
-            type: Number,
-            default: 0
-        }
+  props: {
+    srcPrefix: {
+      type: String,
+      required: true,
     },
-    mounted(){
-        this.$nextTick(function(){
-            // onVisible( this.$refs.videoWrap.children, {
-            //     // onElemVisible: el => {el.play()},
-            //     onElemHidden: el => {el.pause()},
-            //     options: {
-            //         threshold: .25
-            //     }
-            // })
-        })
+    slugs: {
+      type: Array,
+      required: true,
     },
-    methods: {
-        initObserver(){
-            
-        }
-    },
-    components: {
-        FancyVideo
+    activeIndex: {
+      type: Number,
+      default: 0
     }
+  },
+  mounted(){
+    this.$nextTick(function(){
+      // onVisible( this.$refs.videoWrap.children, {
+      //     // onElemVisible: el => {el.play()},
+      //     onElemHidden: el => {el.pause()},
+      //     options: {
+      //         threshold: .25
+      //     }
+      // })
+    })
+  },
+  methods: {
+    initObserver(){
+            
+    }
+  },
+  components: {
+    FancyVideo
+  }
 }
 </script>
 

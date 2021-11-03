@@ -11,17 +11,17 @@
 
 <script>
 export default {
-    props: {
-        src: {
-            type: String,
-            required: true
-        }
-    },
-    computed: {
-        movieSlug(){
-            return this.src
-        }
+  props: {
+    src: {
+      type: String,
+      required: true
     }
+  },
+  computed: {
+    movieSlug(){
+      return this.src
+    }
+  }
 }
 </script>
 

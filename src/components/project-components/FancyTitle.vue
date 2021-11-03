@@ -4,14 +4,14 @@
             <ClipBackground :src="'/clips/' + backgroundVideoSrc" class="clip-background"></ClipBackground>
         </div>
 
-        <Appearing class="h-screen frame main" effect="letterplay">
+        <Appearing class="min-h-screen frame main" effect="letterplay">
             <h1 class="project-name"><slot name="title"></slot></h1>
             <Lerpy :scrollWithStrength=".3" :lerpSpeed="3.5">
                 <p class="date">{{niceDate}}</p>
             </Lerpy>
         </Appearing>
 
-        <div class="h-screen additional-text-wrap frame">
+        <div class="min-h-screen additional-text-wrap frame">
             <div class="additional-text">
                 <Lerpy :scrollWithStrength=".4" :lerpSpeed="3"><hr></Lerpy>
 
@@ -33,38 +33,38 @@ import Appearing from '@/components/effects/Appearing'
 import Lerpy from '@/components/effects/Lerpy'
 
 export default {
-    mounted(){
-        // console.log('project', this.project)
-    },
-    computed: {
-        niceDate(){
-            const dateStart = new Date(this.dateStart)
-            const dateEnd = new Date(this.dateEnd)
-            const dateStartStr = `${dateStart.getMonth() + 1}.${dateStart.getFullYear()}`
-            const dateEndStr = `${dateEnd.getMonth() + 1}.${dateEnd.getFullYear()}`
+  mounted(){
+    // console.log('project', this.project)
+  },
+  computed: {
+    niceDate(){
+      const dateStart = new Date(this.dateStart)
+      const dateEnd = new Date(this.dateEnd)
+      const dateStartStr = `${dateStart.getMonth() + 1}.${dateStart.getFullYear()}`
+      const dateEndStr = `${dateEnd.getMonth() + 1}.${dateEnd.getFullYear()}`
 
-            return dateStartStr + ' — ' + dateEndStr
-        }
-    },
-    props: {
-        backgroundVideoSrc: {
-            required: true,
-            type: String,
-        },
-        dateStart: {
-            required: true,
-            type: String,
-        },
-        dateEnd: {
-            required: true,
-            type: String,
-        },
-    },
-    components: {
-        ClipBackground,
-        Appearing,
-        Lerpy,
+      return dateStartStr + ' — ' + dateEndStr
     }
+  },
+  props: {
+    backgroundVideoSrc: {
+      required: true,
+      type: String,
+    },
+    dateStart: {
+      required: true,
+      type: String,
+    },
+    dateEnd: {
+      required: true,
+      type: String,
+    },
+  },
+  components: {
+    ClipBackground,
+    Appearing,
+    Lerpy,
+  }
 }
 </script>
 
@@ -83,8 +83,12 @@ export default {
     letter-spacing: 3px;
     font-size: 24px;
 }
-.h-screen {
-    height: 100vh;
+.min-h-screen {
+    min-height: 100vh;
+
+    @media (max-width: $tabletWidth) {
+        height: 700px;
+    }
 }
 .frame {
     display: flex;
@@ -113,6 +117,10 @@ hr {
         padding: 50px 0;
         font-size: 32px;
 
+        @media (max-width: $tabletWidth) {
+            font-size: 28px;
+        }
+
         color: var(--neutral);
     }
 }
@@ -122,6 +130,12 @@ h1 {
     // letter-spacing: 10px;
     font-size: 140px;
     width: 100%;
+    padding-left: 100px;
+
+    @media (max-width: $tabletWidth) {
+        padding-left: 50px;
+        font-size: 100px;
+    }
 
     // color: var(--primary);
 }

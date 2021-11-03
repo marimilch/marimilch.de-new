@@ -73,96 +73,92 @@ import FeatherIcons from 'feather-icons'
 import 'highlight.js/styles/github-dark.css'
 
 export default {
-    data() {
-        return {
-            hueRotate: 0,
-            scaleY: 1,
-            scaleYText: .5,
-            heightText: 30,
-            paddingText: 0,
-            minHeight: 382,
-            buttonHeight: 3,
-            back: false,
-        }
+  data() {
+    return {
+      hueRotate: 0,
+      scaleY: 1,
+      scaleYText: .5,
+      heightText: 30,
+      paddingText: 0,
+      minHeight: 382,
+      buttonHeight: 3,
+      back: false,
+    }
+  },
+  props: {
+    flip: {
+      default: false,
+      type: Boolean,
     },
-    props: {
-        flip: {
-            default: false,
-            type: Boolean,
-        },
-        rotateY: {
-            default: .125,
-            type: Number
-        },
-        effectStrength: {
-            default: -.05,
-            type: Number
-        },
-        language: {
-            default: 'javascript',
-            type: String
-        },
-        href: {
-            required: true,
-            type: String
-        },
-        title: {
-            default: '',
-            type: String
-        },
+    rotateY: {
+      default: .125,
+      type: Number
     },
-    mounted(){
-        this.$nextTick( function(){        
-            FeatherIcons.replace()
-            // Unfortunately, to keep the indentations, we have to do it this way
-            const codeBlock = this.$refs.codeWindow.querySelector('code')
+    effectStrength: {
+      default: -.05,
+      type: Number
+    },
+    language: {
+      default: 'javascript',
+      type: String
+    },
+    href: {
+      required: true,
+      type: String
+    },
+    title: {
+      default: '',
+      type: String
+    },
+  },
+  mounted(){
+    this.$nextTick( function(){        
+      FeatherIcons.replace()
+      // Unfortunately, to keep the indentations, we have to do it this way
+      const codeBlock = this.$refs.codeWindow.querySelector('code')
             
-            codeBlock.classList.add(`language-${this.language}`)
-            hljs.highlightAll()
+      codeBlock.classList.add(`language-${this.language}`)
+      hljs.highlightAll()
 
-            return
-            this.$refs.toFancify.style.transform = 
-                `rotateY(${this.rotateY}turn)`
-
-            this.renderCascade()
-        })
-    },
-    methods: {
-        renderCascade(){
-            const dtc = distanceToCenter(this.$refs.toFancifyWrap)
-            // console.log('dtc', `-${dtc.top}px -${dtc.left}px`)
-            // rotateY(${this.rotateY}turn)
-            this.$refs.toFancifyWrap.style.perspectiveOrigin = 
+      return
+    })
+  },
+  methods: {
+    renderCascade(){
+      const dtc = distanceToCenter(this.$refs.toFancifyWrap)
+      // console.log('dtc', `-${dtc.top}px -${dtc.left}px`)
+      // rotateY(${this.rotateY}turn)
+      this.$refs.toFancifyWrap.style.perspectiveOrigin = 
                 `${-Math.round(dtc.left)}px ${-Math.round(dtc.top)}px`
 
-            window.requestAnimationFrame(this.renderCascade.bind(this))
-        },
-        backAndForth(){
-            this.back = !this.back
+      window.requestAnimationFrame(this.renderCascade.bind(this))
+    },
+    backAndForth(){
+      this.back = !this.back
 
-            if (this.back){
-                this.scaleY = .5
-                this.scaleYText = 2
-                this.heightText = 77
-                this.paddingText = 22
-                this.minHeight = 482
-                this.buttonHeight = 8
-            } else {
-                this.scaleY = 1
-                this.scaleYText = .5
-                this.heightText = 30
-                this.paddingText = 0
-                this.minHeight = 382
-                this.buttonHeight = 3
-            }
-        }
-    },
-    components: {
-        Appearing,
-        Lerpy,
-        FancyHalves,
-        FancyParagraph
-    },
+      if (this.back){
+        this.scaleY = .5
+        this.scaleYText = 2
+        this.heightText = 77
+        this.paddingText = 22
+        this.minHeight = 482
+        this.buttonHeight = 8
+      } else {
+        this.scaleY = 1
+        this.scaleYText = .5
+        this.heightText = 30
+        this.paddingText = 0
+        this.minHeight = 382
+        this.buttonHeight = 3
+      }
+    }
+  },
+  components: {
+    Appearing,
+    Lerpy,
+    FancyHalves,
+    FancyParagraph
+  },
 }
 </script>
 

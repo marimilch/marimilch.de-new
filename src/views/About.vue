@@ -104,9 +104,9 @@ import Button from '@/components/Button'
 import RainbowText from '@/components/effects/RainbowText'
 
 export default {
-    components: {
-        Button,
-        RainbowText,
-    }
+  components: {
+    Button,
+    RainbowText,
+  }
 }
 </script>

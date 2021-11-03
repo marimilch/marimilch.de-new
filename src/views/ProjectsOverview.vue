@@ -42,13 +42,13 @@ import ProjectEntry from '@/components/ProjectEntry'
 import projectsJson from '@/assets/json/projects.json'
 
 export default {
-    data() {
-        return {
-            projects: projectsJson,
-        }
-    },
-    components: {
-        ProjectEntry
+  data() {
+    return {
+      projects: projectsJson,
     }
+  },
+  components: {
+    ProjectEntry
+  }
 }
 </script>

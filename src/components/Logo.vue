@@ -10,28 +10,28 @@
 
 <script>
 export default {
-    data(){
-        return {
-            flicker: false,
-        }
-    },
-    computed: {
-        logoName(){
-            return 'logo'
-        }
-    },
-    methods: {
-        async startFlicker(){
-            this.flicker = true
-            await this.later(500)
-            this.flicker = false
-        },
-        later(delay) {
-            return new Promise(function(resolve) {
-                setTimeout(resolve, delay);
-            });
-        }
+  data(){
+    return {
+      flicker: false,
     }
+  },
+  computed: {
+    logoName(){
+      return 'logo'
+    }
+  },
+  methods: {
+    async startFlicker(){
+      this.flicker = true
+      await this.later(500)
+      this.flicker = false
+    },
+    later(delay) {
+      return new Promise(function(resolve) {
+        setTimeout(resolve, delay)
+      })
+    }
+  }
 }
 </script>
 

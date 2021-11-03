@@ -26,51 +26,50 @@
 
 <script>
 import Lerpy from '@/components/effects/Lerpy'
-import {distanceToCenter} from '@/assets/js/distance-to-center'
-import {TimedFrames} from '@/assets/js/timed-frames'
 
 export default {
-    props: {
-        srcPrefix: {
-            type: String,
-            required: true,
-        },
-        slug: {
-            type: String,
-            required: true,
-        },
-        rotationStrengthX: {
-            type: Number,
-            default: .25,
-        },
-        position: {
-            type: Number,
-            default: 1
-        },
+  props: {
+    srcPrefix: {
+      type: String,
+      required: true,
     },
-    data(){
-        return {
-            perspectiveY: 0
-        }
+    slug: {
+      type: String,
+      required: true,
     },
-    mounted(){
-        // this.timedFrames = new TimedFrames(this.renderCascade.bind(this))
-        // this.timedFrames.requestFrame()
-
+    rotationStrengthX: {
+      type: Number,
+      default: .25,
     },
-    methods: {
-        renderCascade(dt){
-            // this.perspectiveY = distanceToCenter(this.$refs.video).top
-            // this.timedFrames.requestFrame()
-        }
+    position: {
+      type: Number,
+      default: 1
     },
-    computed: {
-        positionAbsMin() {return Math.min( Math.abs( this.position ), 3 )},
-        isActive() {return this.position === 0}
-    },
-    components: {
-        Lerpy
+  },
+  data(){
+    return {
+      perspectiveY: 0
     }
+  },
+  mounted(){
+    // this.timedFrames = new TimedFrames(this.renderCascade.bind(this))
+    // this.timedFrames.requestFrame()
+
+  },
+  methods: {
+    renderCascade(dt){
+      console.log(dt) // TODO
+      // this.perspectiveY = distanceToCenter(this.$refs.video).top
+      // this.timedFrames.requestFrame()
+    }
+  },
+  computed: {
+    positionAbsMin() {return Math.min( Math.abs( this.position ), 3 )},
+    isActive() {return this.position === 0}
+  },
+  components: {
+    Lerpy
+  }
 }
 </script>
 

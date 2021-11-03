@@ -1,9 +1,9 @@
 <template>
     <div class="block-halves" :data-flip="flip">
-        <div class="left-side" data-sticky="true">
+        <div class="media-side">
             <slot name="media"></slot>
         </div>
-        <div class="right-side">
+        <div class="desc-side">
             <slot name="description"></slot>
         </div>
     </div>
@@ -11,12 +11,12 @@
 
 <script>
 export default {
-    data(){
-        return {
-            flip: false,
-            // sticky: false,
-        }
+  data(){
+    return {
+      flip: false,
+      // sticky: false,
     }
+  }
 }
 </script>
 
@@ -25,18 +25,15 @@ export default {
     display: flex;
     align-items: center;
     align-content: center;
-    min-height: 100vh;
 
     &[data-flip="true"]{
         flex-direction: row-reverse;
     }
 
-    .left-side, 
-    .right-side {
+    .media-side, 
+    .desc-side {
         width: 50%;
-        padding-top: 100px;
-        padding-bottom: 100px;
-        min-height: 100vh;
+        height: 100vh;
 
         display: flex;
         align-items: center;
@@ -44,14 +41,30 @@ export default {
         justify-content: center;
     }
 
-    .left-side[data-sticky="true"]{
-        // position: sticky;
-        // top: 0;
-        padding: 0;
-        height: 100vh;
-        // cursor: pointer;
+    .desc-side {
+        padding: 100px 50px;
     }
+}
+
+@media (max-width: $tabletWidth) {
+    .block-halves {
+        flex-direction: column;
+        
+        .media-side, 
+        .desc-side {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .desc-side {
+            padding: 50px 25px;
+            height: auto;
+        }
 
 
+        .media-side {
+            height: 600px;
+        }
+    }
 }
 </style>

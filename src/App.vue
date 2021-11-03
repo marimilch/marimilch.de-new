@@ -1,4 +1,5 @@
 <template>
+  <div>
     <LoadingBar ref="loadingBar"></LoadingBar>
     <nav>
         <div>
@@ -41,12 +42,9 @@
     </footer>
 
     <div class="milkglass-background">
-            <MilkGlass ref="milkglass"></MilkGlass>
-        </div>
-
-        <div class="waves-background">
-            <Wave ref="wave"></Wave>
-        </div>
+        <MilkGlass ref="milkglass"></MilkGlass>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -56,109 +54,115 @@ import MilkGlass from '@/components/MilkGlass'
 import LoadingBar from '@/components/LoadingBar'
 import Wave from '@/components/Wave'
 import * as transitions from './assets/js/transitions'
-import {onBeforeRouteLeave} from 'vue-router'
 
 export default {
-    data() {
-        return {
-            navigationPoints: {
-                home: {
-                    to: '/',
-                    label: 'Home',
-                },
-                projects: {
-                    to: '/projects',
-                    label: 'Projects',
-                },
-                thanks: {
-                    to: '/aboutme',
-                    label: 'About Me'
-                },
-            },
-            contentHeight: 0,
-        }
-    },
-    computed: {
-        routeTransition(){
-            return this.$route.meta.transition || 'Fade'
+  data() {
+    return {
+      navigationPoints: {
+        home: {
+          to: '/',
+          label: 'Home',
         },
-    },
-    methods: {
-        startLoading(){
-            if (this.$refs.loadingBar) this.$refs.loadingBar.startLoading()
+        projects: {
+          to: '/projects',
+          label: 'Projects',
         },
-        finishLoading(){
-            if (this.$refs.loadingBar) this.$refs.loadingBar.finishLoading()
+        thanks: {
+          to: '/aboutme',
+          label: 'About Me'
         },
-        getCurrentHeight(el){
-            return el.getBoundingClientRect().height
-        },
-        getCurrentContentElement(){
-            return document.querySelector('main div')
-        },
-        updateHeight(el) {
-            this.contentHeight = this.getCurrentHeight(el)
-        },
-        contentLoadedAsync(){
-            const el = this.getCurrentContentElement()
-            this.enter(el)
-        },
-        async enter(el, done){
-            return transitions[this.routeTransition].enter.bind(this)(el, done)
-        },
-        async leave(el, done){
-            return transitions[this.routeTransition].leave.bind(this)(el, done)
-        },
-    },
-    components: {
-        Button,
-        MilkGlass,
-        Wave,
-        LoadingBar,
-        Logo,
-    },
-    watch: {
-        contentHeight(val){
-            this.$refs.main.style.height = val + 'px'
-        }
+      },
+      contentHeight: 0,
     }
+  },
+  computed: {
+    routeTransition(){
+      return this.$route.meta.transition || 'Fade'
+    },
+  },
+  methods: {
+    startLoading(){
+      if (this.$refs.loadingBar) this.$refs.loadingBar.startLoading()
+    },
+    finishLoading(){
+      if (this.$refs.loadingBar) this.$refs.loadingBar.finishLoading()
+    },
+    getCurrentHeight(el){
+      return el.getBoundingClientRect().height
+    },
+    getCurrentContentElement(){
+      return document.querySelector('main div')
+    },
+    updateHeight(el) {
+      this.contentHeight = this.getCurrentHeight(el)
+    },
+    contentLoadedAsync(){
+      const el = this.getCurrentContentElement()
+      this.enter(el)
+    },
+    async enter(el, done){
+      return transitions[this.routeTransition].enter.bind(this)(el, done)
+    },
+    async leave(el, done){
+      return transitions[this.routeTransition].leave.bind(this)(el, done)
+    },
+  },
+  components: {
+    Button,
+    MilkGlass,
+    Wave,
+    LoadingBar,
+    Logo,
+  },
+  watch: {
+    contentHeight(val){
+      this.$refs.main.style.height = val + 'px'
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-    h1 {
-        margin: 0;
-    }
+body {
+    font-family: Manrope, sans-serif;
+    font-size: 22px;
+    background: var(--canvas);
+    color: var(--neutral);
+}
 
-    .nav-buttons > *{
-        margin-left: 25px;
-    }
+h1 {
+    margin: 0;
+}
 
-    .sub {
-        font-size: 11px;
-        font-family: Manrope, sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        text-align: center;
-    }
+.nav-buttons > *{
+    margin-left: 25px;
+}
 
-    .milkglass-background {
-        z-index: -2;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        max-width:100%;
-        height: 100vh;
-    }
+.sub {
+    font-size: 11px;
+    font-family: Manrope, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+}
 
-    .waves-background {
-        z-index: -1;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        pointer-events: none;
-    }
+.milkglass-background {
+    z-index: -2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width:100%;
+    height: 100vh;
+}
+
+.waves-background {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+}
 </style>

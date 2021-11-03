@@ -89,14 +89,14 @@
 import Button from '@/components/Button'
 
 export default {
-    props: {
-        project: {
-            type: Object,
-            required: true
-        }
-    },
-    components: {
-        Button
+  props: {
+    project: {
+      type: Object,
+      required: true
     }
+  },
+  components: {
+    Button
+  }
 }
 </script>

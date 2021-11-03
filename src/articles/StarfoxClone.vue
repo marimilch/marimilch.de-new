@@ -1,4 +1,5 @@
 <template>
+    <div>
     <FancyTitle 
         backgroundVideoSrc="starfox-clone/fancy"
         dateStart="2020-09"
@@ -130,6 +131,7 @@ if (di.magnitude > inSpeedTimed)
             </Button>
         </FancyButtons>    
     </FancyBlock>
+  </div>
 </template>
 
 <script>
@@ -137,8 +139,6 @@ import FancyTitle from '@/components/project-components/FancyTitle'
 import FancyBlock from '@/components/project-components/FancyBlock'
 import FancyModel from '../components/project-components/FancyModel'
 import FancyTV from '../components/project-components/FancyTV'
-import FancyVideos from '../components/project-components/fancy-videos/FancyVideos'
-// import FancyVideo from '../components/project-components/fancy-videos/FancyVideo'
 import FancyCode from '../components/project-components/FancyCode'
 import FancyButtons from '../components/project-components/FancyButtons'
 import Button from '../components/Button'
@@ -146,17 +146,15 @@ import RainbowText from '@/components/effects/RainbowText'
 
 
 export default {
-    components: {
-        FancyTitle,
-        FancyBlock,
-        FancyModel,
-        FancyTV,
-        // FancyVideo,
-        FancyButtons,
-        FancyVideos,
-        FancyCode,
-        RainbowText,
-        Button,
-    }
+  components: {
+    FancyTitle,
+    FancyBlock,
+    FancyModel,
+    FancyTV,
+    FancyButtons,
+    FancyCode,
+    RainbowText,
+    Button,
+  }
 }
 </script>

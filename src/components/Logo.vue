@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import {prefersDark} from '@/assets/js/prefers-dark.js'
-
 export default {
     data(){
         return {
@@ -19,7 +17,7 @@ export default {
     },
     computed: {
         logoName(){
-            return prefersDark() ? 'logo' : 'logo-bright'
+            return 'logo'
         }
     },
     methods: {

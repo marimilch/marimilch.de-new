@@ -37,38 +37,20 @@
 // separate on purpose (easier to read)
 .button {
     --text:   var(--beige);
-    --main:   var(--light-brown);
-    --side:   var(--brown);
+    --main:   var(--med-magenta);
+    --side:   var(--dark-magenta);
 
-    --main-hover:   var(--dark-pink);
-    --side-hover:   var(--light-brown);
-
-    @media (prefers-color-scheme: dark) {
-        --text:   var(--beige);
-        --main:   var(--med-magenta);
-        --side:   var(--dark-magenta);
-
-        --main-hover:   var(--magenta);
-        --side-hover:   var(--med-magenta);
-    }
+    --main-hover:   var(--magenta);
+    --side-hover:   var(--med-magenta);
 }
 
 .button.alt {
-    --text:   var(--blue);
-    --main:   var(--beige);
-    --side:   var(--blue);
+    --text:   var(--beige);
+    --main:   var(--med-magenta);
+    --side:   var(--dark-magenta);
 
-    --main-hover:   var(--beige);
-    --side-hover:   var(--green);
-
-    @media (prefers-color-scheme: dark) {
-        --text:   var(--beige);
-        --main:   var(--med-magenta);
-        --side:   var(--dark-magenta);
-
-        --main-hover:   var(--magenta);
-        --side-hover:   var(--med-magenta);
-    }
+    --main-hover:   var(--magenta);
+    --side-hover:   var(--med-magenta);
 }
 
 $buttonOuterSpread: 2px;

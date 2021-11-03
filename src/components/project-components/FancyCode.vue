@@ -65,19 +65,12 @@
 <script>
 import { distanceToCenter } from '@/assets/js/distance-to-center.js'
 import hljs from 'highlight.js'
-import { prefersDark } from '@/assets/js/prefers-dark.js'
 import Appearing from '@/components/effects/Appearing'
 import Lerpy from '@/components/effects/Lerpy'
 import FancyHalves from '@/components/project-components/FancyHalves'
 import FancyParagraph from '@/components/project-components/FancyParagraph'
 import FeatherIcons from 'feather-icons'
-
-if ( prefersDark() ){
-    import('highlight.js/styles/github-dark.css')
-    
-} else {
-    import('highlight.js/styles/github.css')
-}
+import 'highlight.js/styles/github-dark.css'
 
 export default {
     data() {
@@ -203,16 +196,9 @@ $timing: 1s;
     }
     
     .left-side * {
-        // default colors
-        --primary: var(--dark-pink) !important; // main color
-        --neutral: var(--brown) !important; // text color
-        --canvas: var(--beige) !important; // background color
-
-        @media (prefers-color-scheme: dark) {
-            --primary: var(--magenta) !important; // main color
-            --neutral: var(--cyan) !important; // text color
-            --canvas: var(--dark-purple) !important; // background color
-        }
+        --primary: var(--magenta) !important; // main color
+        --neutral: var(--cyan) !important; // text color
+        --canvas: var(--dark-purple) !important; // background color
     }
 
     pre {

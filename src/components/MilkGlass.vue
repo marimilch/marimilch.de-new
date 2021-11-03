@@ -26,7 +26,6 @@
 <script>
 import * as THREE from 'three'
 import Model from '@/components/Model'
-import {prefersDark} from '@/assets/js/prefers-dark.js'
 
 export default {
     components: {
@@ -37,7 +36,7 @@ export default {
                     // Materials
             const materials = [
                 new THREE.MeshPhysicalMaterial({ 
-                    color: prefersDark() ? 0x64D9EB : 0xffe7d6,
+                    color: 0x64D9EB,
                     // specular: 0xffffff,
                     transparent: true,
                     opacity: .5,

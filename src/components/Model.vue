@@ -40,7 +40,6 @@ import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { HalftonePassAlpha } from '@/assets/js/HalftonePassAlpha.js'
 
-import { prefersDark } from '@/assets/js/prefers-dark.js'
 import { onVisible } from '@/assets/js/on-visible.js'
 import { TimedFrames } from '@/assets/js/timed-frames.js'
 import { distanceToCenter } from '@/assets/js/distance-to-center.js'
@@ -117,7 +116,7 @@ export default {
             distanceFractionOrigin: .11,
             materials: [
                 new THREE.MeshStandardMaterial({ 
-                    color: prefersDark() ? 0xEA3863 : 0xee6a7c ,
+                    color: 0xEA3863,
                     roughness: 0,
                 }),
             ]

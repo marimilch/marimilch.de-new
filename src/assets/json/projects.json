@@ -5,82 +5,8 @@
         "slug": "starfox-clone"
     },
     {
-        "name": "Cable Simulation",
-        "teaser": "My bachelor thesis which was a cable simulation in Unity",
-        "description": "This is a simulation for a cable I implemented for my Bachelor Thesis. It can be run by two algorithms. The first one bases on Jakobsen's Advanced Character Physics Model and the second one on (Extended) Position Based Dynamics.",
-        "slug": "cable-simulation",
-        "links": [
-            {
-                "label": "GitLab",
-                "url": "//gitlab.rlp.net/mamirago/bachelor-thesis"
-            },
-            {
-                "label": "GitHub",
-                "url": "//github.com/marimilch/unity-xpbd-jakobsen-cable"
-            }
-        ],
-        "clips": [
-            {
-                "url": "cable-simulation"
-            }
-        ]
-    },
-    {
         "name": "Klara",
         "teaser": "An RPG game about a girl whose sister is kidnapped",
-        "description": "This is a game I've been working on during the last two years (with long pauses and some intense working periods, depending on how much time I had). The game is largely story based. I built it in RPG Maker 2003. It is not finished yet, but there are about one to two hours worth of gameplay.",
-        "slug": "klara",
-        "files": [
-            {
-                "label": "Windows Setup",
-                "url": "klara-setup.zip"
-            },
-            {
-                "label": "Full Source",
-                "url": "klara-source.zip"
-            }
-        ],
-        "clips": [
-            {
-                "url": "klara-boss"
-            },
-            {
-                "url": "klara-fighting"
-            },
-            {
-                "url": "klara-riddle"
-            },
-            {
-                "url": "klara-train"
-            }
-        ]
-    },
-    {
-        "name": "Petra & The Wolves",
-        "teaser": "A very small project I finished along with a Unity tutorial",
-        "description": "This is a little microgame I programmed as an exercise for an Unity Tutorial. I downloaded the assets from the Unity Store. It took me a week to finish working six hours each day.",
-        "slug": "petra",
-        "liveGame": "petra",
-        "links": [
-            {
-                "label": "GitHub",
-                "url": "//github.com/marimilch/petra-and-the-wolves-scripts"
-            }
-        ],
-        "files": [
-            {
-                "label": "Windows Binary",
-                "url": "petra-win.zip"
-            },
-            {
-                "label": "Full Source",
-                "url": "petra-source.zip"
-            }
-        ],
-        "clips": [
-            {
-                "url": "microgame"
-            }
-        ]
+        "slug": "klara"
     }
 ]

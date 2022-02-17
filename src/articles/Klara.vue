@@ -9,8 +9,9 @@
             Klara
         </template>
         <template v-slot:description>
-            Around 2003 the <RainbowText>RPG Maker 2003</RainbowText> was the hot stuff in the german 
-            internet community. Cultural heritages like Vampire's Dawn, 
+            In the early 2000s the <RainbowText>RPG Maker</RainbowText> 
+            was the hot stuff in the german 
+            internet community. Cultural heritage like Vampire's Dawn, 
             Ente die Ente & Velsarbor were born. All thanks to
             internet piracy.
         </template>

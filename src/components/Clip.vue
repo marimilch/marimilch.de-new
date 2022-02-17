@@ -1,7 +1,11 @@
 <template>
   <OnVisible @on-visible="videoVisible" @on-hidden="videoHidden" class="on-visible">
     <div 
-        class="video-wrap" 
+        class="video-wrap"
+        :class="`${wobbleInited ? 'wobble-init' : ''} ${wobbling ? 'wobbling' : ''}`"
+        @animationend="wobbling = false"
+        @mousedown="wobbleInit"
+        @mouseup="wobble"
     >
       <video 
         loop
@@ -34,6 +38,12 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      wobbleInited: false,
+      wobbling: false,
+    }
+  },
   methods: {
     videoVisible() {
       const video = this.$refs.video
@@ -47,6 +57,14 @@ export default {
 
       video.pause()
     },
+    wobbleInit() {
+      this.wobbleInited = true
+    },
+    wobble() {
+      if (!this.wobbleInited) return
+      this.wobbleInited = false
+      this.wobbling = true
+    }
   },
   components: {
     OnVisible
@@ -55,10 +73,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes pulse {
+  0% {
+    transform: scale(.9);
+  }
+  25% {
+    transform: scale(1.09);
+  }
+  50% {
+    transform: scale(.955);
+  }
+  75% {
+    transform: scale(1.0225);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.wobble-init {
+  transform: scale(.9);
+}
+.wobbling {
+  animation: pulse .5s linear 0s 1 normal;
+}
 .on-visible {
   height: 100%;
 }
 .video-wrap {
+  transition: transform .2s ease;
   padding: 40px;
   width: 100%;
   height: 100%;
@@ -66,6 +108,7 @@ export default {
   justify-content: center;
   align-items: center;
   align-content: center;
+  cursor: pointer;
 }
 .video {
   width: 100%;

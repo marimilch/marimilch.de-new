@@ -21,17 +21,17 @@
                 </p>
             </div>
 
-            <div class="overflow-chamber style2">
+            <!-- <div class="overflow-chamber style2">
                 <div class="background-zoom-wrap">
                     <div class="background-zoom"></div>
                 </div>
-            </div>
+            </div> -->
 
             <p class="project-links">
                 <!-- <Button :alt="true" to="//instagram.com/marimilch93" :external="true">Instagram</Button> -->
                 <!-- <button href="//twitter.com/marimilch93">Twitter</button> -->
                 <Button :alt="true" to="//github.com/marimilch" :external="true">GitHub</Button>
-                <!-- <Button :alt="true" to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button> -->
+                <Button :alt="true" to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button>
                 <!-- <button href="//dank-games.com">Dank-Games</button> -->
             </p>
 
@@ -41,7 +41,7 @@
 
 <style lang="scss" scoped>
     .about-header {
-        margin-top: 150px;
+        margin-top: 200px;
     }
     .about-wrap {
         position: relative;

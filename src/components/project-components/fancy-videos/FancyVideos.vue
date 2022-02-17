@@ -8,8 +8,7 @@
                 playinline
                 v-for="(slug, index) in slugs"
                 v-bind:key="index"
-                :srcPrefix="srcPrefix"
-                :slug="slug"
+                :source="`${srcPrefix}/${slug}`"
                 :position="index - activeIndex"
             >
             </FancyVideo>

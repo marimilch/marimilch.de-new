@@ -82,6 +82,10 @@ export default {
     text-transform: uppercase;
     letter-spacing: 3px;
     font-size: 24px;
+
+    @media (max-width: $phoneWidth) {
+        font-size: 18px;
+    }
 }
 .min-h-screen {
     min-height: 100vh;
@@ -121,6 +125,11 @@ hr {
             font-size: 28px;
         }
 
+
+        @media (max-width: $phoneWidth) {
+            font-size: 22px;
+        }
+
         color: var(--neutral);
     }
 }
@@ -135,6 +144,10 @@ h1 {
     @media (max-width: $tabletWidth) {
         padding-left: 50px;
         font-size: 100px;
+    }
+
+    @media (max-width: $phoneWidth) {
+        font-size: 50px;
     }
 
     // color: var(--primary);

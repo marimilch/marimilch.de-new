@@ -25,11 +25,6 @@
                 would not be so hard.
             </p>
         </FancyTV>
-
-        <!-- <FancyVideos 
-            srcPrefix="starfox-clone" 
-            :slugs="['fancy', 'shoot1', 'movement']"
-        ></FancyVideos> -->
     </FancyBlock>
 
     <FancyBlock>
@@ -44,7 +39,6 @@
                 and then the obstacles.
             </p>
         </FancyModel>
-        <!-- <FancyVideo srcPrefix="starfox-clone" slug="shoot1"></FancyVideo> -->
     </FancyBlock>
 
     <FancyBlock>
@@ -68,7 +62,6 @@ if (di.magnitude > inSpeedTimed)
                 </p>
             </template> 
         </FancyCode>
-        <!-- <FancyVideo srcPrefix="starfox-clone" slug="movement"></FancyVideo> -->
     </FancyBlock>
 
     <FancyBlock>

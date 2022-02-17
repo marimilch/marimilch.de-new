@@ -17,8 +17,7 @@
                     Marko, 
                     Renyo, 
                     Cedric, 
-                    Batiste, 
-                    Yamina
+                    Batiste
                 </p>
             </div>
 
@@ -35,6 +34,7 @@
                 <!-- <Button :alt="true" to="//www.linkedin.com/in/marimilch" :external="true">LinkedIn</Button> -->
                 <!-- <button href="//dank-games.com">Dank-Games</button> -->
             </p>
+
         </div>
     </div>
 </template>

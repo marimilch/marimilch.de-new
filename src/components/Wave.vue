@@ -19,6 +19,12 @@
 import Two from 'two.js'
 
 export default {
+  props: {
+    playOnMounted: {
+      type: Boolean,
+      default: true,
+    }
+  },
   data() {
     return {
       resolution: 50,
@@ -51,6 +57,8 @@ export default {
     this.two.bind('update', this.renderFrame.bind(this))
 
     window.addEventListener('resize', this.onResize.bind(this))
+
+    if (this.playOnMounted) this.play()
   },
   methods: {
     onResize(){
